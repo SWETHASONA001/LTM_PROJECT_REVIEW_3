@@ -1,0 +1,8 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2
+# Optional: physics-based wake simulation. The API reports floris=false without it.
+floris>=4.1,<5
+# Tests
+httpx>=0.27
+pytest>=8

@@ -16,3 +16,7 @@ frontend/dist/
 .env
 .env.local
 frontend/.env.local
+
+# Local runtime artifacts
+backend/storage/
+frontend/qa-output/
