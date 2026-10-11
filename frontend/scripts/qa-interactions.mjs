@@ -198,7 +198,7 @@ txt = await page.evaluate(() => document.body.innerText);
 check('Follow-up keeps turbine context and drafts NOT-executed instruction', txt.includes('Draft operator instruction · R80711') && /not executed/i.test(txt));
 await ask('What does the model predict at 9 m/s?');
 txt = await page.evaluate(() => document.body.innerText);
-check('Copilot predicts with interval and states CNN-PINN unavailable', /At 9\.0 m\/s/.test(txt) && txt.includes('not a CNN-PINN prediction'));
+check('Copilot predicts with the trained CNN-PINN and its physics bound', /At 9\.0 m\/s the CNN-PINN predicts/.test(txt) && txt.includes('Betz/rated bound'));
 await ask('Explain the trade-offs between the baseline and optimized scenario.');
 txt = await page.evaluate(() => document.body.innerText);
 check('Copilot compares baseline vs optimized', txt.includes('optimized candidate changes modeled AEP'));

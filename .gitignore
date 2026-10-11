@@ -20,3 +20,6 @@ frontend/.env.local
 # Local runtime artifacts
 backend/storage/
 frontend/qa-output/
+
+# Large scikit-learn artifacts — reproduce with ml/train_forecaster.py and ml/train_isolation_forest.py
+models/*.joblib

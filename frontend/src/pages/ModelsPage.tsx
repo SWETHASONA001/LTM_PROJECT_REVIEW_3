@@ -3,29 +3,30 @@ import { Bar, BarChart, CartesianGrid, ComposedChart, ResponsiveContainer, Scatt
 import { axisProps, ChartTooltip, gridProps, Legend, SERIES } from '../components/charts/chartTheme';
 import { Badge, Callout, Card, CardHeader, KeyValue, PageHeader } from '../components/ui/primitives';
 import { ProvenanceBadge } from '../components/ui/Provenance';
-import { DataGate, UnavailableState } from '../components/ui/states';
-import type { ModelsReport } from '../data/types';
+import { CnnPinnSection, PhysicsGnnSection } from '../components/models/MlSections';
+import { DataGate } from '../components/ui/states';
+import type { MlReport, ModelsReport } from '../data/types';
 import { date, fmt, fmtInt, pct } from '../lib/format';
 import { WAKE_MODEL_LABEL } from '../physics/wake';
-import { useDataset } from '../services/dataService';
+import { useDatasets } from '../services/dataService';
 
 export default function ModelsPage() {
-  const state = useDataset('models');
+  const state = useDatasets(['models', 'ml_models']);
   return (
     <div>
       <PageHeader
         eyebrow="Analytics"
         title="Model performance"
-        description="Every model listed here has an implementation and an evaluation in this repository. Models without code or artifacts are shown as unavailable — no metrics are invented."
+        description="Every model listed here has code, a saved artifact and an evaluation on the same time-aware held-out period (Oct 2017 → Jan 2018). Results are reported as measured — including where a model does not help."
       />
       <DataGate state={state} className="h-[50vh]">
-        {(m) => <Content m={m} />}
+        {(d) => <Content m={d.models} ml={d.ml_models} />}
       </DataGate>
     </div>
   );
 }
 
-function Content({ m }: { m: ModelsReport }) {
+function Content({ m, ml }: { m: ModelsReport; ml: MlReport }) {
   const hist = m.residualHistogram.counts.map((c, i) => ({ r: m.residualHistogram.edges[i] + 25, c }));
   const scatter = m.scatter.observed.map((o, i) => ({ obs: o, pred: m.scatter.predicted[i] })).filter((d) => d.obs !== null && d.pred !== null);
   const perTurbine = Object.entries(m.perTurbine).map(([id, v]) => ({ id, fleet: v.fleetCurve.rmse, turbine: v.turbineCurve.rmse, n: v.fleetCurve.n, r2: v.fleetCurve.r2 }));
@@ -60,6 +61,9 @@ function Content({ m }: { m: ModelsReport }) {
           </Card>
         ))}
       </div>
+
+      {ml.cnnPinn && <CnnPinnSection c={ml.cnnPinn} />}
+      {ml.physicsGnn && <PhysicsGnnSection g={ml.physicsGnn} />}
 
       <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
         <Card>
@@ -141,33 +145,33 @@ function Content({ m }: { m: ModelsReport }) {
           <RegistryRow name="Gaussian wake model" status={`Implemented in-browser — ${WAKE_MODEL_LABEL.split('(')[0]}`} ok />
           <RegistryRow name="Layout optimizer" status="Implemented (pattern search, Web Worker)" ok />
           <RegistryRow name="Anomaly detector (power-curve residual)" status="Implemented & applied to full record" ok />
+          {ml.cnnPinn && <RegistryRow name="CNN-PINN wind-power model" status={`Trained · R² ${fmt(ml.cnnPinn.pinn.metrics.r2, 3)} · ${ml.cnnPinn.artifact}`} ok />}
+          {ml.physicsGnn && <RegistryRow name="Dynamic Physics-GNN" status={`Trained · R² ${fmt(ml.physicsGnn.gnn.metrics.r2, 3)} · no gain over ablation`} ok />}
+          {ml.forecaster && <RegistryRow name="Gradient-boosted forecaster" status={`Trained · 1–24 h · CQR intervals · ${ml.forecaster.artifact}`} ok />}
+          {ml.isolationForest && <RegistryRow name="Isolation Forest" status={`Trained · ${ml.isolationForest.eventCount} events · ${ml.isolationForest.artifact}`} ok />}
           {m.notImplemented.map((n) => (
             <RegistryRow key={n.id} name={n.name} status={n.reason} />
           ))}
-          <RegistryRow name="FLORIS" status="Backend integration point ready; FLORIS not installed in this environment" />
+          <RegistryRow name="FLORIS" status="Backend: wake simulation and server-side layout optimisation (FLORIS 4.x, Gauss model)" ok />
         </div>
       </Card>
 
       <Card>
-        <CardHeader title="Physics-informed learning — where the project stands" />
-        <div className="grid gap-5 md:grid-cols-2">
-          <UnavailableState
-            title="CNN-PINN not yet implemented"
-            reason="A physics-informed network would add physics residuals to the training loss — e.g. penalising predictions above 0.5·ρ·A·v³·C_p,Betz, enforcing monotonic power below rated, or coupling turbines through a wake-deficit term — and be evaluated on the same time-aware split."
-            requirement="Needs: model code, training pipeline (PyTorch is not installed), saved weights and an evaluation report."
-          />
-          <div className="space-y-2 text-[12.5px] leading-relaxed text-ink-2">
-            <p>
-              <strong>What exists today:</strong> a data-driven power curve (predicted), an actuator-disc physics reference (physics-derived), and a Gaussian wake model that uses the learned curve. They are compared, not fused.
-            </p>
-            <p>
-              Displaying a wake model beside a regression does <strong>not</strong> make the regression physics-informed. The physics reference scores R² {fmt(m.models[2]?.metrics.r2, 3)} vs {fmt(m.models[0]?.metrics.r2, 3)} for the learned curve on the same test records, quantifying what pure physics with assumed C_p misses.
-            </p>
-          </div>
+        <CardHeader title="How physics enters the models" />
+        <div className="grid gap-4 text-[12.5px] leading-relaxed text-ink-2 md:grid-cols-3">
+          <p>
+            <strong>CNN-PINN:</strong> physics residuals (Betz/rated bound with temperature-derived density, monotonic power below rated, zero below cut-in) are terms of the training loss, evaluated on data and on synthetic collocation inputs across 0–25 m/s. This is what makes it physics-informed — not displaying a wake model beside it.
+          </p>
+          <p>
+            <strong>Physics reference:</strong> a pure actuator-disc model (no learning) scores R² {fmt(m.models[2]?.metrics.r2, 3)} on the same test set, quantifying what physics with an assumed C_p alone misses versus learned models (R² ≈ {fmt(ml.cnnPinn?.pinn.metrics.r2 ?? m.models[0]?.metrics.r2, 3)}).
+          </p>
+          <p>
+            <strong>Wake physics:</strong> farm-level wake losses come from the Gaussian wake model (in-browser) and FLORIS (backend), which agree within ~0.5% on farm power. The learned models predict single-turbine power from that turbine’s own measured inflow.
+          </p>
         </div>
       </Card>
 
-      <Callout tone="neutral">Metrics are recomputed whenever <code>py -3.11 scripts/build_frontend_data.py</code> runs. No model version numbers are shown because no versioned model artifacts exist yet.</Callout>
+      <Callout tone="neutral">Baselines are recomputed by <code>scripts/build_frontend_data.py</code>; trained models by <code>ml/train_*.py</code> (artifacts in <code>models/</code>, trained timestamps shown on each card).</Callout>
     </div>
   );
 }

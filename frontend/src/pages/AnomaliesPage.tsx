@@ -8,14 +8,14 @@ import { KpiCard } from '../components/ui/Kpi';
 import { Badge, Button, Callout, Card, CardHeader, PageHeader } from '../components/ui/primitives';
 import { ProvenanceBadge } from '../components/ui/Provenance';
 import { DataGate, EmptyState } from '../components/ui/states';
-import type { AnomalyEvent, AnomalyReport, WindHourly } from '../data/types';
+import type { AnomalyEvent, AnomalyReport, MlReport, WindHourly } from '../data/types';
 import { date, downloadFile, energy, fmt, pct, toCsv } from '../lib/format';
 import { buildRows, indexOf } from '../lib/series';
 import { useDatasets } from '../services/dataService';
 import { useUiStore } from '../store/appStores';
 
 export default function AnomaliesPage() {
-  const state = useDatasets(['anomalies', 'wind_hourly']);
+  const state = useDatasets(['anomalies', 'wind_hourly', 'ml_models']);
   return (
     <div>
       <PageHeader
@@ -25,7 +25,12 @@ export default function AnomaliesPage() {
         actions={<ProvenanceBadge kind="predicted" detail="Residual-exceedance detector based on the trained fleet power curve." />}
       />
       <DataGate state={state} className="h-[50vh]">
-        {(d) => <Content report={d.anomalies} hourly={d.wind_hourly} />}
+        {(d) => (
+          <>
+            <Content report={d.anomalies} hourly={d.wind_hourly} />
+            {d.ml_models.isolationForest && <IsolationForestSection f={d.ml_models.isolationForest} residual={d.anomalies.events} />}
+          </>
+        )}
       </DataGate>
     </div>
   );
@@ -56,7 +61,7 @@ function Content({ report, hourly }: { report: AnomalyReport; hourly: WindHourly
       </div>
 
       <Callout tone="neutral" title="Method and limits">
-        {report.provenance.method} Isolation Forest is <strong>not</strong> used (scikit-learn and model artifacts are absent). Causes are not labelled in the data: high blade pitch during an event suggests curtailment or a stop, but this is an inference, not a recorded status.
+        {report.provenance.method} A multivariate Isolation Forest is compared further down. Causes are not labelled in the data: high blade pitch during an event suggests curtailment or a stop, but this is an inference, not a recorded status.
       </Callout>
 
       <Card>
@@ -197,5 +202,97 @@ function MiniSeries({ data, k, label, color, s, end }: { data: Record<string, un
       </div>
       <div className="text-[11.5px] text-muted">{label}</div>
     </div>
+  );
+}
+
+const FEATURE_LABEL: Record<string, string> = {
+  resid_norm: 'power-curve residual',
+  P_norm: 'power level',
+  Ba_avg: 'blade pitch',
+  Ws_avg: 'wind speed',
+  Rs_avg: 'rotor speed',
+  gear_dT: 'gearbox temperature rise',
+  Ds_avg: 'generator speed',
+};
+
+function IsolationForestSection({ f, residual }: { f: NonNullable<MlReport['isolationForest']>; residual: AnomalyEvent[] }) {
+  const overlaps = (a: { turbine: string; start: string; end: string }, b: { turbine: string; start: string; end: string }) =>
+    a.turbine === b.turbine && new Date(a.start) < new Date(b.end) && new Date(b.start) < new Date(a.end);
+  const confirmed = f.events.filter((e) => residual.some((r) => overlaps(e, r))).length;
+  const [turbine, setTurbine] = useState('all');
+  const list = f.events.filter((e) => turbine === 'all' || e.turbine === turbine);
+  return (
+    <Card className="mt-5" padded={false}>
+      <div className="p-5 pb-3">
+        <CardHeader
+          title={f.name}
+          subtitle={`Multivariate detector · trained ${date(f.trainedAt, true)} · ${f.artifact}`}
+          actions={
+            <>
+              <Badge tone="energy">trained</Badge>
+              <ProvenanceBadge kind="predicted" detail={f.method} />
+            </>
+          }
+        />
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {[
+            ['Events (≥30 min)', String(f.eventCount)],
+            ['Flagged records (all / test)', `${pct(f.flaggedRecordShare, 2)} / ${pct(f.testFlaggedShare, 2)}`],
+            ['Overlap with residual detector', `${pct(confirmed / Math.max(1, f.events.length), 0)} of shown events`],
+            ['Features', `${f.features.length} SCADA-derived`],
+          ].map(([k, v]) => (
+            <div key={k} className="rounded-lg bg-subtle px-3 py-2.5">
+              <div className="text-[11.5px] text-muted">{k}</div>
+              <div className="num text-[15px] font-semibold">{v}</div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-[12.5px] text-ink-2">
+          <span className="font-semibold">Most anomalous feature per event:</span>
+          {Object.entries(f.dominantFeatures).map(([k, v]) => (
+            <Badge key={k}>
+              {FEATURE_LABEL[k] ?? k}: {v}
+            </Badge>
+          ))}
+        </div>
+        <p className="mt-2 text-[12px] leading-relaxed text-muted">
+          Unlike the residual detector, the Isolation Forest also flags unusual operating states with normal power (e.g. pitch or temperature patterns). Events found by both detectors are the strongest candidates for investigation.
+        </p>
+      </div>
+      <div className="flex items-center justify-between border-t border-line px-5 py-2.5">
+        <span className="text-[13px] font-semibold">Longest events</span>
+        <Select value={turbine} onChange={setTurbine} options={[{ value: 'all', label: 'All turbines' }, ...Object.keys(f.eventsByTurbine).map((t) => ({ value: t, label: `${t} (${f.eventsByTurbine[t]})` }))]} className="w-44" />
+      </div>
+      <div className="max-h-[380px] overflow-auto scroll-thin">
+        <table className="w-full min-w-[720px] text-[12.5px]">
+          <thead className="sticky top-0 bg-surface">
+            <tr className="border-b border-line text-left text-muted">
+              <th className="px-5 py-1.5 font-medium">Turbine</th>
+              <th className="py-1.5 font-medium">Start (UTC)</th>
+              <th className="py-1.5 text-right font-medium">Dur.</th>
+              <th className="py-1.5 text-right font-medium">Ws</th>
+              <th className="py-1.5 text-right font-medium">P</th>
+              <th className="py-1.5 text-right font-medium">Pitch</th>
+              <th className="py-1.5 font-medium pl-4">Driver</th>
+              <th className="px-5 py-1.5 text-right font-medium">Residual det.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.slice(0, 150).map((e) => (
+              <tr key={e.turbine + e.start} className="border-b border-line/60">
+                <td className="px-5 py-1.5 font-medium">{e.turbine}</td>
+                <td className="num py-1.5">{date(e.start, true)}</td>
+                <td className="num py-1.5 text-right">{fmt(e.durationH, 1)} h</td>
+                <td className="num py-1.5 text-right">{fmt(e.meanWs, 1)}</td>
+                <td className="num py-1.5 text-right">{fmt(e.meanPowerKw, 0)} kW</td>
+                <td className="num py-1.5 text-right">{fmt(e.meanPitch, 1)}°</td>
+                <td className="py-1.5 pl-4">{FEATURE_LABEL[e.dominantFeature] ?? e.dominantFeature}</td>
+                <td className="px-5 py-1.5 text-right">{residual.some((r) => overlaps(e, r)) ? <Badge tone="danger">also flagged</Badge> : <span className="text-faint">—</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Card>
   );
 }

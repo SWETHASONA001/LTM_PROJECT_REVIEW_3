@@ -1,8 +1,19 @@
 fastapi>=0.110
 uvicorn[standard]>=0.29
 pydantic>=2
-# Optional: physics-based wake simulation. The API reports floris=false without it.
+# Physics-based wake simulation and server-side layout optimisation
 floris>=4.1,<5
+# Trained models (ml/): CNN-PINN and Physics-GNN (PyTorch), forecaster and Isolation Forest (scikit-learn)
+# CPU wheel: pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.2
+scikit-learn>=1.4
+joblib>=1.3
+pandas>=2.2
+numpy>=1.26
+xarray>=2024.1
+netCDF4>=1.6
+# Copilot LLM agent (enabled only when ANTHROPIC_API_KEY is set on the backend)
+anthropic>=1.0
 # Tests
 httpx>=0.27
 pytest>=8

@@ -67,7 +67,9 @@ export default function SettingsPage() {
                 ['API base URL', API_BASE || 'not set (VITE_API_BASE_URL)'],
                 ['Status', status.state],
                 ['FLORIS', status.state === 'online' ? (status.health.capabilities.floris ? `available ${status.health.capabilities.floris_version ?? ''}` : 'not installed') : '—'],
-                ['LLM provider', status.state === 'online' ? (status.health.capabilities.llm ? 'configured' : 'not configured') : '—'],
+                ['LLM provider', status.state === 'online' ? (status.health.capabilities.llm ? `configured (${status.health.capabilities.llm_model})` : 'not configured — set ANTHROPIC_API_KEY on the backend') : '—'],
+                ['CNN-PINN inference', status.state === 'online' ? (status.health.capabilities.cnn_pinn ? 'available' : 'artifact missing') : '—'],
+                ['Forecaster', status.state === 'online' ? (status.health.capabilities.forecaster ? 'available' : 'artifact missing') : '—'],
                 ['Backend version', status.state === 'online' ? status.health.version : '—'],
               ]}
             />
@@ -114,8 +116,8 @@ export default function SettingsPage() {
             'Turbine alarm/status logs to confirm anomaly causes.',
             'Offshore wind measurements — the offshore farm uses an assumed Weibull resource.',
             'Hydrokinetic generator measurements — all hydro power is modeled.',
-            'CNN-PINN / Physics-GNN code, weights and evaluation.',
-            'FLORIS installation on a backend host; LLM provider credentials on the backend.',
+            'Numerical-weather-prediction inputs for day-ahead forecasting.',
+            'LLM provider credentials on the backend (ANTHROPIC_API_KEY) to switch the copilot from local tools to the Claude agent.',
           ].map((g) => (
             <li key={g} className="rounded-lg bg-subtle px-3 py-2">
               {g}

@@ -373,14 +373,15 @@ def build_models(valid: pd.DataFrame, df: pd.DataFrame, pc_ws, eng, rated_kw):
              "description": f"No learning. rho={RHO_AIR} kg/m3, D=82 m (public spec), Cp={cp_ref} assumed, cut-in 3 m/s.",
              "metrics": metrics(test["P_avg"], yhat_c)},
         ],
-        "notImplemented": [
-            {"id": "cnn-pinn", "name": "CNN-PINN wind-power model",
-             "reason": "No model code or trained weights exist in the repository."},
-            {"id": "physics-gnn", "name": "Dynamic Physics-GNN turbine interaction",
-             "reason": "No implementation or artifacts found."},
-            {"id": "isolation-forest", "name": "Isolation Forest anomaly detector",
-             "reason": "scikit-learn is not installed and no artifact exists; a power-curve residual detector is used instead."},
-        ],
+        # Models trained by ml/*.py are listed only when their artifact is missing.
+        "notImplemented": [m for m in [
+            {"id": "cnn-pinn", "name": "CNN-PINN wind-power model", "artifact": "cnn_pinn.pt",
+             "reason": "Not trained yet — run ml/train_cnn_pinn.py."},
+            {"id": "physics-gnn", "name": "Dynamic Physics-GNN turbine interaction", "artifact": "physics_gnn.pt",
+             "reason": "Not trained yet — run ml/train_physics_gnn.py."},
+            {"id": "isolation-forest", "name": "Isolation Forest anomaly detector", "artifact": "isolation_forest.joblib",
+             "reason": "Not trained yet — run ml/train_isolation_forest.py."},
+        ] if not (ROOT / "models" / m["artifact"]).exists()],
         "perTurbine": per_turbine_metrics,
         "residualHistogram": {"edges": hist_edges.tolist(), "counts": hist.tolist()},
         "residualByWs": {"ws": rbin["bin"].tolist(), "mean": rnd(rbin["mean"], 1),

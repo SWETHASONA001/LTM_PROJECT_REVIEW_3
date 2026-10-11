@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { ArrowUpRight, Bot, ClipboardCheck, Loader2, Send, ShieldAlert, User, Wrench } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { buildCopilotContext } from '../../lib/copilotContext';
 import { localAnswer, SUGGESTED_QUESTIONS } from '../../lib/copilotEngine';
 import { backend, useBackendStatus } from '../../services/api';
 import { ensureConversation, useCopilotStore, useUiStore, type CopilotMessage } from '../../store/appStores';
@@ -15,7 +16,7 @@ export function useCopilotStatus() {
 export function ConnectionBanner({ compact }: { compact?: boolean }) {
   const { status, llm } = useCopilotStatus();
   const text = llm
-    ? 'Connected to backend LLM agent.'
+    ? `Connected to the backend LLM agent${status.state === 'online' && status.health.capabilities.llm_model ? ` (${status.health.capabilities.llm_model})` : ''} with project tools.`
     : status.state === 'standalone'
       ? 'LLM provider not connected — running in local tool mode.'
       : status.state === 'online'
@@ -69,11 +70,20 @@ export function CopilotChat({ compact }: { compact?: boolean }) {
     try {
       if (llm) {
         try {
-          const r = await backend.copilot({ conversation_id: id, message: q, context: c.context });
-          append(id, { role: 'assistant', content: r.answer, references: r.references, tools: r.tool_calls, mode: 'backend-llm' });
+          const context = await buildCopilotContext(c.context);
+          const r = await backend.copilot({ conversation_id: id, message: q, context });
+          const ins = r.instruction;
+          append(id, {
+            role: 'assistant',
+            content: r.answer,
+            references: r.references,
+            tools: r.tool_calls,
+            mode: 'backend-llm',
+            instruction: ins ? { turbine: ins.turbine, change: ins.change, reason: ins.reason, expectedEffect: ins.expected_effect, constraints: ins.constraints, confidence: ins.confidence, source: ins.source } : undefined,
+          });
           return;
-        } catch {
-          /* fall through to local tools, clearly labeled */
+        } catch (e) {
+          append(id, { role: 'assistant', content: `Backend LLM unavailable (${e instanceof Error ? e.message : String(e)}). Answering in local tool mode instead.`, mode: 'local-tools' });
         }
       }
       const a = await localAnswer(q, c.context);
@@ -180,7 +190,7 @@ function MessageView({ m }: { m: CopilotMessage }) {
         <Bot size={14} />
       </div>
       <div className="min-w-0 max-w-[92%] flex-1 space-y-2.5 rounded-2xl rounded-tl-md border border-line bg-surface px-3.5 py-3">
-        <p className="text-[13.5px] leading-relaxed text-ink">{m.content}</p>
+        <p className="whitespace-pre-wrap text-[13.5px] leading-relaxed text-ink">{m.content}</p>
         <Section title="Facts from data & models" items={m.facts} tone="fact" />
         <Section title="Assumptions" items={m.assumptions} tone="assume" />
         <Section title="Recommendations" items={m.recommendations} tone="rec" />

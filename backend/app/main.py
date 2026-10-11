@@ -20,7 +20,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from . import config, floris_service
+from . import config, copilot_service, floris_service, hydrogen_service, ml_service, optimizer_service
 
 app = FastAPI(title="AeroHydro-PINN API", version=config.VERSION)
 app.add_middleware(
@@ -50,8 +50,11 @@ def health() -> dict[str, Any]:
         "capabilities": {
             "floris": floris_service.available(),
             "floris_version": floris_service.FLORIS_VERSION,
-            "llm": False,  # no provider integration implemented yet (see /api/copilot/chat)
+            "llm": copilot_service.enabled(),
+            "llm_model": copilot_service.MODEL if copilot_service.enabled() else None,
             "datasets": (config.DATA_DIR / "manifest.json").exists(),
+            "cnn_pinn": ml_service.cnn_status()["available"],
+            "forecaster": (ml_service.MODEL_DIR / "forecaster.joblib").exists(),
         },
     }
 
@@ -221,34 +224,140 @@ def delete_scenario(scenario_id: str) -> None:
     _save_scenarios(kept)
 
 
-# ----------------------------------------- not yet implemented (explicit) ----
+# ------------------------------------------------------- trained models ----
 
 
-@app.post("/api/optimize")
-def optimize() -> None:
-    raise HTTPException(501, "Server-side layout optimisation is not implemented. The frontend runs the optimiser in a Web Worker; a FLORIS-based server optimiser is planned.")
+class PredictRequest(BaseModel):
+    wind_speed: float = Field(ge=0, le=40)
+    wind_direction: float = Field(210.0, ge=0, lt=360)
+    temperature: float = Field(10.0, ge=-40, le=50)
+    wind_speed_std: float | None = Field(None, ge=0, le=10)
 
 
-@app.post("/api/hydrogen/allocate")
-def hydrogen_allocate() -> None:
-    raise HTTPException(501, "Server-side hydrogen dispatch is not implemented. The frontend dispatch model (physics/hydrogen.ts) is the current reference implementation.")
+@app.post("/api/models/cnn-pinn/predict")
+def cnn_pinn_predict(req: PredictRequest) -> dict[str, Any]:
+    try:
+        return ml_service.cnn_predict(req.wind_speed, req.wind_direction, req.wind_speed_std, req.temperature)
+    except ml_service.Unavailable as exc:
+        raise HTTPException(503, str(exc)) from exc
+
+
+@app.get("/api/models/cnn-pinn/curve")
+def cnn_pinn_curve(wind_direction: float = Query(210.0, ge=0, lt=360), temperature: float = Query(10.0, ge=-40, le=50)) -> dict[str, Any]:
+    try:
+        return ml_service.cnn_curve(wind_direction, temperature)
+    except ml_service.Unavailable as exc:
+        raise HTTPException(503, str(exc)) from exc
+
+
+@app.get("/api/ml")
+def ml_report() -> Any:
+    return _extract("ml_models")
+
+
+class ForecastRequest(BaseModel):
+    issue_time: str = Field(description="ISO timestamp within the SCADA record")
 
 
 @app.post("/api/forecast")
-def forecast() -> None:
-    raise HTTPException(501, "No trained forecasting model is deployed. Only naive baselines exist (see /api/models).")
+def forecast(req: ForecastRequest) -> dict[str, Any]:
+    try:
+        return ml_service.forecast(req.issue_time)
+    except ml_service.Unavailable as exc:
+        raise HTTPException(503, str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+# ----------------------------------------------------- server optimizer ----
+
+
+class Cases(BaseModel):
+    dirs: list[float] = Field(min_length=1, max_length=2000)
+    speeds: list[float] = Field(min_length=1, max_length=2000)
+    probs: list[float] = Field(min_length=1, max_length=2000)
+
+
+class OptimizeRequest(BaseModel):
+    x: list[float] = Field(min_length=1, max_length=200)
+    y: list[float] = Field(min_length=1, max_length=200)
+    movable: list[bool]
+    turbine: TurbineCurve
+    cases: Cases
+    turbulence_intensity: float = Field(gt=0, le=0.5)
+    min_spacing_d: float = Field(gt=0)
+    boundary_width: float = Field(gt=0)
+    boundary_height: float = Field(gt=0)
+    max_evaluations: int = Field(200, ge=10, le=2000)
+    initial_step_d: float = Field(2.0, gt=0, le=10)
+    min_step_d: float = Field(0.1, gt=0, le=5)
+    seed: int = 7
+
+
+@app.post("/api/optimize")
+def optimize(req: OptimizeRequest) -> dict[str, Any]:
+    if not (len(req.x) == len(req.y) == len(req.movable)):
+        raise HTTPException(422, "x, y and movable must have the same length")
+    if not (len(req.cases.dirs) == len(req.cases.speeds) == len(req.cases.probs)):
+        raise HTTPException(422, "cases arrays must have the same length")
+    if not floris_service.available():
+        raise HTTPException(503, "FLORIS is not installed on this backend.")
+    try:
+        return optimizer_service.optimise(req.model_dump())
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(500, f"Optimisation failed: {exc}") from exc
+
+
+# ----------------------------------------------------- hydrogen dispatch ----
+
+
+class StackCurve(BaseModel):
+    kw: list[float] = Field(min_length=2)
+    kg_per_h: list[float] = Field(min_length=2)
+
+
+class Plant(BaseModel):
+    modules: int = Field(ge=1, le=200)
+    staging: Literal["sequential", "optimal"] = "optimal"
+    storage_kwh: float = Field(0, ge=0)
+    storage_kw: float = Field(0, ge=0)
+    round_trip_eff: float = Field(0.88, gt=0, le=1)
+
+
+class HydrogenRequest(BaseModel):
+    available_kw: list[float | None] = Field(min_length=1, max_length=100_000)
+    dt_h: float = Field(1.0, gt=0)
+    stack_curve: StackCurve
+    plant: Plant
+
+
+@app.post("/api/hydrogen/allocate")
+def hydrogen_allocate(req: HydrogenRequest) -> dict[str, Any]:
+    return hydrogen_service.dispatch(req.model_dump())
+
+
+# ---------------------------------------------------------------- copilot ----
 
 
 class CopilotRequest(BaseModel):
-    conversation_id: str
+    conversation_id: str = Field(min_length=1, max_length=100)
     message: str = Field(min_length=1, max_length=4000)
     context: dict[str, Any] = {}
 
 
 @app.post("/api/copilot/chat")
-def copilot_chat(_: CopilotRequest) -> None:
-    raise HTTPException(
-        503,
-        "LLM provider not configured. Add a provider integration (e.g. a LangGraph agent whose tools call these API endpoints) "
-        "and set AEROHYDRO_LLM_PROVIDER plus the provider's API key as server-side environment variables.",
-    )
+def copilot_chat(req: CopilotRequest) -> dict[str, Any]:
+    if not copilot_service.enabled():
+        raise HTTPException(503, "LLM provider not configured. Set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN, or AEROHYDRO_LLM_PROVIDER=anthropic with an `ant auth login` profile) on the backend.")
+    import anthropic  # noqa: PLC0415
+
+    try:
+        return copilot_service.chat(req.conversation_id, req.message, req.context)
+    except anthropic.AuthenticationError as exc:
+        raise HTTPException(503, "Anthropic credentials were rejected; check the backend API key.") from exc
+    except anthropic.RateLimitError as exc:
+        raise HTTPException(429, "Rate limited by the LLM provider; retry shortly.") from exc
+    except anthropic.APIConnectionError as exc:
+        raise HTTPException(502, "Could not reach the LLM provider.") from exc
+    except anthropic.APIStatusError as exc:
+        raise HTTPException(502, f"LLM provider error ({exc.status_code}).") from exc

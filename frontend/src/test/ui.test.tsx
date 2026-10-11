@@ -65,6 +65,7 @@ vi.mock('../services/dataService', () => ({
         models: [{ name: 'Fleet empirical power curve', metrics: { mae: 51, rmse: 123, r2: 0.947, bias: -5, n: 100 }, interval: { testCoverage: 0.94 }, description: 'd' }],
         curve: { ws: [0, 5, 10, 15], mean: [0, 200, 1400, 2000], q05: [0, 100, 1000, 1900], q95: [0, 300, 1700, 2050] },
       };
+    if (name === 'ml_models') return {};
     throw new Error(`unexpected dataset ${name}`);
   },
   useDataset: () => ({ loading: true, reload: () => undefined }),
@@ -87,10 +88,10 @@ describe('copilot local tools', () => {
     expect(a.content).toMatch(/NOT been sent/);
   });
 
-  it('never claims a CNN-PINN prediction', async () => {
+  it('states when the CNN-PINN artifact is missing instead of claiming its prediction', async () => {
     const { localAnswer } = await import('../lib/copilotEngine');
     const a = await localAnswer('What does the CNN-PINN predict at 10 m/s?', {});
-    expect(a.content).toContain('not a CNN-PINN prediction');
+    expect(a.content).toContain('CNN-PINN artifact was not found');
     expect(a.content).toContain('1,400 kW');
   });
 

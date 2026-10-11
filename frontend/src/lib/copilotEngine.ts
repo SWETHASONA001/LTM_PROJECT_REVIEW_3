@@ -230,22 +230,39 @@ async function toolHydro(): Promise<Answer> {
 }
 
 async function toolPredict(q: string): Promise<Answer> {
-  const m = await loadDataset('models');
+  const [m, ml] = await Promise.all([loadDataset('models'), loadDataset('ml_models').catch(() => undefined)]);
   const num = q.match(/(\d+(?:\.\d+)?)\s*m\/?s/i) ?? q.match(/at\s+(\d+(?:\.\d+)?)/i);
+  const cnn = ml?.cnnPinn;
   const card = m.models[0];
-  const facts = [`CNN-PINN: not implemented — no code or weights exist in the repository.`, `Available predictor: ${card.name} (test R² ${fmt(card.metrics.r2, 3)}, RMSE ${fmt(card.metrics.rmse, 0)} kW).`];
   if (!num) {
-    return { content: 'The CNN-PINN model is not available. Give a wind speed (e.g. “predict at 9 m/s”) and I will use the trained empirical power-curve model instead.', facts, references: [ref('models.json', 'predicted', undefined, '/models')], tools: [{ name: 'model_registry', summary: 'checked availability' }] };
+    return {
+      content: 'Give a wind speed (e.g. “predict at 9 m/s”) and I will evaluate the trained CNN-PINN for steady conditions.',
+      facts: cnn ? [`CNN-PINN test R² ${fmt(cnn.pinn.metrics.r2, 3)}, RMSE ${fmt(cnn.pinn.metrics.rmse, 0)} kW, 90% interval coverage ${pct(cnn.pinn.interval.testCoverage, 1)}.`] : ['CNN-PINN artifact not found; only the empirical power curve is available.'],
+      references: [ref('Model performance', 'predicted', undefined, '/models')],
+      tools: [{ name: 'model_registry', summary: 'checked availability' }],
+    };
   }
   const v = Number(num[1]);
+  if (cnn) {
+    const p = interp(cnn.pinn.curve.ws, cnn.pinn.curve.p.map((x) => x ?? 0), v);
+    const cap = interp(cnn.pinn.curve.ws, cnn.pinn.curve.cap.map((x) => x ?? 0), v);
+    const base = interp(m.curve.ws, m.curve.mean.map((x) => x ?? 0), v);
+    return {
+      content: `At ${fmt(v, 1)} m/s the CNN-PINN predicts ${fmt(p, 0)} kW per turbine (Betz/rated bound ${fmt(cap, 0)} kW). The empirical power curve gives ${fmt(base, 0)} kW.`,
+      facts: [
+        `CNN-PINN held-out test: R² ${fmt(cnn.pinn.metrics.r2, 3)}, RMSE ${fmt(cnn.pinn.metrics.rmse, 0)} kW; 90% interval coverage ${pct(cnn.pinn.interval.testCoverage, 1)}.`,
+        `Physics audit: ${cnn.pinn.physicsAudit.capViolations} bound violations in ${cnn.pinn.physicsAudit.points} swept conditions vs ${cnn.ablation.physicsAudit.capViolations} for the same CNN without physics loss.`,
+      ],
+      assumptions: ['Steady conditions over the last hour, wind from 180°, 10 °C, Ws_std = 0.1·v (precomputed sweep). Use the backend for other directions/temperatures and a conformal interval.'],
+      references: [ref('CNN-PINN', 'predicted', cnn.artifact, '/models')],
+      tools: [{ name: 'cnn_pinn.curve', summary: `ws=${v}` }],
+    };
+  }
   const c = m.curve;
   const p = interp(c.ws, c.mean.map((x) => x ?? 0), v);
-  const lo = interp(c.ws, c.q05.map((x) => x ?? 0), v);
-  const hi = interp(c.ws, c.q95.map((x) => x ?? 0), v);
   return {
-    content: `At ${fmt(v, 1)} m/s the fleet power-curve model predicts ${fmt(p, 0)} kW per turbine (90% interval ${fmt(lo, 0)}–${fmt(hi, 0)} kW). This is not a CNN-PINN prediction — that model does not exist yet.`,
-    facts: [...facts, `Interval test coverage ${pct(card.interval?.testCoverage, 1)} (nominal 90%).`],
-    assumptions: ['Single feature: nacelle wind speed. Direction, density and turbulence are not inputs.'],
+    content: `At ${fmt(v, 1)} m/s the fleet power-curve model predicts ${fmt(p, 0)} kW per turbine. The CNN-PINN artifact was not found.`,
+    facts: [`Available predictor: ${card.name} (test R² ${fmt(card.metrics.r2, 3)}).`],
     references: [ref('models.json', 'predicted', card.description, '/models')],
     tools: [{ name: 'power_curve.predict', summary: `ws=${v}` }],
   };

@@ -4,11 +4,12 @@ import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YA
 import { energy, fmt, signedPct } from '../../lib/format';
 import type { SiteEngineering } from '../../lib/engineering';
 import { useOptimizer } from '../../lib/useOptimizer';
+import { backend, useBackendStatus, type ServerOptimizeResponse } from '../../services/api';
 import { OPTIMIZER_METHOD } from '../../physics/optimizer';
 import { useUiStore } from '../../store/appStores';
 import { useSiteStore, type SiteId, type SiteState } from '../../store/siteStore';
 import { axisProps, ChartTooltip, gridProps } from '../charts/chartTheme';
-import { NumberField, Slider, Toggle } from '../ui/controls';
+import { NumberField, Segmented, Slider, Toggle } from '../ui/controls';
 import { Button, Callout } from '../ui/primitives';
 import { ProvenanceBadge } from '../ui/Provenance';
 
@@ -20,8 +21,49 @@ export function OptimizePanel({ site, st, eng }: { site: SiteId; st: SiteState; 
   const [maxEval, setMaxEval] = useState(900);
   const [stepD, setStepD] = useState(2);
   const [seed, setSeed] = useState(7);
+  const [status] = useBackendStatus();
+  const florisOk = status.state === 'online' && status.health.capabilities.floris;
+  const [engine, setEngine] = useState<'browser' | 'floris'>('browser');
+  const [server, setServer] = useState<{ busy: boolean; result?: ServerOptimizeResponse; error?: string }>({ busy: false });
+  const useFloris = engine === 'floris' && florisOk;
   const D = eng.model.rotorDiameter.value;
   const movable = st.turbines.filter((t) => !(t.status === 'real' && st.lockReal)).length;
+
+  const startFloris = async () => {
+    const turbines = st.turbines;
+    setServer({ busy: true });
+    try {
+      const res = await backend.optimize({
+        x: turbines.map((t) => t.x),
+        y: turbines.map((t) => t.y),
+        movable: turbines.map((t) => !(t.status === 'real' && st.lockReal)),
+        turbine: { rotor_diameter: D, hub_height: eng.model.hubHeight.value, ws: eng.model.ws, power_kw: eng.model.powerKw, ct: eng.model.ct },
+        cases: { dirs: eng.optCases.dirs, speeds: eng.optCases.speeds, probs: eng.optCases.probs },
+        turbulence_intensity: st.ti,
+        min_spacing_d: st.minSpacingD,
+        boundary_width: st.boundary.width,
+        boundary_height: st.boundary.height,
+        max_evaluations: Math.min(maxEval, 400),
+        initial_step_d: stepD,
+        seed,
+      });
+      setServer({ busy: false, result: res });
+      setCandidate(site, {
+        turbines: turbines.map((t, i) => ({ ...t, x: res.x[i], y: res.y[i] })),
+        createdAt: new Date().toISOString(),
+        method: `${res.engine}: ${res.method}`,
+        startAepMWh: res.start_aep_mwh,
+        aepMWh: res.best_aep_mwh,
+        evaluations: res.evaluations,
+        terminatedBy: res.terminated_by,
+        resourceLabel: eng.optCases.label,
+        lockReal: st.lockReal,
+      });
+      notify({ title: 'FLORIS optimization finished', body: `${res.evaluations} FLORIS evaluations in ${res.seconds} s · AEP ${signedPct(res.best_aep_mwh / res.start_aep_mwh - 1)} (FLORIS).`, tone: 'success', href: '/planner' });
+    } catch (e) {
+      setServer({ busy: false, error: e instanceof Error ? e.message : String(e) });
+    }
+  };
 
   const start = async () => {
     const turbines = st.turbines;
@@ -75,6 +117,20 @@ export function OptimizePanel({ site, st, eng }: { site: SiteId; st: SiteState; 
         </div>
         {OPTIMIZER_METHOD}. Objective is AEP over the {eng.optCases.kind === 'processed' ? 'SCADA-derived' : 'assumed'} wind rose ({eng.optCases.dirs.length} direction–speed cases, 2 m/s bins). Finds a local optimum from the current layout; not a global guarantee.
       </Callout>
+      <div>
+        <div className="mb-1 text-[12.5px] font-medium text-ink-2">Wake engine</div>
+        <Segmented
+          size="sm"
+          value={useFloris ? 'floris' : 'browser'}
+          onChange={setEngine}
+          options={[
+            { value: 'browser', label: 'Gaussian (in-browser)' },
+            { value: 'floris', label: florisOk ? 'FLORIS (backend)' : 'FLORIS — backend offline' },
+          ]}
+        />
+        {engine === 'floris' && !florisOk && <p className="mt-1 text-[11.5px] text-muted">Start the backend with FLORIS installed to use this engine.</p>}
+        {useFloris && <p className="mt-1 text-[11.5px] text-muted">Each evaluation is a full FLORIS wind-rose run; capped at 400 evaluations.</p>}
+      </div>
       <Toggle label="Lock real SCADA turbines" hint="Existing assets cannot be relocated; only proposed positions move." checked={st.lockReal} onChange={(v) => patch(site, { lockReal: v })} />
       <div className="grid grid-cols-2 gap-3">
         <NumberField label="Max evaluations" value={maxEval} min={50} max={5000} step={50} onChange={setMaxEval} />
@@ -82,7 +138,11 @@ export function OptimizePanel({ site, st, eng }: { site: SiteId; st: SiteState; 
       </div>
       <Slider label="Initial step" value={stepD} min={0.5} max={5} step={0.5} unit="D" onChange={setStepD} hint={`${fmt(stepD * D, 0)} m; halves when no move improves AEP.`} />
       <div className="flex gap-2">
-        {running ? (
+        {useFloris ? (
+          <Button variant="primary" icon={<Sparkles size={14} />} onClick={startFloris} disabled={movable === 0 || server.busy}>
+            {server.busy ? 'Running FLORIS optimization…' : 'Run FLORIS optimization'}
+          </Button>
+        ) : running ? (
           <Button variant="danger" icon={<Square size={14} />} onClick={cancel}>
             Cancel
           </Button>
@@ -93,6 +153,14 @@ export function OptimizePanel({ site, st, eng }: { site: SiteId; st: SiteState; 
         )}
         <span className="self-center text-[12px] text-muted">{movable} movable turbine{movable === 1 ? '' : 's'}</span>
       </div>
+      {server.error && <Callout tone="warn">FLORIS optimization failed: {server.error}</Callout>}
+      {useFloris && server.result && (
+        <Callout tone="success">
+          <span>
+            {server.result.engine}: AEP {energy(server.result.start_aep_mwh)} → {energy(server.result.best_aep_mwh)} ({signedPct(server.result.best_aep_mwh / server.result.start_aep_mwh - 1)}) in {server.result.evaluations} evaluations, {server.result.seconds} s. The comparison below re-evaluates all layouts with the in-browser model so they share one yardstick.
+          </span>
+        </Callout>
+      )}
       {state.status === 'error' && <Callout tone="warn">Optimization failed: {state.message}</Callout>}
       {state.status === 'cancelled' && <Callout tone="neutral">Optimization cancelled. No candidate was produced.</Callout>}
       {progress.length > 0 && (

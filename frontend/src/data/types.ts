@@ -251,6 +251,107 @@ export interface DatasetMap {
   hydro_sites: HydroSites;
   hydro_series: HydroSeries;
   electrolyzer: ElectrolyzerReport;
+  ml_models: MlReport;
 }
 
 export type DatasetName = keyof DatasetMap;
+
+/* ---------------------------------------------- trained ML models (ml/) ---- */
+
+export interface PhysicsAudit {
+  capViolations: number;
+  monotonicViolations: number;
+  cutInViolations: number;
+  points: number;
+}
+
+export interface CnnVariant {
+  metrics: Metrics;
+  perTurbine: Record<string, Metrics>;
+  interval: { method: string; nominal: number; testCoverage: number };
+  testAboveBetzShare: number;
+  physicsAudit: PhysicsAudit;
+  curve: { ws: number[]; p: Nullable[]; cap: Nullable[] };
+  history: { epoch: number; trainMse: number; valMse: number; cap?: number; mono?: number; cutin?: number }[];
+  epochs: number;
+  testWeek: { t: string[]; observed: Nullable[]; predicted: Nullable[]; lo: Nullable[]; hi: Nullable[] };
+}
+
+export interface MlReport {
+  generatedAt: string;
+  cnnPinn?: {
+    id: string;
+    name: string;
+    status: string;
+    trainedAt: string;
+    artifact: string;
+    code: string;
+    architecture: string;
+    inputs: string[];
+    physics: string[];
+    lambda: Record<string, number>;
+    split: Record<string, string | number>;
+    pinn: CnnVariant;
+    ablation: CnnVariant;
+    trainingSeconds: number;
+  };
+  physicsGnn?: {
+    name: string;
+    trainedAt: string;
+    artifact: string;
+    code: string;
+    graph: string;
+    nodeFeatures: string[];
+    physics: string[];
+    split: Record<string, string | number>;
+    gnn: { metrics: Metrics; perTurbine: Record<string, Metrics>; epochs: number; adjacency: { sectors: number[]; turbines: string[]; weights: number[][][] } };
+    ablation: { metrics: Metrics; perTurbine: Record<string, Metrics>; epochs: number };
+    trainingSeconds: number;
+  };
+  forecaster?: {
+    name: string;
+    trainedAt: string;
+    artifact: string;
+    code: string;
+    method: string;
+    features: string[];
+    target: string;
+    horizons: {
+      horizonH: number;
+      model: Metrics;
+      persistence: Metrics;
+      skillVsPersistence: number;
+      intervalCoverage: number;
+      rawQuantileCoverage: number;
+      conformalWideningKw: number;
+      meanIntervalWidthKw: number;
+    }[];
+    window6h: { t: string[]; observed: Nullable[]; forecast: Nullable[]; lo: Nullable[]; hi: Nullable[]; persistence: Nullable[] };
+  };
+  isolationForest?: {
+    name: string;
+    trainedAt: string;
+    artifact: string;
+    code: string;
+    features: string[];
+    method: string;
+    threshold: number;
+    flaggedRecordShare: number;
+    testFlaggedShare: number;
+    eventsByTurbine: Record<string, number>;
+    dominantFeatures: Record<string, number>;
+    eventCount: number;
+    events: {
+      turbine: string;
+      start: string;
+      end: string;
+      durationH: number;
+      meanScore: number;
+      meanWs: number;
+      meanPowerKw: number;
+      meanPitch: number;
+      gearDeltaT: number;
+      dominantFeature: string;
+    }[];
+  };
+}

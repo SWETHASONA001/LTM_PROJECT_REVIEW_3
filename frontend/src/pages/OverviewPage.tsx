@@ -10,7 +10,7 @@ import { KpiCard } from '../components/ui/Kpi';
 import { Card, CardHeader } from '../components/ui/primitives';
 import { ProvenanceBadge } from '../components/ui/Provenance';
 import { DataGate, Skeleton } from '../components/ui/states';
-import type { AnomalyReport, ElectrolyzerReport, HydroSites, ModelsReport, WindHourly, WindSummary } from '../data/types';
+import type { AnomalyReport, ElectrolyzerReport, HydroSites, MlReport, ModelsReport, WindHourly, WindSummary } from '../data/types';
 import { useSiteEngineering } from '../lib/engineering';
 import { date, energy, fmt, pct, signedPct } from '../lib/format';
 import { evaluateLayout } from '../lib/scenarioMetrics';
@@ -19,12 +19,12 @@ import { useDatasets } from '../services/dataService';
 import { useSiteStore } from '../store/siteStore';
 
 export default function OverviewPage() {
-  const state = useDatasets(['wind_summary', 'wind_hourly', 'models', 'anomalies', 'hydro_sites', 'electrolyzer']);
+  const state = useDatasets(['wind_summary', 'wind_hourly', 'models', 'anomalies', 'hydro_sites', 'electrolyzer', 'ml_models']);
   return (
     <div className="space-y-6">
       <Hero />
       <DataGate state={state} className="h-[40vh]" loadingLabel="Loading project datasets…">
-        {(d) => <Body summary={d.wind_summary} hourly={d.wind_hourly} models={d.models} anomalies={d.anomalies} hydro={d.hydro_sites} elec={d.electrolyzer} />}
+        {(d) => <Body summary={d.wind_summary} hourly={d.wind_hourly} models={d.models} anomalies={d.anomalies} hydro={d.hydro_sites} elec={d.electrolyzer} ml={d.ml_models} />}
       </DataGate>
     </div>
   );
@@ -96,7 +96,7 @@ function HeroArt() {
   );
 }
 
-function Body({ summary, hourly, models, anomalies, hydro, elec }: { summary: WindSummary; hourly: WindHourly; models: ModelsReport; anomalies: AnomalyReport; hydro: HydroSites; elec: ElectrolyzerReport }) {
+function Body({ summary, hourly, models, anomalies, hydro, elec, ml }: { summary: WindSummary; hourly: WindHourly; models: ModelsReport; anomalies: AnomalyReport; hydro: HydroSites; elec: ElectrolyzerReport; ml: MlReport }) {
   const sites = useSiteStore((s) => s.sites);
   const on = useSiteEngineering('onshore');
   const off = useSiteEngineering('offshore');
@@ -150,7 +150,17 @@ function Body({ summary, hourly, models, anomalies, hydro, elec }: { summary: Wi
     <>
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard label="Observed wind energy" value={energy(totalEnergy)} provenance="observed" accent="wind" icon={<Wind size={15} />} definition="Sum of positive P_avg × 10 min over all records of the four La Haute Borne turbines (MWh/GWh)." source={`SCADA, ${date(summary.timeRange.start)} – ${date(summary.timeRange.end)}`} sub={`fleet CF ${pct(fleetCf)}`} />
-        <KpiCard label="Predicted power — model skill" value={fmt(fleetModel.metrics.r2, 3)} unit="R²" provenance="predicted" accent="h2" icon={<BrainCircuit size={15} />} definition={`Coefficient of determination of the ${fleetModel.name} on held-out records after ${date(models.split.testStart)}. RMSE ${fmt(fleetModel.metrics.rmse, 0)} kW per turbine.`} source="models.json — time-aware holdout" sub={`90% PI coverage ${pct(fleetModel.interval?.testCoverage, 0)}`} />
+        <KpiCard
+          label="Predicted power — CNN-PINN skill"
+          value={fmt(ml.cnnPinn?.pinn.metrics.r2 ?? fleetModel.metrics.r2, 3)}
+          unit="R²"
+          provenance="predicted"
+          accent="h2"
+          icon={<BrainCircuit size={15} />}
+          definition={ml.cnnPinn ? `Coefficient of determination of the physics-informed CNN on held-out records after ${date(models.split.testStart)}. RMSE ${fmt(ml.cnnPinn.pinn.metrics.rmse, 0)} kW per turbine; ${ml.cnnPinn.pinn.physicsAudit.capViolations} physics-bound violations in the condition sweep.` : `Coefficient of determination of the ${fleetModel.name} on held-out records.`}
+          source={ml.cnnPinn ? `${ml.cnnPinn.artifact} — time-aware holdout` : 'models.json — time-aware holdout'}
+          sub={`90% PI coverage ${pct(ml.cnnPinn?.pinn.interval.testCoverage ?? fleetModel.interval?.testCoverage, 0)}`}
+        />
         <KpiCard
           label="Modeled annual wake loss"
           value={onEval ? pct(onEval.metrics.wakeLossAnnual, 1) : '…'}

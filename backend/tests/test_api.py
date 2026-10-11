@@ -53,12 +53,71 @@ def test_scenario_roundtrip(client):
     assert client.delete(f"/api/scenarios/{sid}").status_code == 404
 
 
-def test_unimplemented_endpoints_are_explicit(client):
-    assert client.post("/api/optimize").status_code == 501
-    assert client.post("/api/forecast").status_code == 501
+def test_copilot_reports_missing_provider(client, monkeypatch):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
+    monkeypatch.setattr(config, "LLM_PROVIDER", "")
     r = client.post("/api/copilot/chat", json={"conversation_id": "c", "message": "hi"})
     assert r.status_code == 503
     assert "not configured" in r.json()["detail"]
+
+
+def test_cnn_pinn_predict_respects_physics(client):
+    from app import ml_service
+
+    if not ml_service.cnn_status()["available"]:
+        assert client.post("/api/models/cnn-pinn/predict", json={"wind_speed": 9}).status_code == 503
+        return
+    low = client.post("/api/models/cnn-pinn/predict", json={"wind_speed": 1.0}).json()
+    mid = client.post("/api/models/cnn-pinn/predict", json={"wind_speed": 9.0}).json()
+    assert low["power_kw"] < 50
+    assert mid["power_kw"] > low["power_kw"]
+    assert mid["power_kw"] <= mid["physics_cap_kw"] * 1.02
+    lo, hi = mid["interval_kw"]
+    assert lo <= mid["power_kw"] <= hi
+
+
+def test_forecast_endpoint(client):
+    r = client.post("/api/forecast", json={"issue_time": "2017-12-03T06:00:00Z"})
+    if r.status_code == 503:
+        return
+    assert r.status_code == 200, r.text
+    f = r.json()["forecasts"]
+    assert [x["horizon_h"] for x in f] == [1, 3, 6, 12, 24]
+    assert all(x["interval_kw"][0] <= x["forecast_kw"] <= x["interval_kw"][1] for x in f)
+
+
+def test_hydrogen_dispatch_balance(client):
+    body = {
+        "available_kw": [0, 50, 300, 1200, 2500, 800, 90, 0, 1500],
+        "stack_curve": {"kw": [100, 500, 1000], "kg_per_h": [2.2, 10, 18]},
+        "plant": {"modules": 2, "staging": "optimal", "storage_kwh": 2000, "storage_kw": 500, "round_trip_eff": 0.85},
+    }
+    r = client.post("/api/hydrogen/allocate", json=body).json()
+    assert abs(r["balance_error_mwh"]) < 1e-9
+    assert r["h2_kg"] > 0
+    assert r["to_electrolyzer_mwh"] <= r["available_mwh"] + 1e-9
+
+
+def test_floris_optimizer_improves_and_respects_constraints(client):
+    from app import floris_service
+
+    base = _two_turbines()
+    body = {
+        "x": [0, 0, 0], "y": [0, -400, -800], "movable": [False, True, True],
+        "turbine": base["turbine"],
+        "cases": {"dirs": [0, 180, 270], "speeds": [8, 8, 9], "probs": [0.5, 0.3, 0.2]},
+        "turbulence_intensity": 0.1, "min_spacing_d": 3, "boundary_width": 2000, "boundary_height": 2000,
+        "max_evaluations": 40,
+    }
+    r = client.post("/api/optimize", json=body)
+    if not floris_service.available():
+        assert r.status_code == 503
+        return
+    out = r.json()
+    assert out["best_aep_mwh"] >= out["start_aep_mwh"]
+    assert out["x"][0] == 0 and out["y"][0] == 0
+    assert out["violation_m"] < 1e-6
 
 
 def _two_turbines():

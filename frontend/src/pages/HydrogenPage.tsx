@@ -5,7 +5,7 @@ import { axisProps, ChartTooltip, gridProps, Legend, SERIES } from '../component
 import { EnergyFlow } from '../components/hydrogen/EnergyFlow';
 import { NumberField, Segmented, Select, Slider, Toggle } from '../components/ui/controls';
 import { KpiCard } from '../components/ui/Kpi';
-import { Callout, Card, CardHeader, PageHeader } from '../components/ui/primitives';
+import { Button, Callout, Card, CardHeader, PageHeader } from '../components/ui/primitives';
 import { ProvenanceBadge } from '../components/ui/Provenance';
 import { DataGate, LoadingState } from '../components/ui/states';
 import type { ElectrolyzerReport, HydroSeries, HydroSites, WindHourly } from '../data/types';
@@ -15,6 +15,7 @@ import { alignedHydroSeries, decompose, modeledWindSeries, observedWindSeries } 
 import { DEFAULT_HYDRO } from '../physics/hydro';
 import { dispatch, stackModelFromReport, type PlantConfig, type StagingStrategy } from '../physics/hydrogen';
 import { useDatasets } from '../services/dataService';
+import { backend, useBackendStatus } from '../services/api';
 import { useSiteStore } from '../store/siteStore';
 
 type WindSource = 'baseline' | 'current' | 'candidate' | 'observed';
@@ -156,6 +157,8 @@ function HydrogenContent({ elec, hourly, hydroSites, hydroSeries }: { elec: Elec
             <CardHeader title="Energy flow" subtitle={`Balance check: available − (direct + charged + curtailed) = ${fmt(r.balanceErrorMWh * 1000, 3)} kWh`} actions={<ProvenanceBadge kind="simulated" />} />
             <EnergyFlow windMWh={results.windMWh} hydroMWh={results.hydroMWh} r={r} />
           </Card>
+
+          <ServerCrossCheck total={results.total} stack={stack} plant={plant} browserKg={r.h2Kg} />
 
           <Card>
             <CardHeader
@@ -305,5 +308,48 @@ function HydrogenContent({ elec, hourly, hydroSites, hydroSeries }: { elec: Elec
         </Callout>
       </Card>
     </div>
+  );
+}
+
+function ServerCrossCheck({ total, stack, plant, browserKg }: { total: number[]; stack: ReturnType<typeof stackModelFromReport>; plant: PlantConfig; browserKg: number }) {
+  const [status] = useBackendStatus();
+  const [res, setRes] = useState<{ kg: number; balance: number } | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  if (status.state !== 'online') return null;
+  const run = async () => {
+    setBusy(true);
+    setErr(null);
+    try {
+      const r = await backend.hydrogen({
+        available_kw: total,
+        stack_curve: { kw: stack.kw, kg_per_h: stack.kgPerH },
+        plant: { modules: plant.modules, staging: plant.staging, storage_kwh: plant.storageKwh, storage_kw: plant.storageKw, round_trip_eff: plant.roundTripEff },
+      });
+      setRes({ kg: r.h2_kg, balance: r.balance_error_mwh });
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Card>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div className="text-[14px] font-semibold">Backend cross-check</div>
+          <div className="text-[12px] text-muted">Re-runs this exact scenario through the Python dispatch service (/api/hydrogen/allocate).</div>
+        </div>
+        <Button size="sm" onClick={run} disabled={busy}>
+          {busy ? 'Running…' : 'Run on backend'}
+        </Button>
+      </div>
+      {err && <p className="mt-2 text-[12px] text-danger">{err}</p>}
+      {res && (
+        <p className="num mt-2 text-[12.5px] text-ink-2">
+          Backend H₂ {mass(res.kg)} vs browser {mass(browserKg)} — difference {fmt(Math.abs(res.kg - browserKg), 3)} kg; backend energy-balance error {fmt(res.balance * 1000, 4)} kWh.
+        </p>
+      )}
+    </Card>
   );
 }
