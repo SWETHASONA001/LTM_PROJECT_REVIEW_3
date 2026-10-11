@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'subtle';
 
@@ -90,15 +91,56 @@ export function Badge({ children, tone = 'neutral', className }: { children: Rea
   );
 }
 
+/** Soft tint per section, chosen from the current route. */
+const BANNER_TONES: { match: string; from: string; to: string; accent: string }[] = [
+  { match: '/twin', from: '#e6f4ef', to: '#e8f1fb', accent: '#0f8a6a' },
+  { match: '/planner', from: '#e9f5ee', to: '#eef6e8', accent: '#0f8a6a' },
+  { match: '/siting', from: '#e7f6ef', to: '#fdf5e4', accent: '#a15c07' },
+  { match: '/wind', from: '#e6effb', to: '#eaf6f8', accent: '#2b63c6' },
+  { match: '/hydro', from: '#e0f2f6', to: '#e6f0fb', accent: '#0e7490' },
+  { match: '/hydrogen', from: '#efedfb', to: '#e8f3f8', accent: '#5b5bd6' },
+  { match: '/forecasting', from: '#eef0fb', to: '#e9f5f2', accent: '#6250d6' },
+  { match: '/scenarios', from: '#e9f5ee', to: '#eef0fb', accent: '#047857' },
+  { match: '/anomalies', from: '#fdf1e6', to: '#fbeeee', accent: '#b45309' },
+  { match: '/models', from: '#f0ecfb', to: '#e8f0fb', accent: '#6d28d9' },
+  { match: '/copilot', from: '#e8f0fb', to: '#eef7f2', accent: '#2b63c6' },
+  { match: '/reports', from: '#f1f3ef', to: '#eaf2f7', accent: '#2f4256' },
+  { match: '/settings', from: '#eff2f5', to: '#eef6f2', accent: '#2f4256' },
+];
+
+function useBannerTone() {
+  const { pathname } = useLocation();
+  return BANNER_TONES.find((t) => pathname.startsWith(t.match)) ?? { from: '#e7f5ef', to: '#e8f0fb', accent: '#0f8a6a' };
+}
+
 export function PageHeader({ eyebrow, title, description, actions }: { eyebrow?: ReactNode; title: string; description?: ReactNode; actions?: ReactNode }) {
+  const tone = useBannerTone();
   return (
-    <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
-      <div className="min-w-0 max-w-3xl">
-        {eyebrow && <div className="label-xs mb-1.5">{eyebrow}</div>}
-        <h1 className="text-[26px] font-semibold tracking-tight text-ink">{title}</h1>
-        {description && <p className="mt-1.5 text-[14px] leading-relaxed text-ink-2">{description}</p>}
+    <header className="page-banner mb-6 px-5 py-5 sm:px-6" style={{ background: `linear-gradient(115deg, ${tone.from} 0%, ${tone.to} 100%)` }}>
+      <svg className="pointer-events-none absolute -right-6 -top-4 h-40 w-[420px] opacity-60" viewBox="0 0 420 160" aria-hidden>
+        {[0, 1, 2, 3].map((i) => (
+          <path key={i} d={`M0 ${120 - i * 22} C 90 ${90 - i * 22}, 170 ${150 - i * 22}, 260 ${110 - i * 22} S 380 ${80 - i * 22}, 420 ${100 - i * 22}`} fill="none" stroke={tone.accent} strokeOpacity={0.12 + i * 0.03} strokeWidth={1.5} />
+        ))}
+        <g transform="translate(360 52)" stroke={tone.accent} strokeOpacity={0.35} strokeWidth={2.2} strokeLinecap="round">
+          <line x1="0" y1="0" x2="0" y2="70" />
+          <line x1="0" y1="0" x2="0" y2="-26" />
+          <line x1="0" y1="0" x2="22" y2="13" />
+          <line x1="0" y1="0" x2="-22" y2="13" />
+        </g>
+      </svg>
+      <div className="relative flex flex-wrap items-end justify-between gap-4">
+        <div className="min-w-0 max-w-3xl">
+          {eyebrow && (
+            <div className="label-xs mb-1.5 flex items-center gap-2" style={{ color: tone.accent }}>
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: tone.accent }} />
+              {eyebrow}
+            </div>
+          )}
+          <h1 className="text-[26px] font-semibold tracking-tight text-ink">{title}</h1>
+          {description && <p className="mt-1.5 text-[14px] leading-relaxed text-ink-2">{description}</p>}
+        </div>
+        {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
       </div>
-      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </header>
   );
 }

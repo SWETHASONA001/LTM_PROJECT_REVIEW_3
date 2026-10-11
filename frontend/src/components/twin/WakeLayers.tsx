@@ -5,14 +5,13 @@ import type { TurbineModel } from '../../physics/turbines';
 import { downstreamVector, gaussianDeficit, velocityField, wakeExpansion, type FarmCase, type FarmResult } from '../../physics/wake';
 import { S, toWorld } from './sceneUtils';
 
-/** Map a velocity deficit (0–0.6) to an RGBA colour on a blue sequential ramp. */
+/** Map a velocity deficit to a soft neutral ramp (mist white → slate) with gentle opacity. */
 function deficitColor(d: number): [number, number, number, number] {
   const t = Math.min(1, Math.max(0, d / 0.45));
-  // light (#cde2fb) → dark (#0d366b)
-  const r = 205 + (13 - 205) * t;
-  const g = 226 + (54 - 226) * t;
-  const b = 251 + (107 - 251) * t;
-  const a = t < 0.02 ? 0 : Math.min(0.85, 0.18 + t * 0.9);
+  const r = 245 + (96 - 245) * t;
+  const g = 248 + (116 - 248) * t;
+  const b = 250 + (128 - 250) * t;
+  const a = t < 0.03 ? 0 : Math.min(0.55, 0.1 + t * 0.55);
   return [r, g, b, a * 255];
 }
 
@@ -20,11 +19,14 @@ function deficitColor(d: number): [number, number, number, number] {
  * Hub-height horizontal slice of the Gaussian-wake velocity deficit,
  * rendered as a translucent textured plane. Physics-derived, not measured.
  */
-export function WakeSlice({ farmCase, solved, extentM, heightY }: { farmCase: FarmCase; solved: FarmResult; extentM: number; heightY: number }) {
+export function WakeSlice({ farmCase, solved, extentM, heightY, focusIndex }: { farmCase: FarmCase; solved: FarmResult; extentM: number; heightY: number; focusIndex?: number }) {
   const N = 150;
   const texture = useMemo(() => {
     const grid = { xMin: -extentM, xMax: extentM, yMin: -extentM, yMax: extentM, nx: N, ny: N };
-    const field = velocityField(farmCase, solved, grid);
+    // Focus mode: only the selected turbine's own wake (its Ct from the solved farm).
+    const c = focusIndex === undefined ? farmCase : { ...farmCase, x: [farmCase.x[focusIndex]], y: [farmCase.y[focusIndex]] };
+    const sv = focusIndex === undefined ? solved : { ...solved, ct: [solved.ct[focusIndex]] };
+    const field = velocityField(c, sv, grid);
     const data = new Uint8Array(N * N * 4);
     for (let iy = 0; iy < N; iy++) {
       for (let ix = 0; ix < N; ix++) {
@@ -44,7 +46,7 @@ export function WakeSlice({ farmCase, solved, extentM, heightY }: { farmCase: Fa
     tex.minFilter = THREE.LinearFilter;
     tex.needsUpdate = true;
     return tex;
-  }, [farmCase, solved, extentM]);
+  }, [farmCase, solved, extentM, focusIndex]);
   useEffect(() => () => texture.dispose(), [texture]);
   const size = extentM * 2 * S;
   return (
@@ -71,6 +73,7 @@ export function WindParticles({
   playing,
   simSpeed,
   count = 2200,
+  focusIndex,
 }: {
   model: TurbineModel;
   turbines: { x: number; y: number }[];
@@ -83,6 +86,8 @@ export function WindParticles({
   playing: boolean;
   simSpeed: number;
   count?: number;
+  /** When set, particles stream only through and behind this turbine. */
+  focusIndex?: number;
 }) {
   const ref = useRef<THREE.Points>(null);
   const D = model.rotorDiameter.value;
@@ -97,25 +102,34 @@ export function WindParticles({
   }, [count]);
   useEffect(() => () => geom.dispose(), [geom]);
 
-  // Particle state in site metres: s (downstream), l (lateral), h (height offset world units)
-  const state = useMemo(() => {
-    const s = new Float32Array(count);
-    const l = new Float32Array(count);
-    const h = new Float32Array(count);
-    for (let i = 0; i < count; i++) {
-      s[i] = (Math.random() * 2 - 1) * extentM;
-      l[i] = (Math.random() * 2 - 1) * extentM;
-      h[i] = (Math.random() * 2 - 1) * R * 1.6;
-    }
-    return { s, l, h };
-  }, [count, extentM, R]);
-
   const geo = useMemo(() => {
     const [ux, uy] = downstreamVector(windDir);
     const ts = turbines.map((t) => t.x * ux + t.y * uy);
     const tl = turbines.map((t) => -t.x * uy + t.y * ux);
     return { ux, uy, ts, tl, k: wakeExpansion(ti) };
   }, [turbines, windDir, ti]);
+
+  // Spawn region (site metres along / across the wind): whole domain, or a corridor through the focused turbine.
+  const region = useMemo(() => {
+    if (focusIndex === undefined || geo.ts[focusIndex] === undefined) return { s0: -extentM, s1: extentM, l0: -extentM, l1: extentM };
+    const s = geo.ts[focusIndex];
+    const l = geo.tl[focusIndex];
+    return { s0: s - 5 * D, s1: Math.min(s + 22 * D, extentM), l0: l - 1.6 * D, l1: l + 1.6 * D };
+  }, [focusIndex, geo, D, extentM]);
+  const hSpread = focusIndex === undefined ? 1.6 : 0.9;
+
+  // Particle state in site metres: s (downstream), l (lateral), h (height offset world units)
+  const state = useMemo(() => {
+    const s = new Float32Array(count);
+    const l = new Float32Array(count);
+    const h = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      s[i] = region.s0 + Math.random() * (region.s1 - region.s0);
+      l[i] = region.l0 + Math.random() * (region.l1 - region.l0);
+      h[i] = (Math.random() * 2 - 1) * R * hSpread;
+    }
+    return { s, l, h };
+  }, [count, region, R, hSpread]);
 
   const step = (dt: number) => {
     const { ux, uy, ts, tl, k } = geo;
@@ -130,10 +144,10 @@ export function WindParticles({
       const def = Math.min(1, Math.sqrt(sumSq));
       const u = Math.max(0.5, windSpeed * (1 - def));
       state.s[i] += u * dt * visual * simSpeed;
-      if (state.s[i] > extentM) {
-        state.s[i] = -extentM;
-        state.l[i] = (Math.random() * 2 - 1) * extentM;
-        state.h[i] = (Math.random() * 2 - 1) * R * 1.6;
+      if (state.s[i] > region.s1) {
+        state.s[i] = region.s0;
+        state.l[i] = region.l0 + Math.random() * (region.l1 - region.l0);
+        state.h[i] = (Math.random() * 2 - 1) * R * hSpread;
       }
       const x = state.s[i] * ux - state.l[i] * uy;
       const y = state.s[i] * uy + state.l[i] * ux;
@@ -141,11 +155,11 @@ export function WindParticles({
       positions[i * 3] = wx;
       positions[i * 3 + 1] = hubY + state.h[i];
       positions[i * 3 + 2] = wz;
-      // white → deep blue with deficit
+      // white in the free stream → soft slate inside the wake
       const tcol = Math.min(1, def / 0.4);
-      colors[i * 3] = 1 - 0.85 * tcol;
-      colors[i * 3 + 1] = 1 - 0.7 * tcol;
-      colors[i * 3 + 2] = 1 - 0.45 * tcol;
+      colors[i * 3] = 1 - 0.55 * tcol;
+      colors[i * 3 + 1] = 1 - 0.48 * tcol;
+      colors[i * 3 + 2] = 1 - 0.42 * tcol;
     }
     (geom.attributes.position as THREE.BufferAttribute).needsUpdate = true;
     (geom.attributes.color as THREE.BufferAttribute).needsUpdate = true;
@@ -155,7 +169,7 @@ export function WindParticles({
     step(0);
     geom.computeBoundingSphere();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo, solved]);
+  }, [geo, solved, state]);
 
   useFrame((_, dt) => {
     if (playing && windSpeed > 0) step(Math.min(dt, 0.05));
@@ -163,7 +177,7 @@ export function WindParticles({
 
   return (
     <points ref={ref} geometry={geom} frustumCulled={false}>
-      <pointsMaterial size={0.55} vertexColors transparent opacity={0.85} depthWrite={false} sizeAttenuation />
+      <pointsMaterial size={focusIndex === undefined ? 0.5 : 0.42} vertexColors transparent opacity={0.9} depthWrite={false} sizeAttenuation />
     </points>
   );
 }
@@ -178,11 +192,11 @@ export function WindArrow({ windDir, extentM, y }: { windDir: number; extentM: n
     <group position={[sx, y, sz]} quaternion={quat}>
       <mesh position={[0, 0, 4]} rotation-x={Math.PI / 2}>
         <cylinderGeometry args={[0.35, 0.35, 8, 10]} />
-        <meshStandardMaterial color="#2b63c6" emissive="#2b63c6" emissiveIntensity={0.25} />
+        <meshStandardMaterial color="#64748b" emissive="#64748b" emissiveIntensity={0.15} />
       </mesh>
       <mesh position={[0, 0, 9]} rotation-x={Math.PI / 2}>
         <coneGeometry args={[1.1, 2.6, 16]} />
-        <meshStandardMaterial color="#2b63c6" emissive="#2b63c6" emissiveIntensity={0.25} />
+        <meshStandardMaterial color="#64748b" emissive="#64748b" emissiveIntensity={0.15} />
       </mesh>
     </group>
   );

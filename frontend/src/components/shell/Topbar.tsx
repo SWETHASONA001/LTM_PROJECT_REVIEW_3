@@ -1,11 +1,12 @@
 import clsx from 'clsx';
-import { Bell, ChevronRight, Command, Menu, Search, UserCircle } from 'lucide-react';
+import { Bell, ChevronRight, Command, LogOut, Menu, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../app/navigation';
 import { date } from '../../lib/format';
 import { useBackendStatus } from '../../services/api';
 import { useUiStore } from '../../store/appStores';
+import { useAuthStore } from '../../store/authStore';
 
 export function Topbar() {
   const setMobile = useUiStore((s) => s.setMobileNav);
@@ -146,24 +147,50 @@ function ProfileMenu() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, () => setOpen(false));
+  const session = useAuthStore((s) => s.session);
+  const signOut = useAuthStore((s) => s.signOut);
+  const nav = useNavigate();
+  const name = session?.user.name ?? 'Guest';
+  const initials = name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
   return (
     <div className="relative" ref={ref}>
-      <button onClick={() => setOpen(!open)} className="flex h-9 items-center gap-2 rounded-lg px-1.5 text-ink-2 hover:bg-subtle" aria-label="Workspace profile">
-        <UserCircle size={22} strokeWidth={1.5} />
+      <button onClick={() => setOpen(!open)} className="flex h-9 items-center gap-2 rounded-lg pl-1 pr-2 text-ink-2 hover:bg-subtle" aria-label="Account menu">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#0f8a6a] to-[#2b63c6] text-[12px] font-bold text-white">{initials}</span>
+        <span className="hidden text-left leading-tight xl:block">
+          <span className="block text-[12.5px] font-semibold text-ink">{name}</span>
+          <span className="block text-[11px] text-muted">{session?.mode === 'backend' ? session.user.role : 'local workspace'}</span>
+        </span>
       </button>
       {open && (
-        <div className="card absolute right-0 top-11 z-50 w-64 p-3 shadow-[var(--shadow-pop)]">
-          <div className="text-[13px] font-semibold text-ink">Local engineering workspace</div>
-          <div className="mt-0.5 text-[12px] leading-snug text-muted">
-            No authentication is configured. Layouts, scenarios and conversations are stored in this browser only.
+        <div className="card absolute right-0 top-11 z-50 w-72 p-3 shadow-[var(--shadow-pop)]">
+          <div className="text-[13px] font-semibold text-ink">{name}</div>
+          <div className="text-[12px] text-muted">{session?.user.email}</div>
+          <div className="mt-2 rounded-lg bg-subtle px-2.5 py-2 text-[11.5px] leading-snug text-ink-2">
+            {session?.mode === 'backend'
+              ? `Signed in via the AeroHydro backend · session expires ${session.expiresAt ? new Date(session.expiresAt * 1000).toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' }) : ''}.`
+              : 'Local workspace without server authentication. Layouts, scenarios and conversations are stored in this browser only.'}
           </div>
-          <div className="mt-3 border-t border-line pt-2">
+          <div className="mt-2 border-t border-line pt-2">
             <Link to="/settings" onClick={() => setOpen(false)} className="block rounded-md px-2 py-1.5 text-[13px] text-ink-2 hover:bg-subtle">
               Settings & data sources
             </Link>
             <Link to="/reports" onClick={() => setOpen(false)} className="block rounded-md px-2 py-1.5 text-[13px] text-ink-2 hover:bg-subtle">
               Reports & exports
             </Link>
+            <button
+              onClick={() => {
+                signOut();
+                nav('/login', { replace: true });
+              }}
+              className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-[13px] text-danger hover:bg-danger-soft"
+            >
+              <LogOut size={14} /> Sign out
+            </button>
           </div>
         </div>
       )}

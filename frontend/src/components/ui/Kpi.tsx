@@ -5,6 +5,8 @@ import type { ProvenanceKind } from '../../data/types';
 import { ProvenanceBadge } from './Provenance';
 import { Tooltip } from './Tooltip';
 
+const ACCENT: Record<string, string> = { wind: '#2b63c6', water: '#0e7490', energy: '#0f8a6a', h2: '#5b5bd6', neutral: '#95a0aa' };
+
 export interface KpiProps {
   label: string;
   value: ReactNode;
@@ -21,7 +23,7 @@ export interface KpiProps {
 
 export function KpiCard({ label, value, unit, provenance, definition, source, sub, icon, accent = 'neutral', unavailable }: KpiProps) {
   return (
-    <div className="card relative flex min-w-0 flex-col gap-2 p-4">
+    <div className="card accent-top relative flex min-w-0 flex-col gap-2 p-4" style={{ ['--accent' as string]: ACCENT[accent] }}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2">
           {icon && (

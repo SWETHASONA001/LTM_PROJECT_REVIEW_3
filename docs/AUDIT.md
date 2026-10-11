@@ -60,6 +60,7 @@ All learned models share one time-aware split: train before 2017-09-01, validati
 | Anomaly detector (power-curve residual) | `scripts/build_frontend_data.py` | 278 events |
 | Gaussian wake model | `frontend/src/physics/wake.ts` | FLORIS 4.6.6 agrees within +0.44 % farm power, max 7 kW/turbine |
 | Layout optimizer — in-browser (Gaussian) and server (FLORIS) | `physics/optimizer.ts`, `backend/app/optimizer_service.py` | never decreases AEP, respects constraints and locked turbines; FLORIS run: +6.5 % AEP in 80 evaluations |
+| Installation recommendations — greedy sequential siting on wind-rose AEP, net of wake losses imposed on existing turbines | `physics/siting.ts` (Web Worker) | unit test: feasible, spacing-respecting, positive net gain; default onshore run: +20.6 % AEP for 3 sites |
 | Hydrogen dispatch — browser and Python | `physics/hydrogen.ts`, `backend/app/hydrogen_service.py` | energy balance closes; the two implementations agree to 0.000 kg |
 | Copilot agent (Claude, tool use over project APIs) | `backend/app/copilot_service.py` | tool loop tested with a mocked client; **not exercised live** because no Anthropic credentials exist on this machine |
 
@@ -102,4 +103,5 @@ frontend/src/
 | `POST /api/forecast` | 1–24 h farm-power forecast from a historical issue time |
 | `POST /api/hydrogen/allocate` | electrolyzer + battery dispatch |
 | `GET/POST/DELETE /api/scenarios` | scenario persistence |
+| `POST /api/auth/login`, `GET /api/auth/me` | sign-in (PBKDF2 users in backend/storage, HMAC-signed 12 h tokens) |
 | `POST /api/copilot/chat` | Claude agent with 12 project tools (503 until credentials are configured) |

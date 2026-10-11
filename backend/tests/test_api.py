@@ -147,3 +147,18 @@ def test_floris_simulate(client):
     # Turbine 2 is directly downstream (wind from north) and must produce less.
     assert p[1] < p[0]
     assert abs(sum(p) - out["farm_power_kw"]) < 1e-6
+
+
+def test_auth_login_flow(client, tmp_path):
+    from app import auth_service
+
+    assert client.post("/api/auth/login", json={"email": "a@b.c", "password": "x"}).status_code == 503
+    auth_service.create_user("Eng@Example.com", "Eng One", "correct-horse-battery")
+    assert client.post("/api/auth/login", json={"email": "eng@example.com", "password": "wrong-password"}).status_code == 401
+    r = client.post("/api/auth/login", json={"email": "eng@example.com", "password": "correct-horse-battery"})
+    assert r.status_code == 200
+    token = r.json()["token"]
+    me = client.get("/api/auth/me", headers={"Authorization": f"Bearer {token}"})
+    assert me.json()["user"]["name"] == "Eng One"
+    tampered = token[:-2] + ("AA" if not token.endswith("AA") else "BB")
+    assert client.get("/api/auth/me", headers={"Authorization": f"Bearer {tampered}"}).status_code == 401

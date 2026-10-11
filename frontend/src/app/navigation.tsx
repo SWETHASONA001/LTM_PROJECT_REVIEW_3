@@ -15,6 +15,7 @@ import {
   Waves,
   Wind,
   Boxes,
+  MapPinPlus,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -43,6 +44,7 @@ export const NAV: NavItem[] = [
     ],
   },
   { path: '/planner', label: 'Turbine Placement Planner', icon: <Map size={I} />, group: 'Engineering', description: 'Edit layouts, compute wakes, optimize placement' },
+  { path: '/siting', label: 'Installation Recommendations', icon: <MapPinPlus size={I} />, group: 'Engineering', description: 'Best sites for new turbines by net energy gain' },
   { path: '/wind', label: 'Wind Intelligence', icon: <Wind size={I} />, group: 'Engineering', description: 'La Haute Borne SCADA analytics' },
   { path: '/hydro', label: 'Hydro Intelligence', icon: <Waves size={I} />, group: 'Engineering', description: 'Tidal-current resource and hydrokinetic model' },
   { path: '/hydrogen', label: 'Hydrogen Optimization', icon: <Fuel size={I} />, group: 'Engineering', description: 'Renewable-to-H2 allocation with an empirical PEM model' },

@@ -8,12 +8,18 @@ import fs from 'node:fs';
 import path from 'node:path';
 import puppeteer from 'puppeteer-core';
 
+// The app now requires a session; QA runs as a local-workspace user.
+const QA_SESSION = JSON.stringify({ state: { session: { user: { name: 'QA Engineer', email: 'local workspace', role: 'local' }, mode: 'local', signedInAt: new Date().toISOString() } }, version: 0 });
+const withSession = (p) => p.evaluateOnNewDocument((v) => { if (!localStorage.getItem('aerohydro.auth.v1')) localStorage.setItem('aerohydro.auth.v1', v); }, QA_SESSION);
+
+
 const base = process.argv[2] ?? 'http://localhost:5173';
 const out = process.argv[3] ?? 'qa-output';
 fs.mkdirSync(out, { recursive: true });
 const exe = [process.env.CHROME_PATH, 'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].filter(Boolean).find((p) => fs.existsSync(p));
 const browser = await puppeteer.launch({ executablePath: exe, headless: true, defaultViewport: { width: 1440, height: 1100 }, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 const page = await browser.newPage();
+await withSession(page);
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));

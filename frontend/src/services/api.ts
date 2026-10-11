@@ -58,6 +58,7 @@ export interface HealthResponse {
     datasets: boolean;
     cnn_pinn?: boolean;
     forecaster?: boolean;
+    auth?: boolean;
   };
 }
 
@@ -151,7 +152,14 @@ export interface HydrogenAllocateResponse {
   balance_error_mwh: number;
 }
 
+export interface LoginResponse {
+  token: string;
+  expires_at: number;
+  user: { email: string; name: string; role: string };
+}
+
 export const backend = {
+  login: (email: string, password: string) => request<LoginResponse>('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }), timeoutMs: 15000 }),
   health: () => request<HealthResponse>('/api/health', { timeoutMs: 4000 }),
   floris: (body: FlorisRequest) => request<FlorisResponse>('/api/floris/simulate', { method: 'POST', body: JSON.stringify(body), timeoutMs: 60000 }),
   copilot: (body: CopilotRequest) => request<CopilotResponse>('/api/copilot/chat', { method: 'POST', body: JSON.stringify(body), timeoutMs: 180000 }),

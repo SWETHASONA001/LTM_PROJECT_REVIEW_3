@@ -17,7 +17,7 @@ export function Sidebar() {
       {mobileOpen && <div className="fixed inset-0 z-40 bg-ink/30 lg:hidden" onClick={() => setMobile(false)} />}
       <aside
         className={clsx(
-          'fixed inset-y-0 left-0 z-50 flex flex-col border-r border-line bg-surface transition-[width,transform] duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-50 flex flex-col border-r border-line bg-gradient-to-b from-[#f7fbf9] via-white to-[#f5f8fc] transition-[width,transform] duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0',
           collapsed ? 'lg:w-[68px]' : 'lg:w-[264px]',
           'w-[272px]',
           mobileOpen ? 'translate-x-0' : '-translate-x-full',
@@ -119,7 +119,7 @@ function NavEntry({ item, collapsed, onNavigate }: { item: (typeof NAV)[number];
         onClick={onNavigate}
         title={collapsed ? item.label : undefined}
         className={({ isActive }) =>
-          clsx(base, isActive ? 'bg-subtle text-ink' : 'text-ink-2 hover:bg-subtle hover:text-ink', collapsed && 'lg:justify-center lg:px-0')
+          clsx(base, isActive ? 'bg-energy-soft text-ink' : 'text-ink-2 hover:bg-[#eef4f1] hover:text-ink', collapsed && 'lg:justify-center lg:px-0')
         }
       >
         {({ isActive }) => (

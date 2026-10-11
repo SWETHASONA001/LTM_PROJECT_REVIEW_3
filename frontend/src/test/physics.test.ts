@@ -112,3 +112,24 @@ describe('hydrogen dispatch', () => {
     }
   });
 });
+
+describe('installation recommendations', () => {
+  it('recommends feasible sites with positive net gain, respecting spacing and boundary', async () => {
+    const { recommendSites } = await import('../physics/siting');
+    const cases = weibullCases({ k: 2, A: 9, prevailingDir: 270, directionality: 1, sectors: 8, speedStep: 3 });
+    const x = [0, 5 * D];
+    const y = [0, 0];
+    const out = recommendSites({ x, y, model, cases, ti: 0.06, minSpacingM: 4 * D, boundary: { width: 16 * D, height: 16 * D }, gridStepM: 2 * D, count: 2 });
+    expect(out.recommendations).toHaveLength(2);
+    const all = [...x.map((xi, i) => ({ x: xi, y: y[i] })), ...out.recommendations];
+    for (let i = 0; i < all.length; i++)
+      for (let j = i + 1; j < all.length; j++) expect(Math.hypot(all[i].x - all[j].x, all[i].y - all[j].y)).toBeGreaterThanOrEqual(4 * D - 1);
+    for (const r of out.recommendations) {
+      expect(Math.abs(r.x)).toBeLessThanOrEqual(8 * D + 1);
+      expect(r.netGainMWh).toBeGreaterThan(0);
+      expect(r.lossToOthersMWh).toBeGreaterThanOrEqual(-1e-6);
+      expect(r.ownAepMWh).toBeCloseTo(r.netGainMWh + r.lossToOthersMWh, 6);
+    }
+    expect(out.finalAepMWh).toBeGreaterThan(out.baseAepMWh);
+  });
+});

@@ -43,6 +43,7 @@ function Twin({ site }: { site: SiteId }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [showWake, setShowWake] = useState(true);
   const [showParticles, setShowParticles] = useState(true);
+  const [windMode, setWindMode] = useState<'selected' | 'all' | 'off'>('selected');
   const [showLabels, setShowLabels] = useState(false);
   const [visible, setVisible] = useState(true);
   const sceneRef = useRef<TwinSceneHandle>(null);
@@ -128,6 +129,7 @@ function Twin({ site }: { site: SiteId }) {
               onHover={setHovered}
               showWake={showWake}
               showParticles={showParticles}
+              windMode={windMode}
               showLabels={showLabels}
               observedRpm={observedRpm}
               observedYaw={observedYaw}
@@ -142,6 +144,11 @@ function Twin({ site }: { site: SiteId }) {
                 Animation is a visualization. Blade motion and particles are driven by {conditions.source === 'observed' ? 'historical SCADA hours' : 'manual conditions'} and the wake model — not live telemetry.
               </div>
             </div>
+            {windMode === 'selected' && !st.selectedId && (
+              <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/85 px-4 py-2 text-[12.5px] font-medium text-ink-2 shadow-sm backdrop-blur">
+                Click a turbine to see its airflow and wake
+              </div>
+            )}
             {/* HUD: compass */}
             <div className="glass absolute right-3 top-3 flex items-center gap-3 rounded-xl px-3 py-2 shadow-sm">
               <svg width="44" height="44" viewBox="-22 -22 44 44" aria-label={`Wind from ${Math.round(conditions.windDir)} degrees`}>
@@ -283,14 +290,28 @@ function Twin({ site }: { site: SiteId }) {
               />
               {!st.candidate && <p className="mt-1.5 text-[11px] text-muted">Run the optimizer in the planner to create an optimized candidate.</p>}
             </div>
+            <div className="mb-4">
+              <div className="mb-1.5 text-[12.5px] font-medium text-ink-2">Wind flow</div>
+              <Segmented
+                ariaLabel="Wind flow display"
+                value={windMode}
+                onChange={setWindMode}
+                options={[
+                  { value: 'selected', label: 'On click' },
+                  { value: 'all', label: 'Whole farm' },
+                  { value: 'off', label: 'Off' },
+                ]}
+              />
+              <p className="mt-1.5 text-[11px] text-muted">“On click” shows the airflow and wake of the turbine you select.</p>
+            </div>
             <div className="space-y-3">
               <Toggle label={<span className="inline-flex items-center gap-1.5"><Layers size={13} /> Wake deficit slice (hub height)</span>} checked={showWake} onChange={setShowWake} />
               <Toggle label={<span className="inline-flex items-center gap-1.5"><Gauge size={13} /> Wind-flow particles</span>} checked={showParticles} onChange={setShowParticles} />
               <Toggle label={<span className="inline-flex items-center gap-1.5"><Tag size={13} /> All turbine labels</span>} checked={showLabels} onChange={setShowLabels} />
             </div>
             <div className="mt-4 flex items-center gap-2 text-[11px] text-muted">
-              <span className="h-2 w-16 rounded" style={{ background: 'linear-gradient(90deg,#cde2fb,#0d366b)' }} />
-              velocity deficit 0 → 45%+
+              <span className="h-2 w-16 rounded" style={{ background: 'linear-gradient(90deg,#f5f8fa,#607480)' }} />
+              wake velocity deficit 0 → 45%+
             </div>
           </Card>
 

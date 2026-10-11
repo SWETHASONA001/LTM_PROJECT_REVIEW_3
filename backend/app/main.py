@@ -16,18 +16,18 @@ from datetime import datetime, timezone
 from functools import lru_cache
 from typing import Any, Literal
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from . import config, copilot_service, floris_service, hydrogen_service, ml_service, optimizer_service
+from . import auth_service, config, copilot_service, floris_service, hydrogen_service, ml_service, optimizer_service
 
 app = FastAPI(title="AeroHydro-PINN API", version=config.VERSION)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.ALLOWED_ORIGINS,
     allow_methods=["GET", "POST", "DELETE"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 
@@ -55,8 +55,36 @@ def health() -> dict[str, Any]:
             "datasets": (config.DATA_DIR / "manifest.json").exists(),
             "cnn_pinn": ml_service.cnn_status()["available"],
             "forecaster": (ml_service.MODEL_DIR / "forecaster.joblib").exists(),
+            "auth": auth_service.configured(),
         },
     }
+
+
+# ----------------------------------------------------------------- auth ----
+
+
+class LoginRequest(BaseModel):
+    email: str = Field(min_length=3, max_length=200)
+    password: str = Field(min_length=1, max_length=200)
+
+
+@app.post("/api/auth/login")
+def login(req: LoginRequest) -> dict[str, Any]:
+    if not auth_service.configured():
+        raise HTTPException(503, "No users configured on the backend. Create one with: python create_user.py <email> <name>")
+    user = auth_service.authenticate(req.email, req.password)
+    if not user:
+        raise HTTPException(401, "Incorrect email or password.")
+    token, exp = auth_service.issue_token(user)
+    return {"token": token, "expires_at": exp, "user": auth_service.public(user)}
+
+
+@app.get("/api/auth/me")
+def me(authorization: str = Header("")) -> dict[str, Any]:
+    data = auth_service.verify_token(authorization.removeprefix("Bearer ").strip())
+    if not data:
+        raise HTTPException(401, "Session expired or invalid.")
+    return {"user": {k: data[k] for k in ("email", "name", "role")}, "expires_at": data["exp"]}
 
 
 # ------------------------------------------------------------- datasets ----

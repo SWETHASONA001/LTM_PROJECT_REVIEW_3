@@ -7,11 +7,12 @@ import { KpiCard } from '../components/ui/Kpi';
 import { ProvenanceBadge } from '../components/ui/Provenance';
 
 describe('navigation', () => {
-  it('defines all 13 primary sections', () => {
+  it('defines all 14 primary sections', () => {
     expect(NAV.map((n) => n.label)).toEqual([
       'Overview',
       'Digital Twin',
       'Turbine Placement Planner',
+      'Installation Recommendations',
       'Wind Intelligence',
       'Hydro Intelligence',
       'Hydrogen Optimization',

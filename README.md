@@ -31,6 +31,14 @@ cd ../frontend && npm install
 echo VITE_API_BASE_URL=http://localhost:8000 > .env.local && npm run dev
 ```
 
+**Sign-in.** The app opens on a sign-in page. Accounts live on the backend (salted PBKDF2 hashes, 12-hour signed sessions); create one with:
+
+```bash
+cd backend && .venv/Scripts/python create_user.py you@company.com "Your Name" --role engineer
+```
+
+If the backend is offline or has no accounts, the page offers a clearly labelled local workspace (no password check, data stays in the browser).
+
 Without the backend the frontend still runs (standalone mode: static extracts + in-browser physics); backend-only features say so in the UI.
 
 **Copilot LLM:** set `ANTHROPIC_API_KEY` in the backend's environment to switch the copilot from local tool mode to the Claude agent (`claude-opus-5-5`, tool use over the project APIs). Without it, the copilot answers with deterministic project tools and states that no LLM is connected.
@@ -48,11 +56,12 @@ Without the backend the frontend still runs (standalone mode: static extracts + 
 ## Tests
 
 ```bash
-cd frontend && npm test && npm run build                   # 22 unit tests + typecheck + build
-cd backend  && .venv/Scripts/python -m pytest -q           # 15 tests (FLORIS, models, optimizer, hydrogen, copilot loop)
+cd frontend && npm test && npm run build                   # 23 unit tests + typecheck + build
+cd backend  && .venv/Scripts/python -m pytest -q           # 16 tests (FLORIS, models, optimizer, hydrogen, auth, copilot loop)
 cd frontend && node scripts/qa-screens.mjs http://localhost:5173 qa-output       # all routes, console errors
 cd frontend && node scripts/qa-interactions.mjs http://localhost:5173 qa-output  # 25 UI interaction checks
 cd frontend && node scripts/qa-backend.mjs http://localhost:5173 qa-output       # 6 backend-powered UI checks
+cd frontend && node scripts/qa-ux.mjs http://localhost:5173 qa-output            # sign-in, twin wind-on-click, siting (8 checks)
 ```
 
 See [docs/AUDIT.md](docs/AUDIT.md) and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).

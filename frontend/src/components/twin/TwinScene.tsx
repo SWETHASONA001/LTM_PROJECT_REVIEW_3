@@ -30,6 +30,8 @@ export interface TwinSceneProps {
   onHover: (id: string | null) => void;
   showWake: boolean;
   showParticles: boolean;
+  /** 'selected' = wind only around the selected turbine; 'all' = whole farm; 'off' = none. */
+  windMode: 'selected' | 'all' | 'off';
   showLabels: boolean;
   /** Optional per-turbine overrides (observed rotor rpm / nacelle yaw for real turbines). */
   observedRpm?: Record<string, number | null>;
@@ -86,6 +88,9 @@ export const TwinScene = forwardRef<TwinSceneHandle, TwinSceneProps>(function Tw
   }, [p.turbines, p.solved, p.farmCase.windDir, p.observedRpm, p.observedYaw, offshore, R, p.site]);
 
   const hubY = H * S + (offshore ? 0 : 0.4);
+  const selIndex = p.selectedId ? p.turbines.findIndex((t) => t.id === p.selectedId) : -1;
+  const focusIndex = p.windMode === 'selected' && selIndex >= 0 ? selIndex : undefined;
+  const showWind = p.windMode === 'all' || (p.windMode === 'selected' && selIndex >= 0);
   const groundSize = Math.max(900, p.extentM * S * 6);
 
   return (
@@ -127,8 +132,8 @@ export const TwinScene = forwardRef<TwinSceneHandle, TwinSceneProps>(function Tw
         offshore={offshore}
         showLabels={p.showLabels}
       />
-      {p.showWake && p.farmCase.windSpeed > 0 && <WakeSlice farmCase={p.farmCase} solved={p.solved} extentM={p.extentM} heightY={hubY} />}
-      {p.showParticles && (
+      {showWind && p.showWake && p.farmCase.windSpeed > 0 && <WakeSlice farmCase={p.farmCase} solved={p.solved} extentM={p.extentM} heightY={hubY} focusIndex={focusIndex} />}
+      {showWind && p.showParticles && (
         <WindParticles
           model={p.model}
           turbines={p.turbines}
@@ -140,9 +145,12 @@ export const TwinScene = forwardRef<TwinSceneHandle, TwinSceneProps>(function Tw
           hubY={hubY}
           playing={p.playing}
           simSpeed={p.simSpeed}
+          focusIndex={focusIndex}
+          count={focusIndex === undefined ? 2200 : 900}
+          key={focusIndex ?? 'all'}
         />
       )}
-      <WindArrow windDir={p.farmCase.windDir} extentM={p.extentM} y={hubY + R * S + 3} />
+      {showWind && <WindArrow windDir={p.farmCase.windDir} extentM={p.extentM} y={hubY + R * S + 3} />}
       <OrbitControls ref={controls} makeDefault target={home.target} maxPolarAngle={Math.PI / 2.08} minDistance={8} maxDistance={camDist * 4} enableDamping dampingFactor={0.08} />
     </Canvas>
   );

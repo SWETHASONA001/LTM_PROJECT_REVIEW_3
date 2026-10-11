@@ -11,11 +11,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import puppeteer from 'puppeteer-core';
 
+// The app now requires a session; QA runs as a local-workspace user.
+const QA_SESSION = JSON.stringify({ state: { session: { user: { name: 'QA Engineer', email: 'local workspace', role: 'local' }, mode: 'local', signedInAt: new Date().toISOString() } }, version: 0 });
+const withSession = (p) => p.evaluateOnNewDocument((v) => { if (!localStorage.getItem('aerohydro.auth.v1')) localStorage.setItem('aerohydro.auth.v1', v); }, QA_SESSION);
+
+
 const base = process.argv[2] ?? 'http://localhost:5173';
 const out = process.argv[3] ?? 'qa-output';
 const routes = process.argv.slice(4).length
   ? process.argv.slice(4)
-  : ['/', '/twin/onshore', '/twin/offshore', '/planner', '/wind', '/hydro', '/hydrogen', '/forecasting', '/scenarios', '/anomalies', '/models', '/copilot', '/reports', '/settings', '/does-not-exist'];
+  : ['/', '/twin/onshore', '/twin/offshore', '/planner', '/siting', '/wind', '/hydro', '/hydrogen', '/forecasting', '/scenarios', '/anomalies', '/models', '/copilot', '/reports', '/settings', '/does-not-exist'];
 
 const candidates = [
   process.env.CHROME_PATH,
@@ -40,6 +45,7 @@ const browser = await puppeteer.launch({
 let failures = 0;
 for (const route of routes) {
   const page = await browser.newPage();
+  await withSession(page);
   const problems = [];
   page.on('console', (m) => {
     if (m.type() === 'error' || m.type() === 'warning') problems.push(`[console.${m.type()}] ${m.text()}`);
