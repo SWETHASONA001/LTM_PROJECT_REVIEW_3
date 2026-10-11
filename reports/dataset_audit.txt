@@ -1,0 +1,1325 @@
+
+=====================================================================================
+CSV: data\raw\wind\la-haute-borne-data-2017-2020.csv
+Rows: 217,588
+Columns: 138
+
+Column names:
+  'Wind_turbine_name'
+  'Date_time'
+  'Ba_avg'
+  'Ba_min'
+  'Ba_max'
+  'Ba_std'
+  'Rt_avg'
+  'Rt_min'
+  'Rt_max'
+  'Rt_std'
+  'DCs_avg'
+  'DCs_min'
+  'DCs_max'
+  'DCs_std'
+  'Cm_avg'
+  'Cm_min'
+  'Cm_max'
+  'Cm_std'
+  'P_avg'
+  'P_min'
+  'P_max'
+  'P_std'
+  'Q_avg'
+  'Q_min'
+  'Q_max'
+  'Q_std'
+  'S_avg'
+  'S_min'
+  'S_max'
+  'S_std'
+  'Cosphi_avg'
+  'Cosphi_min'
+  'Cosphi_max'
+  'Cosphi_std'
+  'Ds_avg'
+  'Ds_min'
+  'Ds_max'
+  'Ds_std'
+  'Db1t_avg'
+  'Db1t_min'
+  'Db1t_max'
+  'Db1t_std'
+  'Db2t_avg'
+  'Db2t_min'
+  'Db2t_max'
+  'Db2t_std'
+  'Dst_avg'
+  'Dst_min'
+  'Dst_max'
+  'Dst_std'
+  'Gb1t_avg'
+  'Gb1t_min'
+  'Gb1t_max'
+  'Gb1t_std'
+  'Gb2t_avg'
+  'Gb2t_min'
+  'Gb2t_max'
+  'Gb2t_std'
+  'Git_avg'
+  'Git_min'
+  'Git_max'
+  'Git_std'
+  'Gost_avg'
+  'Gost_min'
+  'Gost_max'
+  'Gost_std'
+  'Ya_avg'
+  'Ya_min'
+  'Ya_max'
+  'Ya_std'
+  'Yt_avg'
+  'Yt_min'
+  'Yt_max'
+  'Yt_std'
+  'Ws1_avg'
+  'Ws1_min'
+  'Ws1_max'
+  'Ws1_std'
+  'Ws2_avg'
+  'Ws2_min'
+  'Ws2_max'
+  'Ws2_std'
+  'Ws_avg'
+  'Ws_min'
+  'Ws_max'
+  'Ws_std'
+  'Wa_avg'
+  'Wa_min'
+  'Wa_max'
+  'Wa_std'
+  'Va1_avg'
+  'Va1_min'
+  'Va1_max'
+  'Va1_std'
+  'Va2_avg'
+  'Va2_min'
+  'Va2_max'
+  'Va2_std'
+  'Va_avg'
+  'Va_min'
+  'Va_max'
+  'Va_std'
+  'Ot_avg'
+  'Ot_min'
+  'Ot_max'
+  'Ot_std'
+  'Nf_avg'
+  'Nf_min'
+  'Nf_max'
+  'Nf_std'
+  'Nu_avg'
+  'Nu_min'
+  'Nu_max'
+  'Nu_std'
+  'Rs_avg'
+  'Rs_min'
+  'Rs_max'
+  'Rs_std'
+  'Rbt_avg'
+  'Rbt_min'
+  'Rbt_max'
+  'Rbt_std'
+  'Rm_avg'
+  'Rm_min'
+  'Rm_max'
+  'Rm_std'
+  'Pas_avg'
+  'Pas_min'
+  'Pas_max'
+  'Pas_std'
+  'Wa_c_avg'
+  'Wa_c_min'
+  'Wa_c_max'
+  'Wa_c_std'
+  'Na_c_avg'
+  'Na_c_min'
+  'Na_c_max'
+  'Na_c_std'
+
+Data types:
+Wind_turbine_name        str
+Date_time                str
+Ba_avg               float64
+Ba_min               float64
+Ba_max               float64
+Ba_std               float64
+Rt_avg               float64
+Rt_min               float64
+Rt_max               float64
+Rt_std               float64
+DCs_avg              float64
+DCs_min              float64
+DCs_max              float64
+DCs_std              float64
+Cm_avg               float64
+Cm_min               float64
+Cm_max               float64
+Cm_std               float64
+P_avg                float64
+P_min                float64
+P_max                float64
+P_std                float64
+Q_avg                float64
+Q_min                float64
+Q_max                float64
+Q_std                float64
+S_avg                float64
+S_min                float64
+S_max                float64
+S_std                float64
+Cosphi_avg           float64
+Cosphi_min           float64
+Cosphi_max           float64
+Cosphi_std           float64
+Ds_avg               float64
+Ds_min               float64
+Ds_max               float64
+Ds_std               float64
+Db1t_avg             float64
+Db1t_min             float64
+Db1t_max             float64
+Db1t_std             float64
+Db2t_avg             float64
+Db2t_min             float64
+Db2t_max             float64
+Db2t_std             float64
+Dst_avg              float64
+Dst_min              float64
+Dst_max              float64
+Dst_std              float64
+Gb1t_avg             float64
+Gb1t_min             float64
+Gb1t_max             float64
+Gb1t_std             float64
+Gb2t_avg             float64
+Gb2t_min             float64
+Gb2t_max             float64
+Gb2t_std             float64
+Git_avg              float64
+Git_min              float64
+Git_max              float64
+Git_std              float64
+Gost_avg             float64
+Gost_min             float64
+Gost_max             float64
+Gost_std             float64
+Ya_avg               float64
+Ya_min               float64
+Ya_max               float64
+Ya_std               float64
+Yt_avg               float64
+Yt_min               float64
+Yt_max               float64
+Yt_std               float64
+Ws1_avg              float64
+Ws1_min              float64
+Ws1_max              float64
+Ws1_std              float64
+Ws2_avg              float64
+Ws2_min              float64
+Ws2_max              float64
+Ws2_std              float64
+Ws_avg               float64
+Ws_min               float64
+Ws_max               float64
+Ws_std               float64
+Wa_avg               float64
+Wa_min               float64
+Wa_max               float64
+Wa_std               float64
+Va1_avg              float64
+Va1_min              float64
+Va1_max              float64
+Va1_std              float64
+Va2_avg              float64
+Va2_min              float64
+Va2_max              float64
+Va2_std              float64
+Va_avg               float64
+Va_min               float64
+Va_max               float64
+Va_std               float64
+Ot_avg               float64
+Ot_min               float64
+Ot_max               float64
+Ot_std               float64
+Nf_avg               float64
+Nf_min               float64
+Nf_max               float64
+Nf_std               float64
+Nu_avg               float64
+Nu_min               float64
+Nu_max               float64
+Nu_std               float64
+Rs_avg               float64
+Rs_min               float64
+Rs_max               float64
+Rs_std               float64
+Rbt_avg              float64
+Rbt_min              float64
+Rbt_max              float64
+Rbt_std              float64
+Rm_avg               float64
+Rm_min               float64
+Rm_max               float64
+Rm_std               float64
+Pas_avg              float64
+Pas_min              float64
+Pas_max              float64
+Pas_std              float64
+Wa_c_avg             float64
+Wa_c_min             float64
+Wa_c_max             float64
+Wa_c_std             float64
+Na_c_avg             float64
+Na_c_min             float64
+Na_c_max             float64
+Na_c_std             float64
+
+First 5 rows:
+  Wind_turbine_name                  Date_time     Ba_avg     Ba_min     Ba_max  Ba_std  ...  Wa_c_max  Wa_c_std   Na_c_avg  Na_c_min  Na_c_max  Na_c_std
+0            R80721  2017-02-08T08:00:00+01:00  44.990002  44.990002  44.990002     0.0  ...       NaN       NaN  358.04999       NaN       NaN       NaN
+1            R80721  2017-01-26T02:40:00+01:00  -1.000000  -1.000000  -1.000000     0.0  ...       NaN       NaN        NaN       NaN       NaN       NaN
+2            R80721  2017-01-26T13:50:00+01:00  -1.000000  -1.000000  -1.000000     0.0  ...       NaN       NaN        NaN       NaN       NaN       NaN
+3            R80721  2017-01-26T15:00:00+01:00  -1.000000  -1.000000  -1.000000     0.0  ...       NaN       NaN        NaN       NaN       NaN       NaN
+4            R80721  2017-02-18T01:10:00+01:00  44.990002  44.990002  44.990002     0.0  ...       NaN       NaN    7.99000       NaN       NaN       NaN
+
+Missing values (highest first):
+Na_c_std    217588
+Na_c_max    217588
+Wa_c_max    217588
+Wa_c_min    217588
+Pas_min     217588
+Pas_avg     217588
+Na_c_min    217588
+Wa_c_std    217588
+Pas_std     217588
+Pas_max     217588
+Na_c_avg    183657
+Wa_c_avg    183657
+Va_std      140456
+Va_max      140456
+Va_min      140456
+Va_avg      140456
+Va1_avg      79081
+Va1_min      79081
+Va2_std      79081
+Va2_max      79081
+Va1_max      79081
+Va1_std      79081
+Va2_min      79081
+Va2_avg      79081
+Rm_std        5290
+Rm_max        5290
+Rm_min        5290
+Rm_avg        5290
+Q_avg         5108
+Q_min         5108
+
+Numeric summary:
+           Ba_avg      Ba_min      Ba_max      Ba_std      Rt_avg      Rt_min      Rt_max      Rt_std     DCs_avg     DCs_min     DCs_max     DCs_std      Cm_avg      Cm_min      Cm_max      Cm_std       P_avg       P_min       P_max       P_std       Q_avg       Q_min       Q_max       Q_std       S_avg       S_min       S_max       S_std  Cosphi_avg  Cosphi_min  Cosphi_max  Cosphi_std      Ds_avg      Ds_min      Ds_max      Ds_std    Db1t_avg    Db1t_min    Db1t_max    Db1t_std    Db2t_avg    Db2t_min    Db2t_max    Db2t_std     Dst_avg     Dst_min     Dst_max     Dst_std    Gb1t_avg    Gb1t_min    Gb1t_max    Gb1t_std    Gb2t_avg    Gb2t_min    Gb2t_max    Gb2t_std     Git_avg     Git_min     Git_max     Git_std    Gost_avg    Gost_min    Gost_max    Gost_std      Ya_avg      Ya_min      Ya_max      Ya_std      Yt_avg      Yt_min     Yt_max      Yt_std     Ws1_avg     Ws1_min     Ws1_max     Ws1_std     Ws2_avg    Ws2_min     Ws2_max     Ws2_std      Ws_avg      Ws_min      Ws_max      Ws_std      Wa_avg     Wa_min      Wa_max      Wa_std     Va1_avg     Va1_min     Va1_max     Va1_std     Va2_avg     Va2_min     Va2_max     Va2_std     Va_avg     Va_min     Va_max     Va_std      Ot_avg      Ot_min      Ot_max      Ot_std      Nf_avg      Nf_min      Nf_max      Nf_std      Nu_avg      Nu_min      Nu_max      Nu_std      Rs_avg      Rs_min      Rs_max      Rs_std     Rbt_avg     Rbt_min     Rbt_max     Rbt_std      Rm_avg      Rm_min      Rm_max      Rm_std  Pas_avg  Pas_min  Pas_max  Pas_std   Wa_c_avg  Wa_c_min  Wa_c_max  Wa_c_std   Na_c_avg  Na_c_min  Na_c_max  Na_c_std
+count  215636.000  215636.000  215636.000  215636.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215930.000  215930.000  215930.000  215930.000  212480.000  212480.000  212480.000  212480.000  215637.000  215637.000  215637.000  215637.000  215639.000  215639.000  215639.000  215639.000  214561.000  214561.000  214561.000  214561.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215639.000  215930.000  215930.000  215930.000  215930.000  215639.000  215639.000  215639.00  215639.000  214651.000  214651.000  214651.000  214651.000  214687.000  214687.00  214687.000  214687.000  215930.000  215930.000  215930.000  215930.000  215930.000  215930.00  215930.000  215930.000  138507.000  138507.000  138507.000  138507.000  138507.000  138507.000  138507.000  138507.000  77132.000  77132.000  77132.000  77132.000  215639.000  215639.000  215639.000  215639.000  215637.000  215637.000  215637.000  215637.000  215637.000  215637.000  215637.000  215637.000  213012.000  213012.000  213012.000  213012.000  215639.000  215639.000  215639.000  215639.000  212298.000  212298.000  212298.000  212298.000      0.0      0.0      0.0      0.0  33931.000       0.0       0.0       0.0  33931.000       0.0       0.0       0.0
+mean       12.018      10.839      13.667       0.937      19.491      19.304      19.698       0.101    1088.097     971.828    1198.098      61.312    2252.352    1409.208    3200.811     424.849     360.392     197.669     548.765      82.651      27.024      13.542      40.014       5.341     363.896     204.236     552.059      82.116       0.992       0.732       0.963       0.006    1094.492     977.275    1205.476      61.803      39.276      38.407      40.154       0.387      35.782      35.292      36.282       0.232      55.469      53.954      57.031       0.557      60.081      59.302      60.822       0.400      60.734      60.039      61.401       0.388      50.791      49.787      51.787       0.500      54.108      53.669      54.530       0.190     189.484     188.937     190.310       1.426      24.589      23.853      25.33       0.438       5.475       3.464       7.743       0.811       5.444       3.49       7.681       0.790       5.433       3.543       7.582       0.768     187.468     177.66     209.678      29.383       0.637     -44.094      50.603      29.832       0.637     -44.094      50.603      29.832      2.210    -41.344     50.118     29.480      12.242      12.046      12.442       0.103      49.982      49.948      50.015       0.017     700.982     698.898     703.070       0.923      10.506       9.370      11.584       0.596      27.463      27.365      27.553       0.048    2141.581    1219.324    3134.005     451.756      NaN      NaN      NaN      NaN    173.005       NaN       NaN       NaN    173.005       NaN       NaN       NaN
+std        25.366      25.106      26.108       4.001       6.685       6.669       6.692       0.194     605.396     576.448     632.820      79.992    2363.465    1449.167    3270.767     543.533     457.856     270.102     649.222     107.477      31.396      23.726      42.331       6.305     457.674     268.796     648.490     107.247       0.031       0.680       0.095       0.022     602.917     574.966     629.157      80.082       8.127       8.029       8.538       0.649       7.183       7.093       7.507       0.672      11.856      11.650      12.456       0.531      12.961      12.776      13.171       0.449      13.215      13.059      13.402       0.474       8.813       9.104       8.635       0.729       8.702       8.738       8.726       0.392      89.182      88.972      89.431       4.903       7.243       7.326       7.30       0.731       2.759       1.909       3.868       0.488       2.607       1.85       3.640       0.453       2.690       1.899       3.741       0.463      89.796      89.84      97.765     120.187      25.652      41.225      44.637      73.860      25.652      41.225      44.637      73.860     27.419     41.214     44.189    174.764       8.034       7.979       8.184       0.415       0.678       0.926       0.517       0.320      10.807      13.910       9.013       4.507       5.708       5.443       5.962       0.766       6.207       6.223       6.209       0.042    2417.268    1543.176    3310.605     539.969      NaN      NaN      NaN      NaN     86.065       NaN       NaN       NaN     86.065       NaN       NaN       NaN
+min        -1.530     -27.570      -1.020       0.000       1.780       1.000       2.000       0.000    -574.890    -574.950    -574.850       0.010   -4375.890   -4376.140   -4375.690       0.060     -17.390    -133.590     -13.800       0.000     -94.230    -167.250     -72.810       0.000       0.000       0.000       0.000       0.000       0.060      -1.000      -1.000       0.000      -0.180     -47.770       0.000       0.000       3.800    -273.200       3.800       0.000       0.380    -191.350       0.400       0.000      -0.200    -273.200      -0.200       0.000       8.280     -23.000       8.300       0.000      10.200     -35.750      10.200       0.000       8.650     -38.050      10.100       0.000      14.740     -38.450      16.600       0.000       0.000       0.000       0.000       0.000      -1.150     -21.200      -1.00       0.000       0.000     -11.440       0.000       0.000      -0.820     -11.44       0.000       0.000       0.000     -11.440       0.000       0.000       0.000       0.00       0.000       0.010    -179.920    -179.980    -180.000       0.010    -179.920    -179.980    -180.000       0.010   -179.880   -179.940   -179.980      0.140      -7.970     -38.450      -7.800       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000      -0.210     -63.750      -0.200       0.000    -888.080   -3188.720    -644.660       0.000      NaN      NaN      NaN      NaN      0.010       NaN       NaN       NaN      0.010       NaN       NaN       NaN
+25%        -0.990      -1.000      -0.990       0.000      14.000      14.000      14.120       0.000     964.630     954.940     975.140      11.880     440.950      29.305     874.040      57.530      17.560      -1.320      57.365       7.730       3.980       0.000      13.200       1.550      28.090       2.210      63.880       7.570       0.990       1.000       0.960       0.000     969.960     959.060     975.430      12.310      36.040      35.250      36.800       0.160      33.460      33.000      34.000       0.100      54.370      52.900      55.850       0.380      55.970      55.200      56.700       0.140      55.160      54.500      55.800       0.120      49.050      47.850      50.100       0.140      52.600      52.250      52.900       0.090     132.800     132.800     132.630       0.000      20.380      19.375      21.40       0.100       3.930       2.640       5.420       0.490       3.950       2.69       5.410       0.480       3.890       2.630       5.283       0.450     124.442     121.94     121.640       9.370      -5.750     -57.160      36.800       9.640      -5.750     -57.160      36.800       9.640     -5.340    -54.733     35.950      9.350       6.100       5.900       6.200       0.040      49.980      49.960      50.010       0.010     697.660     695.720     699.500       0.560       9.230       9.120       9.310       0.120      24.740      24.600      24.900       0.020     240.065       0.000     676.575      88.200      NaN      NaN      NaN      NaN     90.075       NaN       NaN       NaN     90.075       NaN       NaN       NaN
+50%        -0.970      -0.990      -0.490       0.000      19.000      19.000      19.000       0.000    1200.870    1046.810    1347.750      33.930    1658.200    1163.800    2163.700     225.380     182.410      96.850     278.740      36.860      20.380       8.820      29.480       3.000     184.980     100.650     280.690      36.050       1.000       1.000       0.990       0.000    1205.560    1050.920    1353.010      34.350      40.530      39.500      41.500       0.330      37.060      36.500      37.600       0.200      58.180      56.450      60.000       0.560      63.550      62.700      64.350       0.280      64.570      63.650      65.400       0.270      52.850      51.950      53.850       0.240      56.600      56.150      57.000       0.140     208.065     207.260     208.780       0.000      25.530      24.800      26.30       0.190       5.430       3.760       7.370       0.710       5.400       3.77       7.320       0.700       5.400       3.840       7.220       0.670     206.050     180.10     238.290      11.420      -0.130     -40.600      49.590      11.810      -0.130     -40.600      49.590      11.810      0.175    -38.755     48.630     11.430      11.780      11.600      11.900       0.080      49.990      49.960      50.020       0.010     701.070     699.160     702.980       0.740      11.530      10.030      12.960       0.330      28.220      28.100      28.350       0.040    1464.985     911.330    2032.380     249.875      NaN      NaN      NaN      NaN    192.080       NaN       NaN       NaN    192.080       NaN       NaN       NaN
+75%         2.970      -0.960      13.380       0.190      24.090      24.000      25.000       0.180    1593.030    1390.565    1793.335      84.510    3068.875    2192.590    4319.705     529.430     506.598     298.830     806.760     112.900      34.690      22.590      49.022       6.930     508.690     302.050     808.950     112.330       1.000       1.000       1.000       0.010    1596.360    1394.250    1797.260      84.960      44.720      43.700      45.750       0.510      40.060      39.500      40.600       0.310      62.150      60.250      64.100       0.730      68.110      67.100      69.100       0.530      70.000      69.000      70.850       0.530      56.080      55.400      56.850       0.490      58.390      57.950      58.850       0.230     251.160     249.390     252.440       0.000      29.680      29.100      30.30       0.430       6.820       4.630       9.570       1.020       6.720       4.62       9.440       0.990       6.750       4.720       9.360       0.970     249.690     231.81     285.960      14.690       6.190     -30.450      67.390      15.360       6.190     -30.450      67.390      15.360      6.770    -29.180     66.610     14.780      18.110      17.900      18.400       0.120      50.000      49.980      50.030       0.010     704.520     702.550     706.530       0.990      15.252      13.310      17.170       0.820      31.500      31.400      31.600       0.070    3030.770    2066.030    4400.530     573.578      NaN      NaN      NaN      NaN    236.400       NaN       NaN       NaN    236.400       NaN       NaN       NaN
+max       132.480      92.750     163.230      46.070     215.000     215.000     215.000      39.790    1807.600    1802.250    2073.740     890.580   10965.400   10928.800   11110.400    5305.040    2050.780    2005.540    2292.770    1001.370     266.700     220.310     615.800     102.620    2060.650    2012.470    2298.840     996.800       1.000       1.000       1.000       0.410    1803.930    1798.740    2070.340     889.230      81.880      81.100     396.400     137.120     276.410      61.550     396.200     175.840     101.150      99.350     396.500     117.010      86.210      85.950     396.200     103.930      87.150      86.500     396.000     129.440      72.900      72.550      73.600      10.140      84.770      77.750     396.400     127.590     360.000     360.000     360.000      92.400      56.090      42.600     396.50     114.320      24.890      14.400      37.970       7.200      23.650      13.34      38.180       6.510      24.270      14.170      37.700       6.840     360.000     360.00     360.000   16054.900     179.940     179.990     180.000    2217.640     179.940     179.990     180.000    2217.640    179.920    179.980    179.970  16054.900      70.980      35.200     396.400     133.440      50.090      50.050      52.580      24.980     729.610     726.640     828.730     350.920      17.220      17.150      19.700       8.500      43.070      43.000      46.800       4.310   10875.400   10827.200   11001.400    5388.920      NaN      NaN      NaN      NaN    360.000       NaN       NaN       NaN    360.000       NaN       NaN       NaN
+
+Potential timestamp columns:
+  'Date_time'
+
+Potential experiment/site identifier columns:
+  'Wind_turbine_name'
+    Unique values: 4
+    Examples: ['R80721', 'R80790', 'R80736', 'R80711']
+
+Wind turbine-timestamp quality:
+Unparseable timestamps: 0
+Rows in duplicate turbine-timestamp groups: 912
+
+=====================================================================================
+CSV: data\raw\electrolyzer\combined_wind_experiments.csv
+Rows: 61,285
+Columns: 32
+
+Column names:
+  'Unnamed: 0'
+  'Wind Turbine Power (kW)'
+  'H2E_f_NLR_CurrentCmd (A)'
+  'IVAL_f_FM011_Flow'
+  'Efficiency (kWh/kg)'
+  'Power Supply Average Voltage (Vdc)'
+  'H2E_f_NLR_CurrentCmd'
+  'H2E_n_PSU_A_Power'
+  'H2E_f_PSU_A_Current'
+  'H2E_f_Elec_CalcProdRate'
+  'H2E_f_CG220_LFLPer'
+  'H2E_f_DPS340_DPdegC'
+  'H2E_f_DPS341_DPdegC'
+  'H2E_f_DPS341_DPppmV'
+  'H2E_f_LS201_H2OLevel'
+  'H2E_f_LS301_H2OLevel'
+  'H2E_f_PT264_Pressure'
+  'H2E_f_PT307_Pressure'
+  'H2E_f_PT312_Pressure'
+  'H2E_f_PT604_Pressure'
+  'H2E_f_RS209_Resistivity'
+  'H2E_f_RS507_Resistivity'
+  'H2E_f_TE218_Temp'
+  'H2E_f_TE219_Temp'
+  'H2E_f_TE338_Temp'
+  'H2E_f_TE601_Temp'
+  'H2E_f_TT641_Temp'
+  'H2E_f_TT645_Temp'
+  'H2E_f_TT646_Temp'
+  'H2E_f_TT647_Temp'
+  'Experiment'
+  'Unnamed: 31'
+
+Data types:
+Unnamed: 0                                str
+Wind Turbine Power (kW)               float64
+H2E_f_NLR_CurrentCmd (A)              float64
+IVAL_f_FM011_Flow                     float64
+Efficiency (kWh/kg)                   float64
+Power Supply Average Voltage (Vdc)    float64
+H2E_f_NLR_CurrentCmd                  float64
+H2E_n_PSU_A_Power                       int64
+H2E_f_PSU_A_Current                     int64
+H2E_f_Elec_CalcProdRate               float64
+H2E_f_CG220_LFLPer                    float64
+H2E_f_DPS340_DPdegC                   float64
+H2E_f_DPS341_DPdegC                   float64
+H2E_f_DPS341_DPppmV                   float64
+H2E_f_LS201_H2OLevel                  float64
+H2E_f_LS301_H2OLevel                  float64
+H2E_f_PT264_Pressure                  float64
+H2E_f_PT307_Pressure                  float64
+H2E_f_PT312_Pressure                  float64
+H2E_f_PT604_Pressure                  float64
+H2E_f_RS209_Resistivity               float64
+H2E_f_RS507_Resistivity               float64
+H2E_f_TE218_Temp                      float64
+H2E_f_TE219_Temp                      float64
+H2E_f_TE338_Temp                      float64
+H2E_f_TE601_Temp                      float64
+H2E_f_TT641_Temp                      float64
+H2E_f_TT645_Temp                      float64
+H2E_f_TT646_Temp                      float64
+H2E_f_TT647_Temp                      float64
+Experiment                                str
+Unnamed: 31                           float64
+
+First 5 rows:
+       Unnamed: 0  Wind Turbine Power (kW)  H2E_f_NLR_CurrentCmd (A)  IVAL_f_FM011_Flow  Efficiency (kWh/kg)  Power Supply Average Voltage (Vdc)  ...  H2E_f_TT641_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp                  Experiment  Unnamed: 31
+0  6/4/2025 10:32                   350.14                   995.024              7.305            47.638604                             346.100  ...              17.4               7.2              10.1              15.2  windIEA3.4-7ms-C_1-200.csv          NaN
+1  6/4/2025 10:32                   585.70                  1604.360              7.276            47.965915                             346.433  ...              17.3               7.2              10.0              15.3  windIEA3.4-7ms-C_1-200.csv          NaN
+2  6/4/2025 10:32                   778.30                  2067.155              7.251            58.198869                             352.200  ...              17.4               7.3              10.1              15.3  windIEA3.4-7ms-C_1-200.csv          NaN
+3  6/4/2025 10:32                   903.86                  2523.305              7.166            68.936645                             357.700  ...              17.3               7.2              10.1              15.3  windIEA3.4-7ms-C_1-200.csv          NaN
+4  6/4/2025 10:32                   982.63                  2608.763              7.405            77.245105                             363.333  ...              17.3               7.2              10.1              15.4  windIEA3.4-7ms-C_1-200.csv          NaN
+
+Missing values (highest first):
+Unnamed: 31                46972
+Wind Turbine Power (kW)    18000
+H2E_f_TT641_Temp           14313
+IVAL_f_FM011_Flow              1
+Efficiency (kWh/kg)            1
+
+Numeric summary:
+       Wind Turbine Power (kW)  H2E_f_NLR_CurrentCmd (A)  IVAL_f_FM011_Flow  Efficiency (kWh/kg)  Power Supply Average Voltage (Vdc)  H2E_f_NLR_CurrentCmd  H2E_n_PSU_A_Power  H2E_f_PSU_A_Current  H2E_f_Elec_CalcProdRate  H2E_f_CG220_LFLPer  H2E_f_DPS340_DPdegC  H2E_f_DPS341_DPdegC  H2E_f_DPS341_DPppmV  H2E_f_LS201_H2OLevel  H2E_f_LS301_H2OLevel  H2E_f_PT264_Pressure  H2E_f_PT307_Pressure  H2E_f_PT312_Pressure  H2E_f_PT604_Pressure  H2E_f_RS209_Resistivity  H2E_f_RS507_Resistivity  H2E_f_TE218_Temp  H2E_f_TE219_Temp  H2E_f_TE338_Temp  H2E_f_TE601_Temp  H2E_f_TT641_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp  Unnamed: 31
+count                43285.000                 61285.000          61284.000            61284.000                           61285.000             61285.000          61285.000            61285.000                61285.000           61285.000            61285.000            61285.000            61285.000             61285.000             61285.000             61285.000             61285.000             61285.000             61285.000                61285.000                61285.000         61285.000         61285.000         61285.000         61285.000         46972.000         61285.000         61285.000         61285.000    14313.000
+mean                   668.415                  1733.457             12.675              115.773                             369.113                57.782            668.341             1731.253                   12.916               0.258              -54.210              -54.389                0.868                56.500                30.072                 2.881                29.004                25.071                 4.415                    6.691                   11.213            57.232            58.024            10.843            28.087            13.633             9.824            12.011            13.054       30.056
+std                    284.642                   738.793              5.777              956.487                              23.284                24.626            319.012              737.996                    5.506               0.673                3.556                4.626                0.424                 3.961                 2.790                 0.144                 0.417                 1.121                 0.080                    0.255                    4.366             0.814             0.658             0.936             6.333             7.109             3.770             3.988             4.672       42.641
+min                     20.560                   300.000              0.005               21.113                             320.367                10.000             97.000              295.000                    1.119               0.119              -59.375              -65.035                0.179                49.856                16.039                 2.634                26.888                22.455                 4.115                    4.946                    1.397            54.861            55.787             9.195            15.133             3.700             6.400             8.300             5.800        9.900
+25%                    437.610                  1185.281              8.328               47.790                             352.233                39.509            423.000             1183.000                    8.829               0.123              -57.500              -57.014                0.531                52.851                28.112                 2.775                28.889                24.464                 4.360                    6.616                   10.753            56.713            57.639            10.076            21.411             5.400             7.100             8.900             7.200       10.600
+50%                    657.400                  1774.056             12.901               51.663                             371.100                59.135            668.000             1771.000                   13.210               0.123              -54.583              -53.160                0.884                56.507                30.157                 2.851                29.024                25.279                 4.423                    6.730                   12.658            57.407            57.870            10.590            30.117            17.800             7.600             9.300            14.900       11.600
+75%                    887.460                  2372.221             17.486               55.789                             388.733                79.074            939.000             2367.000                   17.661               0.123              -49.514              -51.910                1.025                60.125                32.051                 2.977                29.218                25.765                 4.472                    6.828                   14.085            57.870            58.333            11.493            31.686            18.400            14.300            16.500            16.900       20.700
+max                   1629.800                  3000.000             33.339            40400.000                             410.200               100.000           1261.000             3003.000                   22.380               4.348              -48.333              -45.417                2.276                63.388                37.423                 3.209                30.878                27.402                 4.604                    7.427                   18.182            59.954            61.343            13.888            41.679            51.500            17.900            21.700            19.900      160.300
+
+Potential timestamp columns:
+
+Potential experiment/site identifier columns:
+  'Wind Turbine Power (kW)'
+    Unique values: 17503
+    Examples: ['350.14', '585.7', '778.3', '903.86', '982.63', '1022.8', '1056.3', '1068.2']
+  'Experiment'
+    Unique values: 13
+    Examples: ['windIEA3.4-7ms-C_1-200.csv', 'windIEA3.4-7ms-A_1-200.csv', 'windIEA3.4-5ms-A_2-200.csv', 'windIEA3.4-5ms-C_2-200.csv', 'windIEA3.4-7ms-A_1-400.csv', 'windIEA3.4-5ms-A_2-400.csv', 'windIEA3.4-5ms-C_2-400.csv', 'windIEA3.4-7ms-C_1-400.csv']
+
+=====================================================================================
+CSV: data\raw\electrolyzer\combined_historical_wind_experiments.csv
+Rows: 28,800
+Columns: 32
+
+Column names:
+  'Unnamed: 0'
+  'Experiment'
+  'GE 1.5 MW Wind Turbine Power (kW)'
+  'H2E_f_NLR_CurrentCmd (%)'
+  'IVAL_f_FM011_Flow (kg/hr)'
+  'Efficiency (kWh/kg)'
+  'Power Supply Average Voltage (Vdc)'
+  'H2E_f_NLR_CurrentCmd (%).1'
+  'H2E_n_PSU_A_Power (kW)'
+  'H2E_f_PSU_A_Current'
+  'H2E_f_Elec_CalcProdRate'
+  'H2E_f_CG220_LFLPer'
+  'H2E_f_DPS340_DPdegC'
+  'H2E_f_DPS341_DPdegC'
+  'H2E_f_DPS341_DPppmV'
+  'H2E_f_LS201_H2OLevel'
+  'H2E_f_LS301_H2OLevel'
+  'H2E_f_PT264_Pressure'
+  'H2E_f_PT307_Pressure'
+  'H2E_f_PT312_Pressure'
+  'H2E_f_PT604_Pressure'
+  'H2E_f_RS209_Resistivity'
+  'H2E_f_RS507_Resistivity'
+  'H2E_f_TE218_Temp'
+  'H2E_f_TE219_Temp'
+  'H2E_f_TE338_Temp'
+  'H2E_f_TE601_Temp'
+  'H2E_f_TT645_Temp'
+  'H2E_f_TT646_Temp'
+  'H2E_f_TT647_Temp'
+  'H2E_f_TT648_Temp'
+  'H2E_f_NLR_CurrentCmd (A)'
+
+Data types:
+Unnamed: 0                                str
+Experiment                                str
+GE 1.5 MW Wind Turbine Power (kW)     float64
+H2E_f_NLR_CurrentCmd (%)              float64
+IVAL_f_FM011_Flow (kg/hr)             float64
+Efficiency (kWh/kg)                   float64
+Power Supply Average Voltage (Vdc)    float64
+H2E_f_NLR_CurrentCmd (%).1            float64
+H2E_n_PSU_A_Power (kW)                float64
+H2E_f_PSU_A_Current                   float64
+H2E_f_Elec_CalcProdRate               float64
+H2E_f_CG220_LFLPer                    float64
+H2E_f_DPS340_DPdegC                   float64
+H2E_f_DPS341_DPdegC                   float64
+H2E_f_DPS341_DPppmV                   float64
+H2E_f_LS201_H2OLevel                  float64
+H2E_f_LS301_H2OLevel                  float64
+H2E_f_PT264_Pressure                  float64
+H2E_f_PT307_Pressure                  float64
+H2E_f_PT312_Pressure                  float64
+H2E_f_PT604_Pressure                  float64
+H2E_f_RS209_Resistivity               float64
+H2E_f_RS507_Resistivity               float64
+H2E_f_TE218_Temp                      float64
+H2E_f_TE219_Temp                      float64
+H2E_f_TE338_Temp                      float64
+H2E_f_TE601_Temp                      float64
+H2E_f_TT645_Temp                      float64
+H2E_f_TT646_Temp                      float64
+H2E_f_TT647_Temp                      float64
+H2E_f_TT648_Temp                      float64
+H2E_f_NLR_CurrentCmd (A)              float64
+
+First 5 rows:
+            Unnamed: 0                 Experiment  GE 1.5 MW Wind Turbine Power (kW)  H2E_f_NLR_CurrentCmd (%)  IVAL_f_FM011_Flow (kg/hr)  Efficiency (kWh/kg)  ...  H2E_f_TE601_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp  H2E_f_TT648_Temp  H2E_f_NLR_CurrentCmd (A)
+0  2025-12-23 12:50:02  wind-GE1.5MW_0.65-200.csv                            991.426                    69.903                     15.292            53.165054  ...             20.91              25.5              28.0               8.6              15.0                  2097.102
+1  2025-12-23 12:50:03  wind-GE1.5MW_0.65-200.csv                            994.603                    89.745                     15.720            51.717557  ...             20.91              25.5              28.0               8.5              14.9                  2692.346
+2  2025-12-23 12:50:04  wind-GE1.5MW_0.65-200.csv                            992.086                    84.644                     15.272            56.181247  ...             20.91              25.5              28.0               8.6              15.0                  2539.325
+3  2025-12-23 12:50:05  wind-GE1.5MW_0.65-200.csv                            992.450                    84.466                     14.993            62.962716  ...             20.91              25.5              28.0               8.6              15.0                  2533.973
+4  2025-12-23 12:50:06  wind-GE1.5MW_0.65-200.csv                            991.753                    84.492                     15.810            64.389627  ...             20.91              25.5              28.0               8.5              15.0                  2534.748
+
+Missing values (highest first):
+Efficiency (kWh/kg)                   3
+H2E_f_NLR_CurrentCmd (%)              2
+Power Supply Average Voltage (Vdc)    2
+H2E_f_NLR_CurrentCmd (%).1            2
+H2E_f_CG220_LFLPer                    2
+H2E_f_Elec_CalcProdRate               2
+H2E_f_PSU_A_Current                   2
+H2E_n_PSU_A_Power (kW)                2
+H2E_f_DPS340_DPdegC                   2
+H2E_f_DPS341_DPdegC                   2
+H2E_f_DPS341_DPppmV                   2
+H2E_f_LS201_H2OLevel                  2
+H2E_f_PT312_Pressure                  2
+H2E_f_PT307_Pressure                  2
+H2E_f_PT264_Pressure                  2
+H2E_f_LS301_H2OLevel                  2
+H2E_f_TE219_Temp                      2
+H2E_f_TE338_Temp                      2
+H2E_f_TE601_Temp                      2
+H2E_f_TT645_Temp                      2
+H2E_f_PT604_Pressure                  2
+H2E_f_RS209_Resistivity               2
+H2E_f_RS507_Resistivity               2
+H2E_f_TE218_Temp                      2
+H2E_f_TT646_Temp                      2
+H2E_f_TT647_Temp                      2
+H2E_f_TT648_Temp                      2
+H2E_f_NLR_CurrentCmd (A)              2
+IVAL_f_FM011_Flow (kg/hr)             1
+
+Numeric summary:
+       GE 1.5 MW Wind Turbine Power (kW)  H2E_f_NLR_CurrentCmd (%)  IVAL_f_FM011_Flow (kg/hr)  Efficiency (kWh/kg)  Power Supply Average Voltage (Vdc)  H2E_f_NLR_CurrentCmd (%).1  H2E_n_PSU_A_Power (kW)  H2E_f_PSU_A_Current  H2E_f_Elec_CalcProdRate  H2E_f_CG220_LFLPer  H2E_f_DPS340_DPdegC  H2E_f_DPS341_DPdegC  H2E_f_DPS341_DPppmV  H2E_f_LS201_H2OLevel  H2E_f_LS301_H2OLevel  H2E_f_PT264_Pressure  H2E_f_PT307_Pressure  H2E_f_PT312_Pressure  H2E_f_PT604_Pressure  H2E_f_RS209_Resistivity  H2E_f_RS507_Resistivity  H2E_f_TE218_Temp  H2E_f_TE219_Temp  H2E_f_TE338_Temp  H2E_f_TE601_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp  H2E_f_TT648_Temp  H2E_f_NLR_CurrentCmd (A)
+count                          28800.000                 28798.000                  28799.000            28797.000                           28798.000                   28798.000               28798.000            28798.000                28798.000           28798.000            28798.000            28798.000            28798.000             28798.000             28798.000             28798.000             28798.000             28798.000             28798.000                28798.000                28798.000         28798.000         28798.000         28798.000         28798.000         28798.000         28798.000         28798.000         28798.000                 28798.000
+mean                             671.298                    59.936                     13.212               62.013                             370.827                      59.936                 708.395             1796.824                   13.400               1.879              -59.283              -64.425                0.224                57.348                29.906                 2.999                28.997                23.475                 4.507                    5.999                   13.488            57.128            57.952            19.841            20.553            18.593            26.757            16.424            24.734                  1798.080
+std                              406.613                    30.828                      6.920              240.657                              29.990                      30.828                 383.065              924.298                    6.896               3.313                1.594                3.575                0.142                 3.318                 2.891                 0.113                 0.256                 2.106                 0.220                    0.752                    2.009             0.724             0.631             2.973             1.493             8.037            23.402             8.256             9.128                   924.831
+min                              -21.931                    10.000                      0.023               24.842                             320.533                      10.000                  97.000              295.000                    2.238               0.116              -61.528              -68.681                0.106                49.885                17.199                 2.771                27.644                19.041                 4.033                    3.574                    1.783            55.787            56.019            16.206            16.142             9.300            11.600             8.200            14.400                   300.000
+25%                              275.974                    27.049                      4.714               49.843                             340.467                      27.049                 280.000              812.250                    6.054               0.119              -60.764              -66.979                0.136                55.110                28.156                 2.911                28.946                21.571                 4.284                    5.999                   12.048            56.713            57.639            17.679            19.994            10.200            12.800             8.900            15.400                   811.471
+50%                              962.331                    82.171                     17.592               53.784                             391.533                      82.171                 983.000             2457.000                   18.333               0.119              -59.097              -65.729                0.163                57.550                30.020                 3.008                29.019                24.146                 4.560                    6.316                   12.987            56.944            57.870            18.531            20.752            18.850            28.600             9.400            29.400                  2465.138
+75%                              989.372                    83.920                     18.573               56.170                             394.100                      83.920                1013.000             2518.000                   18.781               0.119              -58.611              -62.778                0.246                59.990                31.937                 3.121                29.120                25.419                 4.724                    6.424                   15.152            57.407            58.333            21.284            21.563            26.100            31.100            25.100            33.900                  2517.613
+max                             1096.505                    91.977                     21.812            10115.385                             402.233                      91.977                1127.000             2746.000                   20.411               9.133              -54.653              -54.097                0.785                63.218                38.709                 3.144                29.943                26.306                 4.791                    6.719                   18.182            59.722            61.111            26.601            23.423            29.500           167.400            29.300            37.000                  2759.321
+
+Potential timestamp columns:
+
+Potential experiment/site identifier columns:
+  'Experiment'
+    Unique values: 2
+    Examples: ['wind-GE1.5MW_0.65-200.csv', 'wind-GE1.5MW_0.65-400.csv']
+  'GE 1.5 MW Wind Turbine Power (kW)'
+    Unique values: 11687
+    Examples: ['991.426', '994.603', '992.086', '992.45', '991.753', '990.065', '988.82', '986.611']
+
+=====================================================================================
+CSV: data\raw\hydro-electrolyzer\combined_simulated_tidal_experiments.csv
+Rows: 47,502
+Columns: 32
+
+Column names:
+  'Unnamed: 0'
+  'Experiment'
+  'tidal-500kW-RM1 (kW)'
+  'H2E_f_NLR_CurrentCmd (%)'
+  'IVAL_f_FM011_Flow (kg/hr)'
+  'Efficiency (kWh/kg)'
+  'Power Supply Average Voltage (Vdc)'
+  'H2E_f_NLR_CurrentCmd (%).1'
+  'H2E_n_PSU_A_Power (kW)'
+  'H2E_f_PSU_A_Current'
+  'H2E_f_Elec_CalcProdRate'
+  'H2E_f_CG220_LFLPer'
+  'H2E_f_DPS340_DPdegC'
+  'H2E_f_DPS341_DPdegC'
+  'H2E_f_DPS341_DPppmV'
+  'H2E_f_LS201_H2OLevel'
+  'H2E_f_LS301_H2OLevel'
+  'H2E_f_PT264_Pressure'
+  'H2E_f_PT307_Pressure'
+  'H2E_f_PT312_Pressure'
+  'H2E_f_PT604_Pressure'
+  'H2E_f_RS209_Resistivity'
+  'H2E_f_RS507_Resistivity'
+  'H2E_f_TE218_Temp'
+  'H2E_f_TE219_Temp'
+  'H2E_f_TE338_Temp'
+  'H2E_f_TE601_Temp'
+  'H2E_f_TT645_Temp'
+  'H2E_f_TT646_Temp'
+  'H2E_f_TT647_Temp'
+  'H2E_f_TT648_Temp'
+  'H2E_f_NLR_CurrentCmd (A)'
+
+Data types:
+Unnamed: 0                                str
+Experiment                                str
+tidal-500kW-RM1 (kW)                  float64
+H2E_f_NLR_CurrentCmd (%)              float64
+IVAL_f_FM011_Flow (kg/hr)             float64
+Efficiency (kWh/kg)                   float64
+Power Supply Average Voltage (Vdc)    float64
+H2E_f_NLR_CurrentCmd (%).1            float64
+H2E_n_PSU_A_Power (kW)                float64
+H2E_f_PSU_A_Current                   float64
+H2E_f_Elec_CalcProdRate               float64
+H2E_f_CG220_LFLPer                    float64
+H2E_f_DPS340_DPdegC                   float64
+H2E_f_DPS341_DPdegC                   float64
+H2E_f_DPS341_DPppmV                   float64
+H2E_f_LS201_H2OLevel                  float64
+H2E_f_LS301_H2OLevel                  float64
+H2E_f_PT264_Pressure                  float64
+H2E_f_PT307_Pressure                  float64
+H2E_f_PT312_Pressure                  float64
+H2E_f_PT604_Pressure                  float64
+H2E_f_RS209_Resistivity               float64
+H2E_f_RS507_Resistivity               float64
+H2E_f_TE218_Temp                      float64
+H2E_f_TE219_Temp                      float64
+H2E_f_TE338_Temp                      float64
+H2E_f_TE601_Temp                      float64
+H2E_f_TT645_Temp                      float64
+H2E_f_TT646_Temp                      float64
+H2E_f_TT647_Temp                      float64
+H2E_f_TT648_Temp                      float64
+H2E_f_NLR_CurrentCmd (A)              float64
+
+First 5 rows:
+            Unnamed: 0                 Experiment  tidal-500kW-RM1 (kW)  H2E_f_NLR_CurrentCmd (%)  IVAL_f_FM011_Flow (kg/hr)  Efficiency (kWh/kg)  ...  H2E_f_TE601_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp  H2E_f_TT648_Temp  H2E_f_NLR_CurrentCmd (A)
+0  2026-02-11 08:05:30  tidal-500kW-RM1_raw_2.csv                   0.0                    19.984                      4.575            44.590164  ...             6.831              18.3              29.5               7.1              15.4                   599.529
+1  2026-02-11 08:05:31  tidal-500kW-RM1_raw_2.csv                   0.0                    19.984                      4.563            44.707429  ...             6.831              18.3              29.6               7.1              15.2                   599.529
+2  2026-02-11 08:05:32  tidal-500kW-RM1_raw_2.csv                   0.0                    10.000                      4.509            45.242848  ...             6.837              18.3              29.6               7.1              15.4                   300.000
+3  2026-02-11 08:05:33  tidal-500kW-RM1_raw_2.csv                   0.0                    10.000                      4.410            46.258503  ...             6.837              18.2              29.5               7.1              15.4                   300.000
+4  2026-02-11 08:05:34  tidal-500kW-RM1_raw_2.csv                   0.0                    10.000                      4.298            23.033969  ...             6.842              18.2              29.5               7.1              15.3                   300.000
+
+Missing values (highest first):
+Efficiency (kWh/kg)                   2
+H2E_f_NLR_CurrentCmd (%)              1
+IVAL_f_FM011_Flow (kg/hr)             1
+Power Supply Average Voltage (Vdc)    1
+H2E_f_NLR_CurrentCmd (%).1            1
+H2E_f_Elec_CalcProdRate               1
+H2E_f_PSU_A_Current                   1
+H2E_n_PSU_A_Power (kW)                1
+H2E_f_DPS340_DPdegC                   1
+H2E_f_DPS341_DPdegC                   1
+H2E_f_DPS341_DPppmV                   1
+H2E_f_CG220_LFLPer                    1
+H2E_f_LS201_H2OLevel                  1
+H2E_f_PT307_Pressure                  1
+H2E_f_PT264_Pressure                  1
+H2E_f_LS301_H2OLevel                  1
+H2E_f_TE219_Temp                      1
+H2E_f_TE338_Temp                      1
+H2E_f_TE601_Temp                      1
+H2E_f_PT312_Pressure                  1
+H2E_f_PT604_Pressure                  1
+H2E_f_RS209_Resistivity               1
+H2E_f_RS507_Resistivity               1
+H2E_f_TE218_Temp                      1
+H2E_f_TT646_Temp                      1
+H2E_f_TT647_Temp                      1
+H2E_f_TT648_Temp                      1
+H2E_f_TT645_Temp                      1
+H2E_f_NLR_CurrentCmd (A)              1
+
+Numeric summary:
+       tidal-500kW-RM1 (kW)  H2E_f_NLR_CurrentCmd (%)  IVAL_f_FM011_Flow (kg/hr)  Efficiency (kWh/kg)  Power Supply Average Voltage (Vdc)  H2E_f_NLR_CurrentCmd (%).1  H2E_n_PSU_A_Power (kW)  H2E_f_PSU_A_Current  H2E_f_Elec_CalcProdRate  H2E_f_CG220_LFLPer  H2E_f_DPS340_DPdegC  H2E_f_DPS341_DPdegC  H2E_f_DPS341_DPppmV  H2E_f_LS201_H2OLevel  H2E_f_LS301_H2OLevel  H2E_f_PT264_Pressure  H2E_f_PT307_Pressure  H2E_f_PT312_Pressure  H2E_f_PT604_Pressure  H2E_f_RS209_Resistivity  H2E_f_RS507_Resistivity  H2E_f_TE218_Temp  H2E_f_TE219_Temp  H2E_f_TE338_Temp  H2E_f_TE601_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp  H2E_f_TT648_Temp  H2E_f_NLR_CurrentCmd (A)
+count             47502.000                 47501.000                  47501.000            47500.000                           47501.000                   47501.000               47501.000            47501.000                47501.000           47501.000            47501.000            47501.000            47501.000             47501.000             47501.000             47501.000             47501.000             47501.000             47501.000                47501.000                47501.000         47501.000         47501.000         47501.000         47501.000         47501.000         47501.000         47501.000         47501.000                 47501.000
+mean                671.679                    59.297                     13.090               58.680                             370.559                      59.297                 701.224             1777.322                   13.257               1.602              -60.440              -62.713                0.348                55.535                29.979                 3.048                29.499                22.854                 4.599                    4.994                   12.362            57.249            57.954            18.177            14.139            20.659            26.368            16.639            53.968                  1778.910
+std                 399.641                    30.736                      6.858              150.065                              30.002                      30.736                 384.473              921.216                    6.873               2.965                5.108                6.647                0.292                 4.029                 1.983                 0.090                 0.514                 2.110                 0.078                    0.825                    3.809             0.724             0.445             2.598             3.037             7.262             7.359            18.546            65.053                   922.069
+min                   0.000                    10.000                      0.022               17.335                             320.333                      10.000                  96.000              292.000                    2.238               0.101              -65.833              -72.083                0.064                48.922                11.774                 2.870                28.084                18.169                 4.353                    2.890                    0.998            55.787            56.481            14.955             5.358             9.300            12.900             6.600            14.600                   300.000
+25%                 246.825                    24.988                      5.417               49.560                             338.233                      24.988                 258.000              751.000                    5.587               0.105              -65.000              -69.688                0.090                52.118                28.497                 2.977                29.007                21.054                 4.522                    4.629                   11.494            56.713            57.639            16.285            12.243            11.000            17.500             8.800            15.400                   749.627
+50%                 950.100                    80.898                     17.639               53.930                             391.433                      80.898                 970.000             2423.000                   18.068               0.116              -63.333              -61.285                0.302                54.488                30.110                 3.107                29.421                22.507                 4.626                    4.778                   12.987            56.944            57.870            17.379            14.691            23.900            30.300             9.200            17.500                  2426.954
+75%                 998.300                    84.346                     18.626               56.231                             394.667                      84.346                1021.000             2530.000                   18.872               0.119              -55.069              -56.771                0.537                58.865                31.510                 3.118                30.001                25.151                 4.659                    5.900                   15.152            57.639            58.102            19.625            16.653            26.800            32.000            14.600            46.000                  2530.385
+max                1117.200                    92.618                     24.885             6500.000                             401.467                      92.618                1146.000             2779.000                   20.387               8.981              -49.236              -47.917                1.639                63.413                35.675                 3.135                30.644                26.385                 4.721                    6.222                   18.182            59.491            59.491            25.272            18.468            31.200            34.000            91.400           199.400                  2778.531
+
+Potential timestamp columns:
+
+Potential experiment/site identifier columns:
+  'Experiment'
+    Unique values: 2
+    Examples: ['tidal-500kW-RM1_raw_2.csv', 'tidal-500kW-RM1_average_2.csv']
+  'tidal-500kW-RM1 (kW)'
+    Unique values: 13255
+    Examples: ['0.0', '0.221', '0.94', '1.329', '1.916', '2.966', '3.796', '4.708']
+
+=====================================================================================
+NETCDF: data\raw\hydro\ER.nc
+Dimensions: {'bin_depth': 5, 'time': 31304}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for East River, New York, USA (Abbreviated as ER)', 'history': 'Created on 2025-12-23 10:35:43', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=40.76, max=40.76
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-73.95, max=-73.95
+  bin_height: dimensions=('bin_depth',), shape=(5,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=1.52, max=5.52
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(5, 31304), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-2.506, max=2.7469
+  depth: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=8.0912, max=10.898
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-2.0398e+07, max=2.3233e+07
+  alpha: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=7661, min=2.122, max=9.0597
+  beta: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=7661, min=0.30361, max=0.40463
+  RMSE: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=7661, min=0.00016023, max=0.12293
+  label: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=1
+  flood_idx_qs: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(31304,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(31304,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\FC.nc
+Dimensions: {'bin_depth': 8, 'time': 3426}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Fort Clinch, Florida, USA (Abbreviated as FC)', 'history': 'Created on 2025-12-23 10:41:33', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=30.71, max=30.71
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-81.44, max=-81.44
+  bin_height: dimensions=('bin_depth',), shape=(8,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=1.5, max=8.5
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(8, 3426), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-1.9373, max=1.7319
+  depth: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=14.2, max=14.2
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-2.4845e+07, max=2.27e+07
+  alpha: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=1419, min=4.5134, max=11.97
+  beta: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=1419, min=0.31212, max=0.31864
+  RMSE: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=1419, min=0.00044268, max=0.013063
+  label: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=1
+  flood_idx_qs: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(3426,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(3426,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\FWN.nc
+Dimensions: {'bin_depth': 25, 'time': 2933}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Fall of Warness (North), Scotland (Abbreviated as FWN)', 'history': 'Created on 2025-12-23 10:38:07', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=59.16, max=59.16
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-2.83, max=-2.83
+  bin_height: dimensions=('bin_depth',), shape=(25,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=2.24, max=20.24
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(25, 2933), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-3.648, max=3.8547
+  depth: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=25.5, max=30.3
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-9.0596e+07, max=9.4985e+07
+  alpha: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=680, min=3.4539, max=15.377
+  beta: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=680, min=0.3287, max=0.38383
+  RMSE: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=680, min=0.0045378, max=0.027935
+  label: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=1
+  flood_idx_qs: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(2933,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(2933,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\FWS.nc
+Dimensions: {'bin_depth': 36, 'time': 9188}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Fall of Warness (South), Scotland (Abbreviated as FWS)', 'history': 'Created on 2025-12-23 10:38:16', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=59.14, max=59.14
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-2.81, max=-2.81
+  bin_height: dimensions=('bin_depth',), shape=(36,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=2.6, max=37.6
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(36, 9188), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-4.3967, max=3.9677
+  depth: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=22.69, max=46.71
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-1.7201e+08, max=1.631e+08
+  alpha: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=2013, min=4.0863, max=12.551
+  beta: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=2013, min=0.36719, max=0.40239
+  RMSE: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=2013, min=0.0031867, max=0.071263
+  label: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=2
+  flood_idx_qs: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(9188,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(9188,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\GWB.nc
+Dimensions: {'bin_depth': 15, 'time': 7436}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for George Washington Bridge, New Jersey, USA (Abbreviated as GWB)', 'history': 'Created on 2025-12-23 10:42:41', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=40.85, max=40.85
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-73.95, max=-73.95
+  bin_height: dimensions=('bin_depth',), shape=(15,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=3.6, max=17.6
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(15, 7436), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-1.7296, max=1.3526
+  depth: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=22.9, max=22.9
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-3.2754e+07, max=2.8262e+07
+  alpha: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=6042, min=0.71809, max=14.957
+  beta: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=6042, min=0.42288, max=0.47961
+  RMSE: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=6042, min=0.0063849, max=0.079224
+  label: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=2
+  flood_idx_qs: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7436,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7436,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\I95.nc
+Dimensions: {'bin_depth': 10, 'time': 7364}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for I-95 Bridge, Maine, USA (Abbreviated as I95)', 'history': 'Created on 2025-12-23 10:44:21', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=43.09, max=43.09
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-70.77, max=-70.77
+  bin_height: dimensions=('bin_depth',), shape=(10,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=2.3, max=11.3
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(10, 7364), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-2.4976, max=2.1151
+  depth: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=17, max=17
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-3.6008e+07, max=3.3097e+07
+  alpha: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=2157, min=2.1305, max=18.453
+  beta: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=2157, min=0.36118, max=0.37932
+  RMSE: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=2157, min=0.0021046, max=0.042631
+  label: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=1
+  flood_idx_qs: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7364,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7364,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\KI.nc
+Dimensions: {'bin_depth': 23, 'time': 7440}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Kalgin Island, Alaska, USA (Abbreviated as KI)', 'history': 'Created on 2025-12-23 10:46:46', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=60.47, max=60.47
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-151.71, max=-151.71
+  bin_height: dimensions=('bin_depth',), shape=(23,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=18, max=61.9
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(23, 7440), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-3.1598, max=2.0602
+  depth: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=69.5, max=69.5
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-1.9313e+08, max=1.3153e+08
+  alpha: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=3526, min=0.48968, max=100.87
+  beta: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=3526, min=0.54088, max=0.60476
+  RMSE: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=3526, min=0.0021254, max=0.12577
+  label: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=5
+  flood_idx_qs: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7440,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7440,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\NR.nc
+Dimensions: {'bin_depth': 19, 'time': 7439}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Tacoma Bridge, Washington, USA (Abbreviated as NR)', 'history': 'Created on 2025-12-23 10:45:36', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=47.27, max=47.27
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-122.55, max=-122.55
+  bin_height: dimensions=('bin_depth',), shape=(19,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=9.1, max=45.1
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(19, 7439), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-2.9106, max=3.1229
+  depth: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=52, max=52
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-1.4114e+08, max=1.5635e+08
+  alpha: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=2857, min=2.0747, max=5.9346e+07
+  beta: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=2857, min=0.47249, max=0.51253
+  RMSE: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=2857, min=0.002142, max=0.055359
+  label: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=5
+  flood_idx_qs: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7439,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\PI.nc
+Dimensions: {'bin_depth': 5, 'time': 3370}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Parris Island, South Carolina, USA (Abbreviated as PI)', 'history': 'Created on 2025-12-23 10:30:42', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=32.35, max=32.35
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-80.67, max=-80.67
+  bin_height: dimensions=('bin_depth',), shape=(5,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=1.3, max=3.3
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(5, 3370), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-1.2195, max=1.103
+  depth: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=3.633, max=6.465
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-5.8219e+06, max=5.8794e+06
+  alpha: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=2440, min=3.8256, max=6.0117
+  beta: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=2440, min=0.35444, max=0.56316
+  RMSE: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=2440, min=0.00071813, max=0.0097413
+  label: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=1
+  flood_idx_qs: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(3370,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(3370,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\PSP.nc
+Dimensions: {'bin_depth': 14, 'time': 12055}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Point San Pablo, California, USA (Abbreviated as PSP)', 'history': 'Created on 2025-12-23 10:47:50', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=37.97, max=37.97
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-122.44, max=-122.44
+  bin_height: dimensions=('bin_depth',), shape=(14,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=5.8, max=18.8
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(14, 12055), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-1.9124, max=1.4507
+  depth: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=24, max=24
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-4.2259e+07, max=3.1548e+07
+  alpha: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=7110, min=1.0414, max=2.7965e+06
+  beta: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=7110, min=0.4829, max=0.51859
+  RMSE: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=7110, min=0.0015787, max=0.064567
+  label: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=5
+  flood_idx_qs: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(12055,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(12055,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\PW.nc
+Dimensions: {'bin_depth': 45, 'time': 7439}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Point Wilson, Washington, USA (Abbreviated as PW)', 'history': 'Created on 2025-12-23 10:46:16', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=48.17, max=48.17
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-122.71, max=-122.71
+  bin_height: dimensions=('bin_depth',), shape=(45,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=13.1, max=57.1
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(45, 7439), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-2.6608, max=2.2004
+  depth: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=63.1, max=63.1
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-1.616e+08, max=1.2975e+08
+  alpha: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=4186, min=0.80243, max=5.4035e+08
+  beta: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=4186, min=0.51408, max=0.65931
+  RMSE: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=4186, min=0.0036919, max=0.10054
+  label: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=5
+  flood_idx_qs: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7439,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\RC.nc
+Dimensions: {'bin_depth': 9, 'time': 7438}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for The Race, New York, USA (Abbreviated as RC)', 'history': 'Created on 2025-12-23 10:43:34', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=41.23, max=41.23
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-72.06, max=-72.06
+  bin_height: dimensions=('bin_depth',), shape=(9,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=2.7, max=10.7
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(9, 7438), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-2.5124, max=2.292
+  depth: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=16.4, max=16.4
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-3.2179e+07, max=3.5969e+07
+  alpha: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=2647, min=1.4948, max=1.1921e+07
+  beta: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=2647, min=0.37472, max=0.40072
+  RMSE: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=2647, min=0.00087018, max=0.024432
+  label: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=5
+  flood_idx_qs: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7438,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7438,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\SB.nc
+Dimensions: {'bin_depth': 8, 'time': 7439}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Sagamore Bridge, Massachusetts, USA (Abbreviated as SB)', 'history': 'Created on 2025-12-23 10:40:31', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=41.78, max=41.78
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-70.54, max=-70.54
+  bin_height: dimensions=('bin_depth',), shape=(8,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=3, max=10
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(8, 7439), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-2.0907, max=2.1253
+  depth: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=15.9, max=15.9
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-3.0498e+07, max=3.0817e+07
+  alpha: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=2245, min=4.3988, max=11.407
+  beta: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=2245, min=0.38353, max=0.38758
+  RMSE: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=2245, min=0.00050906, max=0.014318
+  label: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=1
+  flood_idx_qs: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7439,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7439,), dtype=datetime64[ns], attributes={}
+
+=====================================================================================
+NETCDF: data\raw\hydro\SP.nc
+Dimensions: {'bin_depth': 7, 'time': 7430}
+Coordinates: ['time']
+Global attributes: {'title': 'Processed data for Southport, North Carolina, USA (Abbreviated as SP)', 'history': 'Created on 2025-12-23 10:40:20', 'description': 'This is a processed ADCP dataset for tidal profile characterization in Jang et al. 2025. You can find how this is processed in details in the methodology of the paper.', 'source': 'Jang, M.C., Neary, V.S., Haas, K.A., Current depth profile characterization for tidal energy development, Renewable Energy. (submitted)'}
+
+Variables:
+  lat: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees North', 'long_name': 'latitude'}
+    missing=0, min=33.92, max=33.92
+  lon: dimensions=(), shape=(), dtype=float32, attributes={'units': 'degrees East', 'long_name': 'longitude'}
+    missing=0, min=-78.01, max=-78.01
+  bin_height: dimensions=('bin_depth',), shape=(7,), dtype=float32, attributes={'units': 'meters', 'long_name': 'height of bins relative to the bed'}
+    missing=0, min=2.4, max=8.4
+  principal_profile: dimensions=('bin_depth', 'time'), shape=(7, 7430), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'current depth profile in principal frame of reference', 'comment': '(+) depth-averaged velocity indicates flood currents and (-) ebb currents.'}
+    missing=0, min=-1.32, max=1.9832
+  depth: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'units': 'meters', 'long_name': 'water depth'}
+    missing=0, min=13.6, max=13.6
+  nu: dimensions=(), shape=(), dtype=float32, attributes={'units': 'meter squared per second', 'long_name': 'kinematic viscosity'}
+    missing=0, min=1.002e-06, max=1.002e-06
+  Re: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'Reynolds number'}
+    missing=0, min=-1.7086e+07, max=2.3294e+07
+  alpha: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'power exponent'}
+    missing=3863, min=1.4032, max=81.789
+  beta: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'bed roughness coefficient'}
+    missing=3863, min=0.37103, max=0.39285
+  RMSE: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'units': 'meters per second', 'long_name': 'Root mean squared error between measured profile and power law fit'}
+    missing=3863, min=0.00095805, max=0.038703
+  label: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'Label for profile classification based on shape', 'comment': '0: below minimum operation speed of 0.75 m/s, 1: monotonic, 2: non-monotonic (concave), 3: non-monotonic (convex), 4: non-monotonic (mix-concavity), 5: pseudo-depth-uniform'}
+    missing=0, min=0, max=2
+  flood_idx_qs: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'quasi-steady profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_acc: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'accelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  flood_idx_dec: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'decelerating profile during flood tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_qs: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'quasi-steady profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_acc: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'accelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  ebb_idx_dec: dimensions=('time',), shape=(7430,), dtype=float32, attributes={'long_name': 'decelerating profile during ebb tide', 'comment': 'A binary array where 1 indicates profile with the corresponding flow regime and current direction, while 0 indicates otherwise.'}
+    missing=0, min=0, max=1
+  time: dimensions=('time',), shape=(7430,), dtype=datetime64[ns], attributes={}

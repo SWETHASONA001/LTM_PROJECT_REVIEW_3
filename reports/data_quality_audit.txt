@@ -1,0 +1,71 @@
+
+=================================================================
+DATASET: wind_scada
+FILE: data/raw/wind/la-haute-borne-data-2017-2020.csv
+Shape: (217588, 138)
+Missing cells: 3999914
+Completely empty columns: ['Pas_avg', 'Pas_min', 'Pas_max', 'Pas_std', 'Wa_c_min', 'Wa_c_max', 'Wa_c_std', 'Na_c_min', 'Na_c_max', 'Na_c_std']
+Exact duplicate rows: 0
+Invalid timestamps: 0
+Time range: 2016-12-31 23:00:00+00:00 to 2018-01-12 23:00:00+00:00
+Rows with duplicate turbine/timestamp keys: 912
+P_avg: missing=1658, min=-17.389999, median=182.41, max=2050.78
+Ws_avg: missing=1658, min=0.0, median=5.4, max=24.27
+Wa_avg: missing=1658, min=0.0, median=206.05, max=360.0
+
+=================================================================
+DATASET: wind_electrolyzer
+FILE: data/raw/electrolyzer/combined_wind_experiments.csv
+Shape: (61285, 32)
+Missing cells: 79287
+Completely empty columns: []
+Exact duplicate rows: 204
+Invalid timestamps: 0
+Time range: 2025-06-04 10:32:00+00:00 to 2025-08-06 13:52:00+00:00
+Experiment counts:
+Experiment
+characterization_200.csv      18000
+windIEA3.4-5ms-A_2-200.csv     3652
+windIEA3.4-5ms-C_2-200.csv     3652
+windIEA3.4-5ms-A_2-400.csv     3652
+windIEA3.4-5ms-C_2-400.csv     3652
+windIEA3.4-7ms-C_1-200.csv     3591
+windIEA3.4-7ms-A_1-200.csv     3591
+windIEA3.4-7ms-A_1-400.csv     3591
+windIEA3.4-7ms-C_1-400.csv     3591
+windIEA3.4-9ms-A_1-200.csv     3591
+windIEA3.4-9ms-C_1-200.csv     3591
+windIEA3.4-9ms-C_1-400.csv     3591
+windIEA3.4-9ms-A_1-400.csv     3540
+Efficiency (kWh/kg): min=21.11310057, median=51.662775435, max=40400.0
+
+=================================================================
+DATASET: historical_electrolyzer
+FILE: data/raw/electrolyzer/combined_historical_wind_experiments.csv
+Shape: (28800, 32)
+Missing cells: 58
+Completely empty columns: []
+Exact duplicate rows: 0
+Invalid timestamps: 0
+Time range: 2025-12-23 12:50:02+00:00 to 2026-01-12 16:27:59+00:00
+Experiment counts:
+Experiment
+wind-GE1.5MW_0.65-200.csv    14400
+wind-GE1.5MW_0.65-400.csv    14400
+Efficiency (kWh/kg): min=24.84157160963245, median=53.78443998733241, max=10115.384615384615
+
+=================================================================
+DATASET: tidal_electrolyzer
+FILE: data/raw/hydro-electrolyzer/combined_simulated_tidal_experiments.csv
+Shape: (47502, 32)
+Missing cells: 30
+Completely empty columns: []
+Exact duplicate rows: 0
+Invalid timestamps: 0
+Time range: 2026-02-11 08:05:30+00:00 to 2026-04-14 17:03:33+00:00
+Experiment counts:
+Experiment
+tidal-500kW-RM1_raw_2.csv        23751
+tidal-500kW-RM1_average_2.csv    23751
+Efficiency (kWh/kg): min=17.334967606373663, median=53.929525106026496, max=6500.0
+tidal-500kW-RM1 (kW): min=0.0, median=950.1, max=1117.2

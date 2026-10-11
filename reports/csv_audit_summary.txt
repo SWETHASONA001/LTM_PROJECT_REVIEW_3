@@ -1,0 +1,310 @@
+
+================================================================================
+FILE: data/raw/wind/la-haute-borne-data-2017-2020.csv
+Shape: (217588, 138)
+Columns: ['Wind_turbine_name', 'Date_time', 'Ba_avg', 'Ba_min', 'Ba_max', 'Ba_std', 'Rt_avg', 'Rt_min', 'Rt_max', 'Rt_std', 'DCs_avg', 'DCs_min', 'DCs_max', 'DCs_std', 'Cm_avg', 'Cm_min', 'Cm_max', 'Cm_std', 'P_avg', 'P_min', 'P_max', 'P_std', 'Q_avg', 'Q_min', 'Q_max', 'Q_std', 'S_avg', 'S_min', 'S_max', 'S_std', 'Cosphi_avg', 'Cosphi_min', 'Cosphi_max', 'Cosphi_std', 'Ds_avg', 'Ds_min', 'Ds_max', 'Ds_std', 'Db1t_avg', 'Db1t_min', 'Db1t_max', 'Db1t_std', 'Db2t_avg', 'Db2t_min', 'Db2t_max', 'Db2t_std', 'Dst_avg', 'Dst_min', 'Dst_max', 'Dst_std', 'Gb1t_avg', 'Gb1t_min', 'Gb1t_max', 'Gb1t_std', 'Gb2t_avg', 'Gb2t_min', 'Gb2t_max', 'Gb2t_std', 'Git_avg', 'Git_min', 'Git_max', 'Git_std', 'Gost_avg', 'Gost_min', 'Gost_max', 'Gost_std', 'Ya_avg', 'Ya_min', 'Ya_max', 'Ya_std', 'Yt_avg', 'Yt_min', 'Yt_max', 'Yt_std', 'Ws1_avg', 'Ws1_min', 'Ws1_max', 'Ws1_std', 'Ws2_avg', 'Ws2_min', 'Ws2_max', 'Ws2_std', 'Ws_avg', 'Ws_min', 'Ws_max', 'Ws_std', 'Wa_avg', 'Wa_min', 'Wa_max', 'Wa_std', 'Va1_avg', 'Va1_min', 'Va1_max', 'Va1_std', 'Va2_avg', 'Va2_min', 'Va2_max', 'Va2_std', 'Va_avg', 'Va_min', 'Va_max', 'Va_std', 'Ot_avg', 'Ot_min', 'Ot_max', 'Ot_std', 'Nf_avg', 'Nf_min', 'Nf_max', 'Nf_std', 'Nu_avg', 'Nu_min', 'Nu_max', 'Nu_std', 'Rs_avg', 'Rs_min', 'Rs_max', 'Rs_std', 'Rbt_avg', 'Rbt_min', 'Rbt_max', 'Rbt_std', 'Rm_avg', 'Rm_min', 'Rm_max', 'Rm_std', 'Pas_avg', 'Pas_min', 'Pas_max', 'Pas_std', 'Wa_c_avg', 'Wa_c_min', 'Wa_c_max', 'Wa_c_std', 'Na_c_avg', 'Na_c_min', 'Na_c_max', 'Na_c_std']
+
+Data types:
+Wind_turbine_name        str
+Date_time                str
+Ba_avg               float64
+Ba_min               float64
+Ba_max               float64
+Ba_std               float64
+Rt_avg               float64
+Rt_min               float64
+Rt_max               float64
+Rt_std               float64
+DCs_avg              float64
+DCs_min              float64
+DCs_max              float64
+DCs_std              float64
+Cm_avg               float64
+Cm_min               float64
+Cm_max               float64
+Cm_std               float64
+P_avg                float64
+P_min                float64
+P_max                float64
+P_std                float64
+Q_avg                float64
+Q_min                float64
+Q_max                float64
+Q_std                float64
+S_avg                float64
+S_min                float64
+S_max                float64
+S_std                float64
+Cosphi_avg           float64
+Cosphi_min           float64
+Cosphi_max           float64
+Cosphi_std           float64
+Ds_avg               float64
+Ds_min               float64
+Ds_max               float64
+Ds_std               float64
+Db1t_avg             float64
+Db1t_min             float64
+Db1t_max             float64
+Db1t_std             float64
+Db2t_avg             float64
+Db2t_min             float64
+Db2t_max             float64
+Db2t_std             float64
+Dst_avg              float64
+Dst_min              float64
+Dst_max              float64
+Dst_std              float64
+Gb1t_avg             float64
+Gb1t_min             float64
+Gb1t_max             float64
+Gb1t_std             float64
+Gb2t_avg             float64
+Gb2t_min             float64
+Gb2t_max             float64
+Gb2t_std             float64
+Git_avg              float64
+Git_min              float64
+Git_max              float64
+Git_std              float64
+Gost_avg             float64
+Gost_min             float64
+Gost_max             float64
+Gost_std             float64
+Ya_avg               float64
+Ya_min               float64
+Ya_max               float64
+Ya_std               float64
+Yt_avg               float64
+Yt_min               float64
+Yt_max               float64
+Yt_std               float64
+Ws1_avg              float64
+Ws1_min              float64
+Ws1_max              float64
+Ws1_std              float64
+Ws2_avg              float64
+Ws2_min              float64
+Ws2_max              float64
+Ws2_std              float64
+Ws_avg               float64
+Ws_min               float64
+Ws_max               float64
+Ws_std               float64
+Wa_avg               float64
+Wa_min               float64
+Wa_max               float64
+Wa_std               float64
+Va1_avg              float64
+Va1_min              float64
+Va1_max              float64
+Va1_std              float64
+Va2_avg              float64
+Va2_min              float64
+Va2_max              float64
+Va2_std              float64
+Va_avg               float64
+Va_min               float64
+Va_max               float64
+Va_std               float64
+Ot_avg               float64
+Ot_min               float64
+Ot_max               float64
+Ot_std               float64
+Nf_avg               float64
+Nf_min               float64
+Nf_max               float64
+Nf_std               float64
+Nu_avg               float64
+Nu_min               float64
+Nu_max               float64
+Nu_std               float64
+Rs_avg               float64
+Rs_min               float64
+Rs_max               float64
+Rs_std               float64
+Rbt_avg              float64
+Rbt_min              float64
+Rbt_max              float64
+Rbt_std              float64
+Rm_avg               float64
+Rm_min               float64
+Rm_max               float64
+Rm_std               float64
+Pas_avg              float64
+Pas_min              float64
+Pas_max              float64
+Pas_std              float64
+Wa_c_avg             float64
+Wa_c_min             float64
+Wa_c_max             float64
+Wa_c_std             float64
+Na_c_avg             float64
+Na_c_min             float64
+Na_c_max             float64
+Na_c_std             float64
+
+First 2 rows:
+Wind_turbine_name                 Date_time    Ba_avg    Ba_min    Ba_max  Ba_std  Rt_avg  Rt_min  Rt_max  Rt_std     DCs_avg   DCs_min  DCs_max  DCs_std  Cm_avg  Cm_min  Cm_max  Cm_std     P_avg     P_min     P_max  P_std     Q_avg     Q_min     Q_max  Q_std  S_avg     S_min     S_max  S_std  Cosphi_avg  Cosphi_min  Cosphi_max  Cosphi_std      Ds_avg  Ds_min      Ds_max  Ds_std  Db1t_avg  Db1t_min  Db1t_max  Db1t_std  Db2t_avg  Db2t_min  Db2t_max  Db2t_std   Dst_avg   Dst_min   Dst_max  Dst_std  Gb1t_avg  Gb1t_min  Gb1t_max  Gb1t_std  Gb2t_avg  Gb2t_min  Gb2t_max  Gb2t_std   Git_avg   Git_min   Git_max  Git_std  Gost_avg  Gost_min  Gost_max  Gost_std  Ya_avg  Ya_min  Ya_max  Ya_std    Yt_avg    Yt_min    Yt_max  Yt_std  Ws1_avg  Ws1_min  Ws1_max  Ws1_std  Ws2_avg  Ws2_min  Ws2_max  Ws2_std  Ws_avg  Ws_min  Ws_max  Ws_std     Wa_avg    Wa_min     Wa_max  Wa_std  Va1_avg  Va1_min  Va1_max  Va1_std  Va2_avg  Va2_min  Va2_max  Va2_std    Va_avg     Va_min    Va_max  Va_std  Ot_avg  Ot_min  Ot_max  Ot_std    Nf_avg    Nf_min    Nf_max  Nf_std    Nu_avg    Nu_min    Nu_max  Nu_std  Rs_avg  Rs_min  Rs_max  Rs_std   Rbt_avg  Rbt_min   Rbt_max  Rbt_std      Rm_avg     Rm_min  Rm_max  Rm_std  Pas_avg  Pas_min  Pas_max  Pas_std  Wa_c_avg  Wa_c_min  Wa_c_max  Wa_c_std  Na_c_avg  Na_c_min  Na_c_max  Na_c_std
+           R80721 2017-02-08T08:00:00+01:00 44.990002 44.990002 44.990002     0.0    14.0    14.0    14.0     0.0   38.369999   17.6800    52.41     9.39    2.39    2.06    2.69    0.09  -1.89000  -2.36000  -1.40000   0.15  0.000000  0.000000  0.000000   0.00   1.89   1.40000   2.36000   0.15        1.00         1.0        1.00         0.0   38.110001   17.27   51.919998    9.40 33.410000 33.200001 33.599998      0.14 30.790001     30.60     30.85      0.03 45.590000 45.299999 45.799999     0.11 35.360001 35.099998 35.599998      0.15 37.939999 37.799999 38.000000      0.08 34.130001 31.799999 35.700001     1.04 39.580002 39.049999 40.200001      0.40  318.12  318.12  318.12     0.0 20.610001 20.500000 20.799999    0.08     0.14     0.00     1.94     0.44     0.22     0.00     1.93     0.53    0.18    0.00    1.89    0.44 358.049990 298.76999  54.560001   12.05      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN 39.939999 -19.350000 96.449997   12.05    4.80     4.8     4.9    0.01 50.000000 49.959999 50.029999    0.01 698.40002 696.01001 708.03003    2.40    0.33    0.00    0.49    0.16 19.020000     19.0 19.100000     0.04  -18.889999 -438.32999    0.00   79.82      NaN      NaN      NaN      NaN 358.04999       NaN       NaN       NaN 358.04999       NaN       NaN       NaN
+           R80721 2017-01-26T02:40:00+01:00 -1.000000 -1.000000 -1.000000     0.0    10.0    10.0    10.0     0.0 1204.140000 1195.8101  1208.66     3.26 1796.71 1764.35 1816.86   10.58 197.32001 186.07001 200.96001   2.15 22.200001 16.120001 25.110001   1.04 198.58 186.92999 202.14999   2.17        0.99         1.0        0.99         0.0 1205.520000 1197.17 1210.060100    3.25 40.639999 40.200001 41.099998      0.17 29.379999     29.15     29.60      0.08 54.580002 53.500000 55.799999     0.37 64.800003 64.550003 65.000000      0.08 64.400002 64.300003 64.599998      0.08 54.959999 54.700001 55.599998     0.12 56.209999 56.000000 56.450001      0.07   63.48   63.48   63.48     0.0 21.900000 21.700001 22.200001    0.13     4.33     3.42     5.54     0.39     5.38     3.74     6.69     0.46    4.85    3.67    6.01    0.39  74.470001   9.47000 108.520000    9.74      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN 11.000000 -54.009998 45.029999    9.74   -7.16    -7.3    -6.9    0.11 50.009998 49.980000 50.029999    0.01 704.65997 703.42999 705.90002    0.45   11.48   11.37   11.54    0.03 21.610001     21.6 21.799999     0.03 1562.970000 1481.31010 1586.53   13.00      NaN      NaN      NaN      NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+
+Missing cells: 3999914
+Exact duplicate rows: 0
+
+Field summary: Date_time
+Unique values: 54283
+Sample values: ['2017-02-08T08:00:00+01:00', '2017-01-26T02:40:00+01:00', '2017-01-26T13:50:00+01:00', '2017-01-26T15:00:00+01:00', '2017-02-18T01:10:00+01:00']
+
+================================================================================
+FILE: data/raw/electrolyzer/combined_wind_experiments.csv
+Shape: (61285, 32)
+Columns: ['Unnamed: 0', 'Wind Turbine Power (kW)', 'H2E_f_NLR_CurrentCmd (A)', 'IVAL_f_FM011_Flow', 'Efficiency (kWh/kg)', 'Power Supply Average Voltage (Vdc)', 'H2E_f_NLR_CurrentCmd', 'H2E_n_PSU_A_Power', 'H2E_f_PSU_A_Current', 'H2E_f_Elec_CalcProdRate', 'H2E_f_CG220_LFLPer', 'H2E_f_DPS340_DPdegC', 'H2E_f_DPS341_DPdegC', 'H2E_f_DPS341_DPppmV', 'H2E_f_LS201_H2OLevel', 'H2E_f_LS301_H2OLevel', 'H2E_f_PT264_Pressure', 'H2E_f_PT307_Pressure', 'H2E_f_PT312_Pressure', 'H2E_f_PT604_Pressure', 'H2E_f_RS209_Resistivity', 'H2E_f_RS507_Resistivity', 'H2E_f_TE218_Temp', 'H2E_f_TE219_Temp', 'H2E_f_TE338_Temp', 'H2E_f_TE601_Temp', 'H2E_f_TT641_Temp', 'H2E_f_TT645_Temp', 'H2E_f_TT646_Temp', 'H2E_f_TT647_Temp', 'Experiment', 'Unnamed: 31']
+
+Data types:
+Unnamed: 0                                str
+Wind Turbine Power (kW)               float64
+H2E_f_NLR_CurrentCmd (A)              float64
+IVAL_f_FM011_Flow                     float64
+Efficiency (kWh/kg)                   float64
+Power Supply Average Voltage (Vdc)    float64
+H2E_f_NLR_CurrentCmd                  float64
+H2E_n_PSU_A_Power                       int64
+H2E_f_PSU_A_Current                     int64
+H2E_f_Elec_CalcProdRate               float64
+H2E_f_CG220_LFLPer                    float64
+H2E_f_DPS340_DPdegC                   float64
+H2E_f_DPS341_DPdegC                   float64
+H2E_f_DPS341_DPppmV                   float64
+H2E_f_LS201_H2OLevel                  float64
+H2E_f_LS301_H2OLevel                  float64
+H2E_f_PT264_Pressure                  float64
+H2E_f_PT307_Pressure                  float64
+H2E_f_PT312_Pressure                  float64
+H2E_f_PT604_Pressure                  float64
+H2E_f_RS209_Resistivity               float64
+H2E_f_RS507_Resistivity               float64
+H2E_f_TE218_Temp                      float64
+H2E_f_TE219_Temp                      float64
+H2E_f_TE338_Temp                      float64
+H2E_f_TE601_Temp                      float64
+H2E_f_TT641_Temp                      float64
+H2E_f_TT645_Temp                      float64
+H2E_f_TT646_Temp                      float64
+H2E_f_TT647_Temp                      float64
+Experiment                                str
+Unnamed: 31                           float64
+
+First 2 rows:
+    Unnamed: 0  Wind Turbine Power (kW)  H2E_f_NLR_CurrentCmd (A)  IVAL_f_FM011_Flow  Efficiency (kWh/kg)  Power Supply Average Voltage (Vdc)  H2E_f_NLR_CurrentCmd  H2E_n_PSU_A_Power  H2E_f_PSU_A_Current  H2E_f_Elec_CalcProdRate  H2E_f_CG220_LFLPer  H2E_f_DPS340_DPdegC  H2E_f_DPS341_DPdegC  H2E_f_DPS341_DPppmV  H2E_f_LS201_H2OLevel  H2E_f_LS301_H2OLevel  H2E_f_PT264_Pressure  H2E_f_PT307_Pressure  H2E_f_PT312_Pressure  H2E_f_PT604_Pressure  H2E_f_RS209_Resistivity  H2E_f_RS507_Resistivity  H2E_f_TE218_Temp  H2E_f_TE219_Temp  H2E_f_TE338_Temp  H2E_f_TE601_Temp  H2E_f_TT641_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp                 Experiment  Unnamed: 31
+6/4/2025 10:32                   350.14                   995.024              7.305            47.638604                             346.100                33.167                348                  993                    7.423               0.123              -52.222              -45.451                2.276                60.823                29.549                 2.836                28.967                25.669                 4.331                    6.377                   13.699            58.333            59.028            13.447            16.742              17.4               7.2              10.1              15.2 windIEA3.4-7ms-C_1-200.csv          NaN
+6/4/2025 10:32                   585.70                  1604.360              7.276            47.965915                             346.433                53.479                349                  997                    8.024               0.119              -52.292              -45.451                2.276                60.829                29.549                 2.827                28.966                25.668                 4.332                    6.381                   13.889            58.333            59.028            13.442            16.747              17.3               7.2              10.0              15.3 windIEA3.4-7ms-C_1-200.csv          NaN
+
+Missing cells: 79287
+Exact duplicate rows: 204
+
+Field summary: Experiment
+Unique values: 13
+Sample values: ['windIEA3.4-7ms-C_1-200.csv', 'windIEA3.4-7ms-C_1-200.csv', 'windIEA3.4-7ms-C_1-200.csv', 'windIEA3.4-7ms-C_1-200.csv', 'windIEA3.4-7ms-C_1-200.csv']
+
+================================================================================
+FILE: data/raw/electrolyzer/combined_historical_wind_experiments.csv
+Shape: (28800, 32)
+Columns: ['Unnamed: 0', 'Experiment', 'GE 1.5 MW Wind Turbine Power (kW)', 'H2E_f_NLR_CurrentCmd (%)', 'IVAL_f_FM011_Flow (kg/hr)', 'Efficiency (kWh/kg)', 'Power Supply Average Voltage (Vdc)', 'H2E_f_NLR_CurrentCmd (%).1', 'H2E_n_PSU_A_Power (kW)', 'H2E_f_PSU_A_Current', 'H2E_f_Elec_CalcProdRate', 'H2E_f_CG220_LFLPer', 'H2E_f_DPS340_DPdegC', 'H2E_f_DPS341_DPdegC', 'H2E_f_DPS341_DPppmV', 'H2E_f_LS201_H2OLevel', 'H2E_f_LS301_H2OLevel', 'H2E_f_PT264_Pressure', 'H2E_f_PT307_Pressure', 'H2E_f_PT312_Pressure', 'H2E_f_PT604_Pressure', 'H2E_f_RS209_Resistivity', 'H2E_f_RS507_Resistivity', 'H2E_f_TE218_Temp', 'H2E_f_TE219_Temp', 'H2E_f_TE338_Temp', 'H2E_f_TE601_Temp', 'H2E_f_TT645_Temp', 'H2E_f_TT646_Temp', 'H2E_f_TT647_Temp', 'H2E_f_TT648_Temp', 'H2E_f_NLR_CurrentCmd (A)']
+
+Data types:
+Unnamed: 0                                str
+Experiment                                str
+GE 1.5 MW Wind Turbine Power (kW)     float64
+H2E_f_NLR_CurrentCmd (%)              float64
+IVAL_f_FM011_Flow (kg/hr)             float64
+Efficiency (kWh/kg)                   float64
+Power Supply Average Voltage (Vdc)    float64
+H2E_f_NLR_CurrentCmd (%).1            float64
+H2E_n_PSU_A_Power (kW)                float64
+H2E_f_PSU_A_Current                   float64
+H2E_f_Elec_CalcProdRate               float64
+H2E_f_CG220_LFLPer                    float64
+H2E_f_DPS340_DPdegC                   float64
+H2E_f_DPS341_DPdegC                   float64
+H2E_f_DPS341_DPppmV                   float64
+H2E_f_LS201_H2OLevel                  float64
+H2E_f_LS301_H2OLevel                  float64
+H2E_f_PT264_Pressure                  float64
+H2E_f_PT307_Pressure                  float64
+H2E_f_PT312_Pressure                  float64
+H2E_f_PT604_Pressure                  float64
+H2E_f_RS209_Resistivity               float64
+H2E_f_RS507_Resistivity               float64
+H2E_f_TE218_Temp                      float64
+H2E_f_TE219_Temp                      float64
+H2E_f_TE338_Temp                      float64
+H2E_f_TE601_Temp                      float64
+H2E_f_TT645_Temp                      float64
+H2E_f_TT646_Temp                      float64
+H2E_f_TT647_Temp                      float64
+H2E_f_TT648_Temp                      float64
+H2E_f_NLR_CurrentCmd (A)              float64
+
+First 2 rows:
+         Unnamed: 0                Experiment  GE 1.5 MW Wind Turbine Power (kW)  H2E_f_NLR_CurrentCmd (%)  IVAL_f_FM011_Flow (kg/hr)  Efficiency (kWh/kg)  Power Supply Average Voltage (Vdc)  H2E_f_NLR_CurrentCmd (%).1  H2E_n_PSU_A_Power (kW)  H2E_f_PSU_A_Current  H2E_f_Elec_CalcProdRate  H2E_f_CG220_LFLPer  H2E_f_DPS340_DPdegC  H2E_f_DPS341_DPdegC  H2E_f_DPS341_DPppmV  H2E_f_LS201_H2OLevel  H2E_f_LS301_H2OLevel  H2E_f_PT264_Pressure  H2E_f_PT307_Pressure  H2E_f_PT312_Pressure  H2E_f_PT604_Pressure  H2E_f_RS209_Resistivity  H2E_f_RS507_Resistivity  H2E_f_TE218_Temp  H2E_f_TE219_Temp  H2E_f_TE338_Temp  H2E_f_TE601_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp  H2E_f_TT648_Temp  H2E_f_NLR_CurrentCmd (A)
+2025-12-23 12:50:02 wind-GE1.5MW_0.65-200.csv                            991.426                    69.903                     15.292            53.165054                             380.233                      69.903                   813.0               2096.0                   15.644               0.119              -57.847              -59.549                0.383                50.916                27.591                 2.971                29.006                21.181                 4.326                    6.160                   15.385            57.176            57.176            16.979             20.91              25.5              28.0               8.6              15.0                  2097.102
+2025-12-23 12:50:03 wind-GE1.5MW_0.65-200.csv                            994.603                    89.745                     15.720            51.717557                             381.167                      89.745                   813.0               2096.0                   15.644               0.119              -57.847              -59.549                0.383                50.928                27.543                 2.970                29.008                21.043                 4.332                    6.162                   15.873            57.176            57.176            16.979             20.91              25.5              28.0               8.5              14.9                  2692.346
+
+Missing cells: 58
+Exact duplicate rows: 0
+
+Field summary: Experiment
+Unique values: 2
+Sample values: ['wind-GE1.5MW_0.65-200.csv', 'wind-GE1.5MW_0.65-200.csv', 'wind-GE1.5MW_0.65-200.csv', 'wind-GE1.5MW_0.65-200.csv', 'wind-GE1.5MW_0.65-200.csv']
+
+================================================================================
+FILE: data/raw/hydro-electrolyzer/combined_simulated_tidal_experiments.csv
+Shape: (47502, 32)
+Columns: ['Unnamed: 0', 'Experiment', 'tidal-500kW-RM1 (kW)', 'H2E_f_NLR_CurrentCmd (%)', 'IVAL_f_FM011_Flow (kg/hr)', 'Efficiency (kWh/kg)', 'Power Supply Average Voltage (Vdc)', 'H2E_f_NLR_CurrentCmd (%).1', 'H2E_n_PSU_A_Power (kW)', 'H2E_f_PSU_A_Current', 'H2E_f_Elec_CalcProdRate', 'H2E_f_CG220_LFLPer', 'H2E_f_DPS340_DPdegC', 'H2E_f_DPS341_DPdegC', 'H2E_f_DPS341_DPppmV', 'H2E_f_LS201_H2OLevel', 'H2E_f_LS301_H2OLevel', 'H2E_f_PT264_Pressure', 'H2E_f_PT307_Pressure', 'H2E_f_PT312_Pressure', 'H2E_f_PT604_Pressure', 'H2E_f_RS209_Resistivity', 'H2E_f_RS507_Resistivity', 'H2E_f_TE218_Temp', 'H2E_f_TE219_Temp', 'H2E_f_TE338_Temp', 'H2E_f_TE601_Temp', 'H2E_f_TT645_Temp', 'H2E_f_TT646_Temp', 'H2E_f_TT647_Temp', 'H2E_f_TT648_Temp', 'H2E_f_NLR_CurrentCmd (A)']
+
+Data types:
+Unnamed: 0                                str
+Experiment                                str
+tidal-500kW-RM1 (kW)                  float64
+H2E_f_NLR_CurrentCmd (%)              float64
+IVAL_f_FM011_Flow (kg/hr)             float64
+Efficiency (kWh/kg)                   float64
+Power Supply Average Voltage (Vdc)    float64
+H2E_f_NLR_CurrentCmd (%).1            float64
+H2E_n_PSU_A_Power (kW)                float64
+H2E_f_PSU_A_Current                   float64
+H2E_f_Elec_CalcProdRate               float64
+H2E_f_CG220_LFLPer                    float64
+H2E_f_DPS340_DPdegC                   float64
+H2E_f_DPS341_DPdegC                   float64
+H2E_f_DPS341_DPppmV                   float64
+H2E_f_LS201_H2OLevel                  float64
+H2E_f_LS301_H2OLevel                  float64
+H2E_f_PT264_Pressure                  float64
+H2E_f_PT307_Pressure                  float64
+H2E_f_PT312_Pressure                  float64
+H2E_f_PT604_Pressure                  float64
+H2E_f_RS209_Resistivity               float64
+H2E_f_RS507_Resistivity               float64
+H2E_f_TE218_Temp                      float64
+H2E_f_TE219_Temp                      float64
+H2E_f_TE338_Temp                      float64
+H2E_f_TE601_Temp                      float64
+H2E_f_TT645_Temp                      float64
+H2E_f_TT646_Temp                      float64
+H2E_f_TT647_Temp                      float64
+H2E_f_TT648_Temp                      float64
+H2E_f_NLR_CurrentCmd (A)              float64
+
+First 2 rows:
+         Unnamed: 0                Experiment  tidal-500kW-RM1 (kW)  H2E_f_NLR_CurrentCmd (%)  IVAL_f_FM011_Flow (kg/hr)  Efficiency (kWh/kg)  Power Supply Average Voltage (Vdc)  H2E_f_NLR_CurrentCmd (%).1  H2E_n_PSU_A_Power (kW)  H2E_f_PSU_A_Current  H2E_f_Elec_CalcProdRate  H2E_f_CG220_LFLPer  H2E_f_DPS340_DPdegC  H2E_f_DPS341_DPdegC  H2E_f_DPS341_DPppmV  H2E_f_LS201_H2OLevel  H2E_f_LS301_H2OLevel  H2E_f_PT264_Pressure  H2E_f_PT307_Pressure  H2E_f_PT312_Pressure  H2E_f_PT604_Pressure  H2E_f_RS209_Resistivity  H2E_f_RS507_Resistivity  H2E_f_TE218_Temp  H2E_f_TE219_Temp  H2E_f_TE338_Temp  H2E_f_TE601_Temp  H2E_f_TT645_Temp  H2E_f_TT646_Temp  H2E_f_TT647_Temp  H2E_f_TT648_Temp  H2E_f_NLR_CurrentCmd (A)
+2026-02-11 08:05:30 tidal-500kW-RM1_raw_2.csv                   0.0                    19.984                      4.575            44.590164                             332.733                      19.984                   204.0                601.0                    4.472               0.116              -63.403              -60.729                0.326                54.398                31.568                 2.981                28.970                19.416                 4.508                    5.804                    4.630            56.713            56.481            17.837             6.831              18.3              29.5               7.1              15.4                   599.529
+2026-02-11 08:05:31 tidal-500kW-RM1_raw_2.csv                   0.0                    19.984                      4.563            44.707429                             332.567                      19.984                   204.0                601.0                    4.472               0.116              -63.403              -60.729                0.326                54.397                31.581                 2.982                28.961                19.540                 4.509                    5.803                    4.673            56.713            56.481            17.842             6.831              18.3              29.6               7.1              15.2                   599.529
+
+Missing cells: 30
+Exact duplicate rows: 0
+
+Field summary: Experiment
+Unique values: 2
+Sample values: ['tidal-500kW-RM1_raw_2.csv', 'tidal-500kW-RM1_raw_2.csv', 'tidal-500kW-RM1_raw_2.csv', 'tidal-500kW-RM1_raw_2.csv', 'tidal-500kW-RM1_raw_2.csv']
