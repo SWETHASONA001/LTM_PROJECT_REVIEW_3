@@ -1,0 +1,25 @@
+# Large raw datasets are kept locally, never committed (source data is read-only)
+data/raw/**/*.csv
+data/raw/**/*.nc
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+backend/.venv/
+
+# Node
+node_modules/
+frontend/dist/
+*.log
+.env
+.env.local
+frontend/.env.local
+
+# Local runtime artifacts
+backend/storage/
+frontend/qa-output/
+
+# Large scikit-learn artifacts — reproduce with ml/train_forecaster.py and ml/train_isolation_forest.py
+models/*.joblib
