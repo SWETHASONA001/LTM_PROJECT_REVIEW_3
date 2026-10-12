@@ -20,7 +20,17 @@ $envFile = Join-Path $root 'frontend\.env.local'
 if (-not (Test-Path $envFile)) { Set-Content -Path $envFile -Value 'VITE_API_BASE_URL=http://localhost:8000' -Encoding ascii }
 if (-not (Test-Path (Join-Path $root 'frontend\node_modules'))) { Push-Location (Join-Path $root 'frontend'); npm install; Pop-Location }
 
-Start-Process -FilePath $py -ArgumentList '-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', '8000' -WorkingDirectory (Join-Path $root 'backend')
-Start-Process -FilePath 'npm.cmd' -ArgumentList 'run', 'dev' -WorkingDirectory (Join-Path $root 'frontend')
+function Test-Port($port) { [bool](Get-NetTCPConnection -State Listen -LocalPort $port -ErrorAction SilentlyContinue) }
+
+# Start each part only if it is not already running (avoids duplicate copies on other ports).
+if (Test-Port 8000) { Write-Host 'Backend already running on port 8000 - not starting another copy.' }
+else { Start-Process -FilePath $py -ArgumentList '-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', '8000' -WorkingDirectory (Join-Path $root 'backend') }
+
+if (Test-Port 5173) { Write-Host 'Frontend already running on port 5173 - not starting another copy.' }
+else { Start-Process -FilePath 'npm.cmd' -ArgumentList 'run', 'dev', '--', '--port', '5173', '--strictPort' -WorkingDirectory (Join-Path $root 'frontend') }
+
+Write-Host ''
 Write-Host 'Backend:  http://127.0.0.1:8000/docs'
-Write-Host 'Frontend: http://localhost:5173'
+Write-Host 'Frontend: http://localhost:5173   <- open this address'
+Start-Sleep -Seconds 4
+Start-Process 'http://localhost:5173/login'

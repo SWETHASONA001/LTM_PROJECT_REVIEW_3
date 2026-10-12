@@ -26,6 +26,8 @@ app = FastAPI(title="AeroHydro-PINN API", version=config.VERSION)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.ALLOWED_ORIGINS,
+    # Local development: accept the frontend on any localhost port (Vite moves to 5174+ when 5173 is busy).
+    allow_origin_regex=config.LOCAL_ORIGIN_REGEX,
     allow_methods=["GET", "POST", "DELETE"],
     allow_headers=["Content-Type", "Authorization"],
 )

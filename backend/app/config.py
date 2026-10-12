@@ -19,6 +19,9 @@ STORAGE_DIR = Path(os.getenv("AEROHYDRO_STORAGE_DIR", ROOT / "backend" / "storag
 # Comma-separated list of allowed browser origins for CORS.
 ALLOWED_ORIGINS = [o.strip() for o in os.getenv("AEROHYDRO_ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if o.strip()]
 
+# Also allow any localhost/127.0.0.1 port in development. Set AEROHYDRO_ALLOW_LOCAL_ORIGINS=0 in production.
+LOCAL_ORIGIN_REGEX = r"http://(localhost|127\.0\.0\.1):\d+" if os.getenv("AEROHYDRO_ALLOW_LOCAL_ORIGINS", "1") != "0" else None
+
 # LLM provider for the copilot. Not implemented yet: the endpoint reports 503
 # until a provider integration (e.g. a LangGraph agent) is added server-side.
 LLM_PROVIDER = os.getenv("AEROHYDRO_LLM_PROVIDER", "").strip()
