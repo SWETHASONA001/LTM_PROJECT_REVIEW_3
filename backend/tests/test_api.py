@@ -162,3 +162,29 @@ def test_auth_login_flow(client, tmp_path):
     assert me.json()["user"]["name"] == "Eng One"
     tampered = token[:-2] + ("AA" if not token.endswith("AA") else "BB")
     assert client.get("/api/auth/me", headers={"Authorization": f"Bearer {tampered}"}).status_code == 401
+
+
+def test_register_forgot_and_reset_password(client, monkeypatch):
+    from app import config as cfg
+
+    r = client.post("/api/auth/register", json={"name": "New User", "email": "New@Example.com", "password": "long-enough-pw"})
+    assert r.status_code == 201 and r.json()["user"]["email"] == "new@example.com"
+    assert client.post("/api/auth/register", json={"name": "Dup", "email": "new@example.com", "password": "long-enough-pw"}).status_code == 409
+    assert client.post("/api/auth/register", json={"name": "Short", "email": "s@example.com", "password": "short"}).status_code == 422
+
+    # Unknown and known emails get the same response (no account enumeration).
+    unknown = client.post("/api/auth/forgot-password", json={"email": "nobody@example.com"}).json()
+    known = client.post("/api/auth/forgot-password", json={"email": "new@example.com"}).json()
+    assert unknown["message"] == known["message"]
+    outbox = (cfg.STORAGE_DIR / "outbox.log").read_text(encoding="utf-8")
+    assert "nobody@example.com" not in outbox
+    token = outbox.split("token=")[1].split()[0]
+
+    assert client.post("/api/auth/reset-password", json={"token": "x" * 20, "password": "another-long-pw"}).status_code == 400
+    assert client.post("/api/auth/reset-password", json={"token": token, "password": "brand-new-password"}).status_code == 200
+    assert client.post("/api/auth/reset-password", json={"token": token, "password": "brand-new-password"}).status_code == 400  # single use
+    assert client.post("/api/auth/login", json={"email": "new@example.com", "password": "long-enough-pw"}).status_code == 401
+    assert client.post("/api/auth/login", json={"email": "new@example.com", "password": "brand-new-password"}).status_code == 200
+
+    monkeypatch.setenv("AEROHYDRO_ALLOW_SIGNUP", "0")
+    assert client.post("/api/auth/register", json={"name": "X", "email": "x@example.com", "password": "long-enough-pw"}).status_code == 403

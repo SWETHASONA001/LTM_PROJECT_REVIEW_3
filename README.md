@@ -37,7 +37,9 @@ echo VITE_API_BASE_URL=http://localhost:8000 > .env.local && npm run dev
 cd backend && .venv/Scripts/python create_user.py you@company.com "Your Name" --role engineer
 ```
 
-If the backend is offline or has no accounts, the page offers a clearly labelled local workspace (no password check, data stays in the browser).
+Users can also **create an account** on the sign-in page (turn off with `AEROHYDRO_ALLOW_SIGNUP=0`) and use **Forgot password?** to get a single-use reset link valid for 30 minutes. Without SMTP settings the link is written to `backend/storage/outbox.log` (development outbox) instead of being emailed.
+
+If the backend is offline, the page offers a clearly labelled local workspace (no password check, data stays in the browser).
 
 Without the backend the frontend still runs (standalone mode: static extracts + in-browser physics); backend-only features say so in the UI.
 
@@ -57,11 +59,12 @@ Without the backend the frontend still runs (standalone mode: static extracts + 
 
 ```bash
 cd frontend && npm test && npm run build                   # 23 unit tests + typecheck + build
-cd backend  && .venv/Scripts/python -m pytest -q           # 16 tests (FLORIS, models, optimizer, hydrogen, auth, copilot loop)
+cd backend  && .venv/Scripts/python -m pytest -q           # 17 tests (FLORIS, models, optimizer, hydrogen, auth, copilot loop)
 cd frontend && node scripts/qa-screens.mjs http://localhost:5173 qa-output       # all routes, console errors
 cd frontend && node scripts/qa-interactions.mjs http://localhost:5173 qa-output  # 25 UI interaction checks
 cd frontend && node scripts/qa-backend.mjs http://localhost:5173 qa-output       # 6 backend-powered UI checks
 cd frontend && node scripts/qa-ux.mjs http://localhost:5173 qa-output            # sign-in, twin wind-on-click, siting (8 checks)
+cd frontend && node scripts/qa-auth.mjs http://localhost:5173 qa-output          # create account, forgot/reset password (8 checks)
 ```
 
 See [docs/AUDIT.md](docs/AUDIT.md) and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).

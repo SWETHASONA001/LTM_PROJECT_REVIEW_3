@@ -59,6 +59,8 @@ export interface HealthResponse {
     cnn_pinn?: boolean;
     forecaster?: boolean;
     auth?: boolean;
+    signup?: boolean;
+    email?: boolean;
   };
 }
 
@@ -159,6 +161,12 @@ export interface LoginResponse {
 }
 
 export const backend = {
+  register: (name: string, email: string, password: string) =>
+    request<LoginResponse>('/api/auth/register', { method: 'POST', body: JSON.stringify({ name, email, password }), timeoutMs: 15000 }),
+  forgotPassword: (email: string, reset_url_base: string) =>
+    request<{ status: string; delivery: 'email' | 'outbox'; message: string }>('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email, reset_url_base }), timeoutMs: 30000 }),
+  resetPassword: (token: string, password: string) =>
+    request<{ status: string; user: { email: string; name: string; role: string } }>('/api/auth/reset-password', { method: 'POST', body: JSON.stringify({ token, password }), timeoutMs: 15000 }),
   login: (email: string, password: string) => request<LoginResponse>('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }), timeoutMs: 15000 }),
   health: () => request<HealthResponse>('/api/health', { timeoutMs: 4000 }),
   floris: (body: FlorisRequest) => request<FlorisResponse>('/api/floris/simulate', { method: 'POST', body: JSON.stringify(body), timeoutMs: 60000 }),

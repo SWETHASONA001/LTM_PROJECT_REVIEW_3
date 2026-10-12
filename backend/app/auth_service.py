@@ -104,3 +104,64 @@ def authenticate(email: str, password: str) -> dict[str, Any] | None:
     if not hmac.compare_digest(_hash(password, bytes.fromhex(user["salt"])), user["hash"]):
         return None
     return user
+
+
+# ------------------------------------------------------------ self sign-up ----
+
+def signup_allowed() -> bool:
+    """Self-registration is on by default for local use; set AEROHYDRO_ALLOW_SIGNUP=0 to disable."""
+    return os.getenv("AEROHYDRO_ALLOW_SIGNUP", "1").strip().lower() not in {"0", "false", "no"}
+
+
+def register(email: str, name: str, password: str) -> dict[str, Any]:
+    email = email.strip().lower()
+    if "@" not in email or "." not in email.split("@")[-1]:
+        raise ValueError("Enter a valid email address.")
+    if not name.strip():
+        raise ValueError("Enter your name.")
+    if any(u["email"] == email for u in load_users()):
+        raise ValueError("An account with this email already exists. Sign in or reset your password.")
+    return create_user(email, name.strip(), password, role="engineer")
+
+
+# --------------------------------------------------------- password reset ----
+
+RESET_TTL_S = 30 * 60
+
+
+def _resets_file():
+    config.STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    return config.STORAGE_DIR / "password_resets.json"
+
+
+def _load_resets() -> list[dict[str, Any]]:
+    f = _resets_file()
+    now = time.time()
+    items = json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
+    return [r for r in items if r["exp"] > now]
+
+
+def create_reset(email: str) -> str | None:
+    """Create a single-use reset token (only its hash is stored). None for unknown emails."""
+    email = email.strip().lower()
+    if not any(u["email"] == email for u in load_users()):
+        return None
+    raw = secrets.token_urlsafe(32)
+    items = [r for r in _load_resets() if r["email"] != email]  # one active link per user
+    items.append({"email": email, "hash": hashlib.sha256(raw.encode()).hexdigest(), "exp": time.time() + RESET_TTL_S})
+    _resets_file().write_text(json.dumps(items, indent=2), encoding="utf-8")
+    return raw
+
+
+def reset_password(raw_token: str, new_password: str) -> dict[str, Any]:
+    h = hashlib.sha256(raw_token.encode()).hexdigest()
+    items = _load_resets()
+    match = next((r for r in items if hmac.compare_digest(r["hash"], h)), None)
+    if not match:
+        raise ValueError("This reset link is invalid or has expired. Request a new one.")
+    user = next((u for u in load_users() if u["email"] == match["email"]), None)
+    if not user:
+        raise ValueError("This reset link is invalid or has expired. Request a new one.")
+    updated = create_user(user["email"], user["name"], new_password, user["role"])  # validates length
+    _resets_file().write_text(json.dumps([r for r in items if r is not match], indent=2), encoding="utf-8")
+    return updated

@@ -20,6 +20,8 @@ const Reports = lazy(() => import('../pages/ReportsPage'));
 const Settings = lazy(() => import('../pages/SettingsPage'));
 const NotFound = lazy(() => import('../pages/NotFoundPage'));
 const Login = lazy(() => import('../pages/LoginPage'));
+const ForgotPassword = lazy(() => import('../pages/ForgotPasswordPage'));
+const ResetPassword = lazy(() => import('../pages/ResetPasswordPage'));
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +29,24 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={null}>
         <Login />
+      </Suspense>
+    ),
+    errorElement: <RouteError />,
+  },
+  {
+    path: '/forgot-password',
+    element: (
+      <Suspense fallback={null}>
+        <ForgotPassword />
+      </Suspense>
+    ),
+    errorElement: <RouteError />,
+  },
+  {
+    path: '/reset-password',
+    element: (
+      <Suspense fallback={null}>
+        <ResetPassword />
       </Suspense>
     ),
     errorElement: <RouteError />,

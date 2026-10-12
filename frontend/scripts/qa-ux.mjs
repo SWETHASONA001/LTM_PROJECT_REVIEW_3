@@ -32,14 +32,22 @@ await page.screenshot({ path: path.join(out, 'login.png') });
 
 // 2. Sign in
 if (process.env.QA_EMAIL && process.env.QA_PASSWORD) {
-  await page.type('#email', process.env.QA_EMAIL);
-  await page.type('#password', 'wrong-password-123');
-  await click('Sign in');
+  const fill = async (label, value) => {
+    const id = await page.evaluate((l) => [...document.querySelectorAll('label')].find((x) => x.textContent?.trim() === l)?.htmlFor, label);
+    await page.$eval(`[id="${id}"]`, (el) => (el.value = ''));
+    await page.type(`[id="${id}"]`, value);
+  };
+  const submit = async () => {
+    await page.waitForFunction(() => !document.querySelector('form button[type=submit]')?.disabled, { timeout: 15000 });
+    await page.evaluate(() => document.querySelector('form button[type=submit]').click());
+  };
+  await fill('Email', process.env.QA_EMAIL);
+  await fill('Password', 'wrong-password-123');
+  await submit();
   await page.waitForFunction(() => document.querySelector('[role=alert]'), { timeout: 15000 });
   check('Wrong password is rejected', (await text()).includes('Incorrect email or password'));
-  await page.$eval('#password', (el) => (el.value = ''));
-  await page.type('#password', process.env.QA_PASSWORD);
-  await click('Sign in');
+  await fill('Password', process.env.QA_PASSWORD);
+  await submit();
 } else {
   await click('Open local workspace');
 }

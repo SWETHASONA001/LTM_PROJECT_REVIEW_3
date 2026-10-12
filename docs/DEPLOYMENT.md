@@ -39,6 +39,8 @@ The image needs the repository's `ml/` and `models/` folders. `models/*.pt` are 
 | `AEROHYDRO_RAW_DIR` | Raw datasets, if server-side processing is added |
 | `AEROHYDRO_STORAGE_DIR` | Scenario persistence (default `backend/storage`; use a persistent volume or replace with a database) |
 | `AEROHYDRO_SECRET` | Token-signing secret for sign-in sessions (otherwise generated into storage/secret.key). Set explicitly in production. |
+| `AEROHYDRO_ALLOW_SIGNUP` | `1` (default) lets anyone create an account from the sign-in page; set `0` in production unless open sign-up is intended. |
+| `AEROHYDRO_SMTP_HOST`, `_PORT`, `_USER`, `_PASSWORD`, `_FROM` | Email delivery for password-reset links. Without them, links go to `storage/outbox.log` (development only). |
 | `ANTHROPIC_API_KEY` | Enables the copilot agent (Claude). Server-side only, never exposed to the browser. |
 | `AEROHYDRO_LLM_MODEL` | Optional model override (default `claude-opus-5-5`). |
 

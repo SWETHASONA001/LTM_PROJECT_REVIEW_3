@@ -20,7 +20,7 @@ from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from . import auth_service, config, copilot_service, floris_service, hydrogen_service, ml_service, optimizer_service
+from . import auth_service, config, copilot_service, mail_service, floris_service, hydrogen_service, ml_service, optimizer_service
 
 app = FastAPI(title="AeroHydro-PINN API", version=config.VERSION)
 app.add_middleware(
@@ -55,7 +55,9 @@ def health() -> dict[str, Any]:
             "datasets": (config.DATA_DIR / "manifest.json").exists(),
             "cnn_pinn": ml_service.cnn_status()["available"],
             "forecaster": (ml_service.MODEL_DIR / "forecaster.joblib").exists(),
-            "auth": auth_service.configured(),
+            "auth": auth_service.configured() or auth_service.signup_allowed(),
+            "signup": auth_service.signup_allowed(),
+            "email": mail_service.smtp_configured(),
         },
     }
 
@@ -77,6 +79,64 @@ def login(req: LoginRequest) -> dict[str, Any]:
         raise HTTPException(401, "Incorrect email or password.")
     token, exp = auth_service.issue_token(user)
     return {"token": token, "expires_at": exp, "user": auth_service.public(user)}
+
+
+class RegisterRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=120)
+    email: str = Field(min_length=3, max_length=200)
+    password: str = Field(min_length=10, max_length=200)
+
+
+@app.post("/api/auth/register", status_code=201)
+def register(req: RegisterRequest) -> dict[str, Any]:
+    if not auth_service.signup_allowed():
+        raise HTTPException(403, "Self-registration is disabled. Ask an administrator for an account.")
+    try:
+        user = auth_service.register(req.email, req.name, req.password)
+    except ValueError as exc:
+        raise HTTPException(409 if "already exists" in str(exc) else 422, str(exc)) from exc
+    stored = next(u for u in auth_service.load_users() if u["email"] == user["email"])
+    token, exp = auth_service.issue_token(stored)
+    return {"token": token, "expires_at": exp, "user": user}
+
+
+class ForgotRequest(BaseModel):
+    email: str = Field(min_length=3, max_length=200)
+    reset_url_base: str = Field("http://localhost:5173/reset-password", max_length=300)
+
+
+@app.post("/api/auth/forgot-password")
+def forgot_password(req: ForgotRequest) -> dict[str, Any]:
+    # Identical response whether or not the account exists (prevents account enumeration).
+    allowed = [o.rstrip("/") + "/reset-password" for o in config.ALLOWED_ORIGINS]
+    base = req.reset_url_base if req.reset_url_base in allowed else (allowed[0] if allowed else "http://localhost:5173/reset-password")
+    raw = auth_service.create_reset(req.email)
+    if raw:
+        body = (
+            "Someone asked to reset the password for your AeroHydro-PINN account.\n\n"
+            f"Open this link within 30 minutes to choose a new password:\n{base}?token={raw}\n\n"
+            "If you did not ask for this, ignore this message; your password will not change."
+        )
+        mail_service.send(req.email.strip().lower(), "Reset your AeroHydro-PINN password", body)
+    return {
+        "status": "ok",
+        "delivery": "email" if mail_service.smtp_configured() else "outbox",
+        "message": "If an account exists for that email, a reset link has been sent. It expires in 30 minutes.",
+    }
+
+
+class ResetRequest(BaseModel):
+    token: str = Field(min_length=10, max_length=200)
+    password: str = Field(min_length=10, max_length=200)
+
+
+@app.post("/api/auth/reset-password")
+def reset_password(req: ResetRequest) -> dict[str, Any]:
+    try:
+        user = auth_service.reset_password(req.token, req.password)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    return {"status": "ok", "user": user}
 
 
 @app.get("/api/auth/me")
