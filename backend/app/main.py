@@ -16,13 +16,34 @@ from datetime import datetime, timezone
 from functools import lru_cache
 from typing import Any, Literal
 
-from fastapi import FastAPI, Header, HTTPException, Query
+from fastapi import FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
 from . import auth_service, config, copilot_service, mail_service, floris_service, hydrogen_service, ml_service, optimizer_service
 
 app = FastAPI(title="AeroHydro-PINN API", version=config.VERSION)
+
+# Accounts defined in environment secrets (production hosts without persistent disks).
+_seeded = auth_service.seed_from_env()
+if _seeded:
+    print(f"[auth] accounts loaded from environment: {', '.join(_seeded)}")
+
+OPEN_API_PATHS = ("/api/health", "/api/auth/login", "/api/auth/me", "/api/auth/register", "/api/auth/forgot-password", "/api/auth/reset-password")
+
+
+@app.middleware("http")
+async def require_session(request: Request, call_next):
+    """In production (AEROHYDRO_REQUIRE_AUTH=1) every API call needs a valid session token."""
+    path = request.url.path
+    if config.REQUIRE_AUTH and path.startswith("/api/") and request.method != "OPTIONS" and path not in OPEN_API_PATHS:
+        token = request.headers.get("authorization", "").removeprefix("Bearer ").strip()
+        if not auth_service.verify_token(token):
+            return JSONResponse({"detail": "Sign in required."}, status_code=401)
+    return await call_next(request)
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.ALLOWED_ORIGINS,
@@ -60,8 +81,25 @@ def health() -> dict[str, Any]:
             "auth": auth_service.configured() or auth_service.signup_allowed(),
             "signup": auth_service.signup_allowed(),
             "email": mail_service.smtp_configured(),
+            # Reset links need a way to reach the user: email, or the local dev outbox.
+            "password_reset": mail_service.smtp_configured() or not config.REQUIRE_AUTH,
+            "require_auth": config.REQUIRE_AUTH,
         },
     }
+
+
+DATASETS = {"manifest", "wind_summary", "wind_hourly", "models", "anomalies", "forecast", "hydro_sites", "hydro_series", "electrolyzer", "ml_models"}
+
+
+@app.get("/api/data/{name}")
+def dataset(name: str) -> FileResponse:
+    """Data extracts for the frontend. Behind sign-in when AEROHYDRO_REQUIRE_AUTH=1."""
+    if name not in DATASETS:
+        raise HTTPException(404, "Unknown dataset.")
+    path = config.DATA_DIR / f"{name}.json"
+    if not path.exists():
+        raise HTTPException(503, f"Data extract '{name}' not found on this server.")
+    return FileResponse(path, media_type="application/json", headers={"Cache-Control": "private, max-age=3600"})
 
 
 # ----------------------------------------------------------------- auth ----
@@ -109,6 +147,9 @@ class ForgotRequest(BaseModel):
 
 @app.post("/api/auth/forgot-password")
 def forgot_password(req: ForgotRequest) -> dict[str, Any]:
+    if config.REQUIRE_AUTH and not mail_service.smtp_configured():
+        # In production without email the dev outbox is unreachable, so links could never be delivered.
+        raise HTTPException(503, "Password reset by email is not available on this server. Ask your administrator to reset your password.")
     # Identical response whether or not the account exists (prevents account enumeration).
     allowed = [o.rstrip("/") + "/reset-password" for o in config.ALLOWED_ORIGINS]
     base = req.reset_url_base if req.reset_url_base in allowed else (allowed[0] if allowed else "http://localhost:5173/reset-password")
@@ -451,3 +492,20 @@ def copilot_chat(req: CopilotRequest) -> dict[str, Any]:
         raise HTTPException(502, "Could not reach the LLM provider.") from exc
     except anthropic.APIStatusError as exc:
         raise HTTPException(502, f"LLM provider error ({exc.status_code}).") from exc
+
+
+# ------------------------------------------------- built frontend (single-URL deploy) ----
+
+if config.FRONTEND_DIST and (config.FRONTEND_DIST / "index.html").exists():
+    _dist = config.FRONTEND_DIST.resolve()
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def spa(full_path: str) -> FileResponse:
+        """Serve the built website; unknown paths fall back to index.html for client-side routing."""
+        if full_path.startswith("api/"):
+            raise HTTPException(404, "Not found")
+        candidate = (_dist / full_path).resolve()
+        if full_path and candidate.is_file() and _dist in candidate.parents:
+            cache = "public, max-age=31536000, immutable" if full_path.startswith("assets/") else "no-cache"
+            return FileResponse(candidate, headers={"Cache-Control": cache})
+        return FileResponse(_dist / "index.html", headers={"Cache-Control": "no-cache"})

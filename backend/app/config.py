@@ -22,8 +22,15 @@ ALLOWED_ORIGINS = [o.strip() for o in os.getenv("AEROHYDRO_ALLOWED_ORIGINS", "ht
 # Also allow any localhost/127.0.0.1 port in development. Set AEROHYDRO_ALLOW_LOCAL_ORIGINS=0 in production.
 LOCAL_ORIGIN_REGEX = r"http://(localhost|127\.0\.0\.1):\d+" if os.getenv("AEROHYDRO_ALLOW_LOCAL_ORIGINS", "1") != "0" else None
 
-# LLM provider for the copilot. Not implemented yet: the endpoint reports 503
-# until a provider integration (e.g. a LangGraph agent) is added server-side.
+# LLM provider for the copilot (see copilot_service.enabled()).
 LLM_PROVIDER = os.getenv("AEROHYDRO_LLM_PROVIDER", "").strip()
+
+# Production: every /api/* call except health and sign-in needs a valid session token,
+# including the data extracts (served from /api/data/{name}, never as public files).
+REQUIRE_AUTH = os.getenv("AEROHYDRO_REQUIRE_AUTH", "0") == "1"
+
+# Built frontend to serve from this same service (single-URL deployment). Unset in local development.
+_dist = os.getenv("AEROHYDRO_FRONTEND_DIST", "").strip()
+FRONTEND_DIST = Path(_dist) if _dist else None
 
 VERSION = "0.1.0"

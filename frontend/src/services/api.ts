@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useAuthStore } from '../store/authStore';
 
 /**
  * FastAPI backend client. The base URL comes only from VITE_API_BASE_URL
  * (build-time env). When it is empty the app runs in standalone mode:
- * static data extracts + in-browser physics. No secrets ever live here.
+ * static data extracts + in-browser physics. "same-origin" means the backend
+ * serves this website itself (single-URL deployment). No secrets ever live here.
  */
-export const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '');
+const RAW_API_BASE = (import.meta.env.VITE_API_BASE_URL ?? '').trim();
+export const API_CONFIGURED = RAW_API_BASE !== '';
+export const API_BASE = RAW_API_BASE === 'same-origin' ? '' : RAW_API_BASE.replace(/\/+$/, '');
+
+/** Authorization header for the signed-in backend session, if any. */
+export function authHeader(): Record<string, string> {
+  const s = useAuthStore.getState().session;
+  return s?.mode === 'backend' && s.token ? { Authorization: `Bearer ${s.token}` } : {};
+}
 
 export class ApiError extends Error {
   constructor(
@@ -17,15 +27,18 @@ export class ApiError extends Error {
 }
 
 export async function request<T>(path: string, init?: RequestInit & { timeoutMs?: number }): Promise<T> {
-  if (!API_BASE) throw new ApiError('Backend not configured (VITE_API_BASE_URL is empty).', 0);
+  if (!API_CONFIGURED) throw new ApiError('Backend not configured (VITE_API_BASE_URL is empty).', 0);
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), init?.timeoutMs ?? 15000);
   try {
     const res = await fetch(`${API_BASE}${path}`, {
       ...init,
       signal: ctrl.signal,
-      headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
+      headers: { 'Content-Type': 'application/json', ...authHeader(), ...(init?.headers ?? {}) },
     });
+    if (res.status === 401 && !path.startsWith('/api/auth/') && useAuthStore.getState().session?.mode === 'backend') {
+      useAuthStore.getState().signOut(); // expired or revoked session -> back to sign-in
+    }
     if (!res.ok) {
       let detail = res.statusText;
       try {
@@ -61,6 +74,8 @@ export interface HealthResponse {
     auth?: boolean;
     signup?: boolean;
     email?: boolean;
+    password_reset?: boolean;
+    require_auth?: boolean;
   };
 }
 
@@ -188,7 +203,7 @@ export type BackendStatus =
 let statusPromise: Promise<BackendStatus> | null = null;
 
 export function checkBackend(force = false): Promise<BackendStatus> {
-  if (!API_BASE) return Promise.resolve({ state: 'standalone' });
+  if (!API_CONFIGURED) return Promise.resolve({ state: 'standalone' });
   if (!statusPromise || force) {
     statusPromise = backend
       .health()
@@ -199,7 +214,7 @@ export function checkBackend(force = false): Promise<BackendStatus> {
 }
 
 export function useBackendStatus(): [BackendStatus, () => void] {
-  const [status, setStatus] = useState<BackendStatus>(API_BASE ? { state: 'checking' } : { state: 'standalone' });
+  const [status, setStatus] = useState<BackendStatus>(API_CONFIGURED ? { state: 'checking' } : { state: 'standalone' });
   const [nonce, setNonce] = useState(0);
   useEffect(() => {
     let alive = true;

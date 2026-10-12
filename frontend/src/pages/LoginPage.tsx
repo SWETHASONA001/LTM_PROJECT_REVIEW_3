@@ -19,6 +19,7 @@ export default function LoginPage() {
   const online = status.state === 'online';
   const authAvailable = online && !!status.health.capabilities.auth;
   const signupAvailable = online && !!status.health.capabilities.signup;
+  const resetAvailable = !online || status.health.capabilities.password_reset !== false;
   const [name, setName] = useState('');
   const [email, setEmail] = useState(params.get('email') ?? '');
   const [password, setPassword] = useState('');
@@ -73,7 +74,7 @@ export default function LoginPage() {
   return (
     <AuthLayout title={mode === 'signup' ? 'Create your account' : 'Sign in'} subtitle={mode === 'signup' ? 'Join your team’s AeroHydro workspace.' : 'Use your AeroHydro platform account.'}>
       <div className="mt-6 inline-flex w-full rounded-lg border border-line bg-subtle p-0.5" role="tablist" aria-label="Account">
-        {(['signin', 'signup'] as Mode[]).map((m) => (
+        {(['signin', 'signup'] as Mode[]).filter((m) => m === 'signin' || !online || signupAvailable).map((m) => (
           <button key={m} role="tab" type="button" aria-selected={mode === m} onClick={() => setMode(m)} className={clsx('h-9 flex-1 rounded-md text-[13.5px] font-medium', mode === m ? 'bg-surface text-ink shadow-sm ring-1 ring-line' : 'text-muted hover:text-ink')}>
             {m === 'signin' ? 'Sign in' : 'Create account'}
           </button>
@@ -87,7 +88,8 @@ export default function LoginPage() {
         <div>
           <PasswordField label="Password" value={password} onChange={setPassword} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} disabled={disabled} />
           {mode === 'signup' && <PasswordStrength password={password} />}
-          {mode === 'signin' && (
+          {mode === 'signin' && !resetAvailable && <div className="mt-1.5 text-right text-[12px] text-muted">Forgot your password? Ask your administrator to reset it.</div>}
+          {mode === 'signin' && resetAvailable && (
             <div className="mt-1.5 text-right">
               <Link to={`/forgot-password${email ? `?email=${encodeURIComponent(email)}` : ''}`} className="text-[12.5px] font-medium text-energy hover:underline">
                 Forgot password?

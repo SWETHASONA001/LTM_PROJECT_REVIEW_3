@@ -5,7 +5,7 @@ import { DataGate } from '../components/ui/states';
 import type { ProvenanceKind } from '../data/types';
 import { bytes, date } from '../lib/format';
 import { PROVENANCE } from '../lib/provenance';
-import { API_BASE, useBackendStatus } from '../services/api';
+import { API_BASE, API_CONFIGURED, useBackendStatus } from '../services/api';
 import { useDataset } from '../services/dataService';
 import { useCopilotStore, useScenarioStore, useUiStore } from '../store/appStores';
 import { useSiteStore } from '../store/siteStore';
@@ -64,7 +64,7 @@ export default function SettingsPage() {
             <CardHeader title="Backend connection" icon={<Server size={16} />} actions={<Button size="sm" icon={<RefreshCw size={13} />} onClick={recheck}>Re-check</Button>} />
             <KeyValue
               rows={[
-                ['API base URL', API_BASE || 'not set (VITE_API_BASE_URL)'],
+                ['API base URL', API_CONFIGURED ? API_BASE || 'same address as this website' : 'not set (VITE_API_BASE_URL)'],
                 ['Status', status.state],
                 ['FLORIS', status.state === 'online' ? (status.health.capabilities.floris ? `available ${status.health.capabilities.floris_version ?? ''}` : 'not installed') : '—'],
                 ['LLM provider', status.state === 'online' ? (status.health.capabilities.llm ? `configured (${status.health.capabilities.llm_model})` : 'not configured — set ANTHROPIC_API_KEY on the backend') : '—'],

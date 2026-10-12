@@ -1,17 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { DatasetMap, DatasetName } from '../data/types';
+import { API_BASE, authHeader } from './api';
 
 /**
  * Loads the static, provenance-tagged extracts in /public/data.
  * They are produced from the real repository datasets by
  * scripts/build_frontend_data.py — never hand-written fixtures.
+ * With VITE_DATA_SOURCE=api they are fetched from the backend behind sign-in
+ * (private deployments) instead of as public static files.
  */
+const FROM_API = import.meta.env.VITE_DATA_SOURCE === 'api';
 const cache = new Map<DatasetName, Promise<unknown>>();
 
 export function loadDataset<K extends DatasetName>(name: K): Promise<DatasetMap[K]> {
   let p = cache.get(name);
   if (!p) {
-    p = fetch(`${import.meta.env.BASE_URL}data/${name}.json`).then(async (res) => {
+    const url = FROM_API ? `${API_BASE}/api/data/${name}` : `${import.meta.env.BASE_URL}data/${name}.json`;
+    p = fetch(url, { headers: FROM_API ? authHeader() : {} }).then(async (res) => {
       if (!res.ok) throw new Error(`Dataset "${name}" could not be loaded (HTTP ${res.status}).`);
       return res.json();
     });

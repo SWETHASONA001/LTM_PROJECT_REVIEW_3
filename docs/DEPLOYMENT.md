@@ -1,6 +1,27 @@
-# Deployment guide (not yet deployed)
+# Deployment guide
 
-## Frontend — Vercel or Netlify
+## Recommended: one private service on Render (free)
+
+`Dockerfile` + `render.yaml` build a single web service: the FastAPI backend serves the built website, the API and the data at one address. In this mode (`AEROHYDRO_REQUIRE_AUTH=1`):
+
+- every page and API call requires sign-in; the data extracts are served only via `/api/data/*` with a valid session (never as public files);
+- self sign-up is off; accounts come from Render secrets, so they survive restarts on the free tier (no persistent disk);
+- "Forgot password" is replaced by "ask your administrator" unless SMTP is configured.
+
+**Steps**
+
+1. Create a **private** GitHub repository (it contains the data extracts) and push this branch.
+2. On render.com: *New → Blueprint* → pick the repository. Render reads `render.yaml` and asks for:
+   - `AEROHYDRO_ADMIN_EMAIL`, `AEROHYDRO_ADMIN_NAME`, `AEROHYDRO_ADMIN_PASSWORD` — your account;
+   - `AEROHYDRO_USERS` (optional) — invited users, e.g. `[{"email":"a@b.com","name":"A","password":"at-least-10-chars","role":"engineer"}]`;
+   - `ANTHROPIC_API_KEY` (optional) — Claude copilot.
+3. Deploy. The app is then at `https://<service-name>.onrender.com`.
+
+**Free-tier limits:** the service sleeps after ~15 min idle (first visit then takes ~1 min); 512 MB RAM; files written at runtime (saved server-side scenarios) are lost on restart — layouts and scenarios saved in the browser are unaffected. The forecasting API is unavailable online (the 186 MB raw SCADA file and the forecaster artifact are not deployed); its page shows the precomputed results.
+
+To add or remove users later, edit `AEROHYDRO_USERS` in the Render dashboard (Environment) — the service restarts with the new list.
+
+## Alternative: Frontend — Vercel or Netlify
 
 | Setting | Value |
 |---|---|

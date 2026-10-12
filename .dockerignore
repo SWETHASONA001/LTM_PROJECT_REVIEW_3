@@ -1,0 +1,13 @@
+# Keep raw datasets, secrets and local environments out of the image.
+data/
+backend/.venv/
+backend/storage/
+**/__pycache__/
+**/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/qa-output/
+models/*.joblib
+.git/
+reports/
+*.log

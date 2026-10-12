@@ -106,6 +106,30 @@ def authenticate(email: str, password: str) -> dict[str, Any] | None:
     return user
 
 
+# ------------------------------------------------------ accounts from env ----
+
+def seed_from_env() -> list[str]:
+    """Create accounts from environment secrets so they survive restarts on hosts
+    without persistent disks (e.g. Render free tier).
+
+    AEROHYDRO_ADMIN_EMAIL / AEROHYDRO_ADMIN_NAME / AEROHYDRO_ADMIN_PASSWORD  -> one admin
+    AEROHYDRO_USERS = JSON list of {"email","name","password","role"}         -> invited users
+    """
+    created = []
+    specs: list[dict[str, str]] = []
+    if os.getenv("AEROHYDRO_ADMIN_EMAIL") and os.getenv("AEROHYDRO_ADMIN_PASSWORD"):
+        specs.append({"email": os.environ["AEROHYDRO_ADMIN_EMAIL"], "name": os.getenv("AEROHYDRO_ADMIN_NAME", "Administrator"), "password": os.environ["AEROHYDRO_ADMIN_PASSWORD"], "role": "admin"})
+    if os.getenv("AEROHYDRO_USERS"):
+        specs.extend(json.loads(os.environ["AEROHYDRO_USERS"]))
+    for sp in specs:
+        existing = next((u for u in load_users() if u["email"] == sp["email"].strip().lower()), None)
+        if existing and hmac.compare_digest(_hash(sp["password"], bytes.fromhex(existing["salt"])), existing["hash"]):
+            continue
+        create_user(sp["email"].strip(), sp.get("name", sp["email"]), sp["password"], sp.get("role", "engineer"))
+        created.append(sp["email"].strip().lower())
+    return created
+
+
 # ------------------------------------------------------------ self sign-up ----
 
 def signup_allowed() -> bool:
