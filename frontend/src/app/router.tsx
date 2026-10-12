@@ -78,4 +78,7 @@ export const router = createBrowserRouter([
       { path: '*', element: <NotFound /> },
     ],
   },
-]);
+], {
+  // Supports hosting under a sub-path (e.g. GitHub Pages: /LTM_PROJECT_REVIEW_3/).
+  basename: import.meta.env.BASE_URL.replace(/\/$/, '') || '/',
+});
